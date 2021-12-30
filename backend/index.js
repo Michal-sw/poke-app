@@ -1,9 +1,16 @@
 const express = require('express');
+const cors = require('cors');
 const pokemons = require('./routes/pokemons');
 const moves = require('./routes/moves');
 
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  optionsSuccessStatus: 200
+}
+
 const app = express();
 app.use(express.json());
+app.use(cors(corsOptions));
 
 try {
   app.use('/pokemons', pokemons);
