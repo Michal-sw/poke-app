@@ -1,18 +1,25 @@
-// const express = require('express');
-// const router = express.Router({mergeParams: true});
+const express = require('express');
+const router = express.Router({ mergeParams: true });
 
-// router.get('/', async (req, res) => {
-//   const session = driver.session();
-//   await session
-//     .run("MATCH (actors :Actor) return actors")
-//     .then(result => {
-//       console.log(result.records)
-//       const allRecords = result.records.map(record => record.get('actors'))
-//       res.json(allRecords)
-//     })
-//     .catch(err => res.send(err))
-//     .finally(() => session.close());
-// });
+const Move = require('../models/Move');
 
+router.get('/', async (req, res) => {
+  await Move.find()
+    .then(result => res.json(result))
+    .catch(err => res.status(500).json(err));
+});
 
-// module.exports = router;
+router.get('/:name', async (req, res) => {
+  const name = req.params.name;
+
+  Move.find({ alias: name })
+    .then(result => {
+      if (result.length != 0) {
+        res.json(result)
+      } else {
+        res.sendStatus(404)
+      }
+    })
+    .catch(err => res.status(500).json(err));
+})
+module.exports = router;

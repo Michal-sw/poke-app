@@ -13,9 +13,13 @@ router.get('/:name', async (req, res) => {
   const name = req.params.name;
   const camelCaseName = name.charAt(0).toUpperCase() + name.slice(1);
 
-  await Type.find({ name: camelCaseName })
+  Type.find({ name: camelCaseName })
     .then(result => {
-      res.json(result)
+      if (result.length != 0) {
+        res.json(result)
+      } else {
+        res.sendStatus(404)
+      }
     })
     .catch(err => res.status(500).json(err));
 })
