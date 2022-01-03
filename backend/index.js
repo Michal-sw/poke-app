@@ -1,7 +1,9 @@
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
 const pokemons = require('./routes/pokemons');
 const moves = require('./routes/moves');
+const types = require('./routes/types');
 
 const corsOptions = {
   origin: 'http://localhost:3000',
@@ -11,28 +13,28 @@ const corsOptions = {
 const app = express();
 app.use(express.json());
 app.use(cors(corsOptions));
+// app.use('/pokemons', pokemons);
+// app.use('/moves', moves);
+app.use('/types', types)
 
-try {
-  app.use('/pokemons', pokemons);
-  app.use('/moves', moves);
+require('dotenv').config();
+const dbConnData = {
+  host: process.env.MONGO_HOST || '127.0.0.1',
+  port: process.env.MONGO_PORT || 27017,
+  database: process.env.MONGO_DATABASE || 'pokedex'
+};
 
-  const port = 5000
-  app.listen(port, () => {
-    console.log(`API server listening at http://localhost:${port}`);
-  })
-
-} catch(ex) {
-  console.error('Error connecting to SQLite', ex);
-}
-
-// db.each("SELECT type_id AS id FROM pokemon_types", function(err, row) {
-//   console.log(row);
-// })
-
-// let db = new sqlite3.Database('/Users/michal/Downloads/pokemon/pokedex/pokedex/data/pokedex.sqlite', (err) => {
-//   if (err) {
-//     console.error(err.message);
-//   }
-//   console.log('Connected to the chinook database.');
-// });
-
+mongoose
+    .connect(`mongodb://${dbConnData.host}:${dbConnData.port}/${dbConnData.database}`, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
+    .then(response => {
+        console.log(`Connected to MongoDB. Database name: "${response.connections[0].name}"`)
+        const apiPort = process.env.PORT || 3000
+        const apiHost = process.env.API_HOST || 'localhost';
+        app.listen(apiPort, () => {
+            console.log(`API server available from: http://${apiHost}:${apiPort}`);
+        });
+    })
+    .catch(error => console.error('Error connecting to MongoDB', error));

@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import {  } from 'styled-components'
 
+import Loading from '../components/Loading';
+
 import { selectPokemonsLoading, selectPokemons } from '../../ducks/pokemons/selectors'
 import { getPokemons } from '../../ducks/pokemons/operations'
 
@@ -15,6 +17,7 @@ const PokemonList = ({ pokemons, loading ,getPokemons }, props) => {
 
   return (
     <article>
+    <Loading></Loading>
       {
         pokemons.map(pokemon => {
           return (
