@@ -4,7 +4,7 @@ import types from './types';
 
 export const getPokemons = (page) => {
   return createAction({
-    endpoint: `http://localhost:5000/pokemons?page=${page}`,
+    endpoint: `http://localhost:3001/pokemons?page=${page}&limit=30`,
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
