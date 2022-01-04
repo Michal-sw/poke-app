@@ -1,30 +1,45 @@
-// const express = require('express');
-// const router = express.Router({mergeParams: true});
+const express = require('express');
+const router = express.Router({mergeParams: true});
 
-// router.get('/', async (req, res) => {
-//   const page = req.query.page
+const Pokemon = require('../models/Pokemon');
 
-//   if (page > 29) {
-//     res.redirect('pokemons/29')
-//   } else {
+router.get('/', async (req, res) => {
+  const numOfRecords = req.query.name ? await Pokemon.find({ name: { "$regex": new RegExp(req.query.name) } }).count() : await Pokemon.count();
+  const limit = parseInt(req.query.limit) || 30;
+  const p = req.query.page
+  const page = p >= 2 && p <= Math.ceil(numOfRecords/limit) ? p : 1
+  const offset = (page - 1) * limit
 
-//     const offset =  page >= 2 ? (page - 1) * 30 : 0
+  if (req.query.name) {
+    Pokemon
+      .find({ num: {'$gt': offset}, alias: { "$regex": new RegExp(req.query.name.toLowerCase()) } })
+      .sort({ num: 1 })
+      .skip(offset)
+      .limit(limit)
+      .then(result => res.json(result))
+      .catch(err => res.status(500).json(err));  
+  } else {
+    Pokemon
+    .find({ num: {'$gt': offset} })
+    .sort({ num: 1 })
+    .limit(limit)
+    .then(result => res.json(result))
+    .catch(err => res.status(500).json(err));
+  }
+});
 
-//     let db = new sqlite3.Database(databasePath, sqlite3.OPEN_READONLY);
-//     const pStmt = db.all(
-//     `SELECT id, identifier
-//     FROM pokemon
-//     WHERE id > ${offset}
-//     LIMIT 30`, (err, rows) => {
-//       if (err) {
-//         res.send(err)
-//       } else {
-//         res.send(rows)
-//       }
-//     });
+router.get('/:name', async (req, res) => {
+  const name = req.params.name;
 
-//     db.close()  
-//   }
-// });
+  Pokemon.find({ alias: name })
+    .then(result => {
+      if (result.length != 0) {
+        res.json(result)
+      } else {
+        res.sendStatus(404)
+      }
+    })
+    .catch(err => res.status(500).json(err));
+})
 
-// module.exports = router;
+module.exports = router;
