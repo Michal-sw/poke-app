@@ -31,7 +31,7 @@ mongoose
     })
     .then(response => {
         console.log(`Connected to MongoDB. Database name: "${response.connections[0].name}"`)
-        const apiPort = process.env.PORT || 3000
+        const apiPort = process.env.PORT || 3001
         const apiHost = process.env.API_HOST || 'localhost';
         app.listen(apiPort, () => {
             console.log(`API server available from: http://${apiHost}:${apiPort}`);
