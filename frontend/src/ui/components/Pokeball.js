@@ -1,7 +1,6 @@
-const Loading = ({ rotation }) => {
-  console.log(rotation)
+const Pokeball = () => {
   return (
-    <img style={ rotation ? { transition: 'width 2s'  } : null }
+    <img
       src="https://upload.wikimedia.org/wikipedia/commons/5/53/Poké_Ball_icon.svg"
       alt="pokeball"
       height="87"
@@ -10,4 +9,4 @@ const Loading = ({ rotation }) => {
   )
 }
 
-export default Loading;
+export default Pokeball;
