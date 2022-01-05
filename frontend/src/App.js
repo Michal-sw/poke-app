@@ -15,7 +15,7 @@ function App() {
       <BrowserRouter>
         <Navbar/>
         <Switch>
-          <Route path='/' component={ PokemonList } exact/>
+          <Route path='/pokemons' component={ PokemonList } exact/>
         </Switch>
       </BrowserRouter>
     </div>

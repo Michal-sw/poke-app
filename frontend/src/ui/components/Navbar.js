@@ -6,8 +6,9 @@ const Navbar = () => {
   return (
     <NavContainer>
       <NavLink>
-        <Link to={'/pokemons'} />
-        <NavName>Pokemons</NavName>
+        <Link to={'/pokemons'}>
+          <NavName>Pokemons</NavName>
+        </Link>
       </NavLink>
       <NavLink>
         <Link to={'/types'} />
@@ -39,11 +40,13 @@ const NavLink = styled.div`
   background-image: url("https://raw.githubusercontent.com/itsjavi/pokemon-assets/master/assets/svg/pokeball-banner.svg");
   width: 282px;
   margin-right: 5px;
+  > a {
+    text-decoration: none;
+  }
 `;
 
 const NavName = styled.p`
   color: Black;
-  font-family: "Pokemon Pixel Font Regular";
   font-size: 2em;
   margin-top:11px;
   margin-bottom:11px;
