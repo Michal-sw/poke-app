@@ -3,7 +3,7 @@ import types from './types';
 
 
 export const getPokemons = (query) => {
-  console.log(query)
+  
   return createAction({
     endpoint: `http://localhost:3001/pokemons?${query}`,
     method: 'GET',

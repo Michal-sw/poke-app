@@ -19,7 +19,6 @@ const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryA
     const url = new URLSearchParams(location.search);
     changeQueryAction(url)
     getPokemons(url.toString());
-    console.log(maxPage)
   }, [location.search]);
 
   const pageDown = () => {

@@ -4,7 +4,7 @@ const router = express.Router({mergeParams: true});
 const Pokemon = require('../models/Pokemon');
 
 router.get('/', async (req, res) => {
-  const numOfRecords = req.query.name ? await Pokemon.find({ name: { "$regex": new RegExp(`^${req.query.name.toLowerCase()}`) } }).count() : await Pokemon.count();
+  const numOfRecords = req.query.name ? await Pokemon.find({ alias: { "$regex": new RegExp(`^${req.query.name.toLowerCase()}`) } }).count() : await Pokemon.count();
   const limit = parseInt(req.query.limit) || 30;
   const maxPage = Math.ceil(numOfRecords/limit)
 
