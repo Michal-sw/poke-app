@@ -1,6 +1,7 @@
-const PokeSearch = () => {
+const PokeSearch = ({onClick}) => {
   return (
     <img
+      onClick={onClick}
       src="https://raw.githubusercontent.com/itsjavi/pokemon-assets/master/assets/svg/search-button.svg"
       alt="pokeball"
       height="40"

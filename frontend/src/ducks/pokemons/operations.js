@@ -2,10 +2,10 @@ import { createAction } from "redux-api-middleware"
 import types from './types';
 
 
-export const getPokemons = (page) => {
-  console.log(page)
+export const getPokemons = (query) => {
+  console.log(query)
   return createAction({
-    endpoint: `http://localhost:3001/pokemons?page=${page}&limit=30`,
+    endpoint: `http://localhost:3001/pokemons?${query}`,
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -14,7 +14,6 @@ export const getPokemons = (page) => {
       types.POKEMON_LIST_REQUEST,
       types.POKEMON_LIST_SUCCESS,
       types.POKEMON_LIST_FAILURE
-  ]
-
+    ]
   })
-}
+};
