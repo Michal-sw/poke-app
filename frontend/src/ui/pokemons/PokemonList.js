@@ -7,7 +7,8 @@ import Pokeball from '../components/Pokeball';
 
 import { selectPokemonsLoading, selectPokemons } from '../../ducks/pokemons/selectors'
 import { getPokemons } from '../../ducks/pokemons/operations'
-import { PageButton, PageButtonContainer } from '../styles/MultiUsageStyles';
+import { PageButton, PageButtonContainer, SearchContainer, SearchInput } from '../styles/MultiUsageStyles';
+import PokeSearch from '../components/PokeSearch';
 
 const PokemonList = ({ pokemons, loading ,getPokemons }, props) => {
   const [page, setPage] = useState(new URLSearchParams(useLocation().search).get('page'));
@@ -17,7 +18,7 @@ const PokemonList = ({ pokemons, loading ,getPokemons }, props) => {
   useEffect(() => {
     getPokemons(page)
   }, [page])
-  
+
   const pageDown = () => {
     setPage(parseInt(page) - 1)
     history.push({
@@ -44,6 +45,10 @@ const PokemonList = ({ pokemons, loading ,getPokemons }, props) => {
   return (
     <div style={{ display:'flex', flexDirection:'column', alignItems:'center', margin:'0px 50px 0px 50px'}} >
       <Pokeball />
+      <SearchContainer>
+        <SearchInput/>
+        <PokeSearch/>
+      </SearchContainer>
       <PageButtonContainer>
         { page > 1 ? <PageButton onClick={pageDown}>Previous page</PageButton> : null}
         <PageButton onClick={pageUp}>Next page</PageButton>

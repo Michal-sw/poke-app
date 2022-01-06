@@ -36,6 +36,7 @@ const NavContainer = styled.nav`
   margin-top: 10px;
   padding: 10px 5px 10px 5px;
 `;
+
 const NavLink = styled.div`
   background-image: url("https://raw.githubusercontent.com/itsjavi/pokemon-assets/master/assets/svg/pokeball-banner.svg");
   width: 282px;
