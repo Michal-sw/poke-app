@@ -11,6 +11,10 @@ const typeSchema = new Schema({
       required: 'Name required',
       unique: true
     },
+    color: {
+      type: String,
+      required: 'Color required'
+    },
     immunes: [{
       type: String
     }],

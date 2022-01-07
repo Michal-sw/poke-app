@@ -10,8 +10,8 @@ body {
   /* background-image: url("https://i.redd.it/qmfjuz883g7z.png"); */
   /* background-image: url("https://wallpaperaccess.com/full/418495.jpg"); */
   background-image: url("https://mocah.org/uploads/posts/991378-pixel-art-8-bit-green-digital-art-Pokmon.png");
-  background-size: 3000px;
-  /* Moze ladny gradient dla skali  */
+  background-size: 1500px;
+  background-attachment: fixed;
 }
 
 code {
