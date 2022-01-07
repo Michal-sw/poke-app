@@ -21,6 +21,7 @@ import { PokemonCard, PokemonCardHead, PokemonCardName, PokemonSprite} from '../
 
 const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryAction, maxPage, typesSelectOptions, getTypes }, props) => {
   const [searchInput, setSearchInput] = useState('');
+  const [selectedTypes, setSelectedTypes] = useState([])
   const location = useLocation();
   const history = useHistory();
 
@@ -49,6 +50,9 @@ const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryA
   const changeSearchInput = (input) => {
     setSearchInput(input.target.value);
   };
+  const changeSelectedTypes = (input) => {
+    setSelectedTypes(input.map(option => option.value))
+  }
   const handleSearch = () => {
     const newUrl = query;
     newUrl.set('name', searchInput);
@@ -60,7 +64,7 @@ const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryA
     <div style={{ display:'flex', flexDirection:'column', alignItems:'center', margin:'0px 50px 0px 50px'}} >
       <Pokeball />
       <SearchContainer>
-        <TypeSelect typesSelectOptions={typesSelectOptions} />
+        <TypeSelect typesSelectOptions={typesSelectOptions} onChange={changeSelectedTypes} />
         <SearchInput onChange={changeSearchInput}/>
         <PokeSearch onClick={handleSearch}/>
       </SearchContainer>
