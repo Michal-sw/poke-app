@@ -23,14 +23,14 @@ router.get('/', async (req, res) => {
       .sort({ num: 1 })
       .skip(offset)
       .limit(limit)
-      .then(result => res.send({ pokemons: result, maxPage }))
+      .then(result => res.send({ pokemons: result, maxPage, limit, numOfRecords }))
       .catch(err => res.status(500).json(err));  
   } else {
     Pokemon
     .find({ num: {'$gt': offset} })
     .sort({ num: 1 })
     .limit(limit)
-    .then(result => res.json({ pokemons: result, maxPage }))
+    .then(result => res.json({ pokemons: result, maxPage, limit, numOfRecords }))
     .catch(err => res.status(500).json(err));
   }
 });
