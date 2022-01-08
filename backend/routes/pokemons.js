@@ -1,20 +1,26 @@
 const express = require('express');
 const router = express.Router({mergeParams: true});
+const { Types } = require('mongoose')
 
 const Pokemon = require('../models/Pokemon');
 
 router.get('/', async (req, res) => {
-  const numOfRecords = req.query.name ? await Pokemon.find({ alias: { "$regex": new RegExp(`^${req.query.name.toLowerCase()}`) } }).count() : await Pokemon.count();
+  const query = { };
+
+  req.query.types ? query.types = req.query.types.split(',').map(typeId => Types.ObjectId(typeId)) : null;
+  req.query.name ? query.alias = { "$regex": new RegExp(`^${req.query.name.toLowerCase()}`) } : null;
+
+  const numOfRecords = await Pokemon.find(query).count();
   const limit = parseInt(req.query.limit) || 30;
   const maxPage = Math.ceil(numOfRecords/limit)
 
-  const p = req.query.page
-  const page = p >= 2 && p <= maxPage ? p : 1
+  const p = req.query.page;
+  const page = p >= 2 && p <= maxPage ? p : 1;
   const offset = (page - 1) * limit
 
-  if (req.query.name) {
+  if (req.query.name || req.query.types) {
     Pokemon
-      .find({ num: {'$gt': offset}, alias: { "$regex": new RegExp(`^${req.query.name.toLowerCase()}`) } })
+      .find(query)
       .sort({ num: 1 })
       .skip(offset)
       .limit(limit)
