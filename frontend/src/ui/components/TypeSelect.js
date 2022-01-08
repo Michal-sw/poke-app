@@ -8,6 +8,7 @@ const TypeSelect = ({ typesSelectOptions, onChange }) => {
       onChange={onChange}
       isMulti
       name='types'
+      placeholder='Types...'
       options={typesSelectOptions}
       styles={{
         option: (styles, { data }) => ({
@@ -26,12 +27,14 @@ const TypeSelect = ({ typesSelectOptions, onChange }) => {
           borderRadius: '5px',
           boxShadow: 'inset 1px 1px 5px grey',
           fontSize: '1.7em',
-          minWidth: '150px'
+          minWidth: '150px',
+          maxWidth: '600px'
         }),
         menuList: (styles, {data}) => ({
           ...styles,
           border: '2px solid black',
-          backgroundColor: 'purple'
+          paddingTop: '0px',
+          paddingBottom: '0px'
         })
       }} 
   />)

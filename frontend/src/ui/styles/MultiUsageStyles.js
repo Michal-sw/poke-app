@@ -19,6 +19,7 @@ export const PageCounter = styled.p`
 export const SearchContainer = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 `;
 
 export const SearchInput = styled.input`
@@ -30,4 +31,4 @@ export const SearchInput = styled.input`
   border-radius: 5px;
   box-shadow:inset 1px 1px 5px grey ;
   background: white;
-  }`;
+}`;

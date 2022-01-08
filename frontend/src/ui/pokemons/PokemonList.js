@@ -14,6 +14,7 @@ import Loading from '../components/Loading';
 import Pokeball from '../components/Pokeball';
 import PokeSearch from '../components/PokeSearch';
 import TypeSelect from '../components/TypeSelect';
+import SortSelect from '../components/SortSelect';
 
 import { PageButton, PageButtonContainer, PageCounter, SearchContainer, SearchInput } from '../styles/MultiUsageStyles';
 import { PokemonCard, PokemonCardHead, PokemonCardName, PokemonSprite} from '../styles/PokemonStyles';
@@ -21,6 +22,7 @@ import { PokemonCard, PokemonCardHead, PokemonCardName, PokemonSprite} from '../
 
 const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryAction, maxPage, typesSelectOptions, getTypes }, props) => {
   const [searchInput, setSearchInput] = useState('');
+  const [selectedSort, setSelectedSort] = useState('');
   const [selectedTypes, setSelectedTypes] = useState([])
   const location = useLocation();
   const history = useHistory();
@@ -50,6 +52,9 @@ const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryA
   const changeSearchInput = (input) => {
     setSearchInput(input.target.value);
   };
+  const changeSelectedSort = (input) => {
+    setSelectedSort(input.value);
+  };
   const changeSelectedTypes = (input) => {
     setSelectedTypes(input.map(option => option.value))
   }
@@ -57,6 +62,7 @@ const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryA
     const newUrl = query;
     newUrl.set('name', searchInput);
     if (selectedTypes.length > 0) newUrl.set('types', selectedTypes.reduce((prev, curr) => `${prev},${curr}`)); else newUrl.set('types', '');
+    if (selectedSort !== '') newUrl.set('sort', selectedSort)
     newUrl.set('page', 1);
     history.push(`/pokemons?${newUrl.toString()}`)
   };
@@ -65,8 +71,9 @@ const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryA
     <div style={{ display:'flex', flexDirection:'column', alignItems:'center', margin:'0px 50px 0px 50px'}} >
       <Pokeball />
       <SearchContainer>
-        <TypeSelect typesSelectOptions={typesSelectOptions} onChange={changeSelectedTypes} />
-        <SearchInput onChange={changeSearchInput}/>
+        <TypeSelect typesSelectOptions={typesSelectOptions} onChange={changeSelectedTypes}/>
+        <SearchInput onChange={changeSearchInput} placeholder='Name...'/>
+        <SortSelect onChange={changeSelectedSort}/>
         <PokeSearch onClick={handleSearch}/>
       </SearchContainer>
       <PageButtonContainer>
