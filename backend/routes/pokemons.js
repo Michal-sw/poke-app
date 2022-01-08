@@ -6,8 +6,7 @@ const Pokemon = require('../models/Pokemon');
 
 router.get('/', async (req, res) => {
   const query = { };
-
-  req.query.types ? query.types = req.query.types.split(',').map(typeId => Types.ObjectId(typeId)) : null;
+  req.query.types ? query.types = { "$in": req.query.types.split(',').map(typeId => Types.ObjectId(typeId)) } : null;
   req.query.name ? query.alias = { "$regex": new RegExp(`^${req.query.name.toLowerCase()}`) } : null;
 
   const numOfRecords = await Pokemon.find(query).count();

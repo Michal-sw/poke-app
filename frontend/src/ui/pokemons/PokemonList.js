@@ -56,6 +56,7 @@ const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryA
   const handleSearch = () => {
     const newUrl = query;
     newUrl.set('name', searchInput);
+    if (selectedTypes.length > 0) newUrl.set('types', selectedTypes.reduce((prev, curr) => `${prev},${curr}`)); else newUrl.set('types', '');
     newUrl.set('page', 1);
     history.push(`/pokemons?${newUrl.toString()}`)
   };
