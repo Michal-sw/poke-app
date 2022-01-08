@@ -15,7 +15,7 @@ import Pokeball from '../components/Pokeball';
 import PokeSearch from '../components/PokeSearch';
 import TypeSelect from '../components/TypeSelect';
 
-import { PageButton, PageButtonContainer, SearchContainer, SearchInput } from '../styles/MultiUsageStyles';
+import { PageButton, PageButtonContainer, PageCounter, SearchContainer, SearchInput } from '../styles/MultiUsageStyles';
 import { PokemonCard, PokemonCardHead, PokemonCardName, PokemonSprite} from '../styles/PokemonStyles';
 
 
@@ -73,6 +73,7 @@ const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryA
         { page > 1 ? <PageButton onClick={pageDown}>Previous page</PageButton> : null }
         { page >= maxPage ? null : <PageButton onClick={pageUp}>Next page</PageButton> }
       </PageButtonContainer>
+      <PageCounter>{page} z {maxPage}</PageCounter>
       <div style={{ display:'flex', flexWrap:'wrap', justifyContent:'space-around'}}>
         { loading ? <Loading/> :
           pokemons.map(pokemon => {
@@ -96,7 +97,7 @@ const mapStateToProps = (state) => ({
   pokemons: selectPokemons(state),
   loading: selectPokemonsLoading(state),
   query: selectPokemonsQuery(state),
-  page: selectPokemonsQueryPage(state),
+  page: selectPokemonsQueryPage(state) || 1,
   maxPage: selectPokemonsMaxPage(state),
 
   typesSelectOptions: selectTypesSelectOptions(state)

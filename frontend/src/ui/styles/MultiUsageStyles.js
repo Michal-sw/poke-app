@@ -11,6 +11,10 @@ export const PageButton = styled.button`
     background-color: black;
   }
 `;
+export const PageCounter = styled.p`
+  font-size: 1.3em;
+  margin: 15px 0px 15px 0px;
+`
 
 export const SearchContainer = styled.div`
   display: flex;
