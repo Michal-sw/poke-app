@@ -60,10 +60,18 @@ const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryA
   }
   const handleSearch = () => {
     const newUrl = query;
-    newUrl.set('name', searchInput);
-    if (selectedTypes.length > 0) newUrl.set('types', selectedTypes.reduce((prev, curr) => `${prev},${curr}`)); else newUrl.set('types', '');
-    if (selectedSort !== '') newUrl.set('sort', selectedSort)
     newUrl.set('page', 1);
+    
+    searchInput !== '' 
+      ? newUrl.set('name', searchInput)
+      : newUrl.delete('name');
+    selectedTypes.length > 0
+      ? newUrl.set('types', selectedTypes.reduce((prev, curr) => `${prev},${curr}`))
+      : newUrl.delete('types');
+    selectedSort !== ''
+      ? newUrl.set('sort', selectedSort)
+      : newUrl.delete('sort');
+
     history.push(`/pokemons?${newUrl.toString()}`)
   };
 
