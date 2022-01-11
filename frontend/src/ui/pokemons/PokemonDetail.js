@@ -10,8 +10,14 @@ import actions from '../../ducks/pokemons/actions';
 
 import { getTypes } from '../../ducks/types/operations'
 
+// Background Image wrzucic do Reduxa albo do publica
+const PokemonDetail = ({ pokemon, getPokemon, name }, props) => {
+  useEffect(() => {
+    if (!pokemon.num) {
+      getPokemon(name)
+    }
+  }, [])
 
-const PokemonDetail = ({pokemon}) => {
   return (
     <div>
       {pokemon.name}
@@ -21,7 +27,8 @@ const PokemonDetail = ({pokemon}) => {
 
 
 const mapStateToProps = (state, props) => ({
-  pokemon: selectPokemon(state, props)
+  name: props.match.params.name,
+  pokemon: selectPokemon(state, props),
 });
 
 const mapDispatchToProps = {

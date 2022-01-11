@@ -2,6 +2,7 @@ import types from './types';
 
 const pokemonInitState = {
   pokemons: [],
+  pokemon: { },
   loading: false,
   err: '',
   query: new URLSearchParams(),
@@ -16,6 +17,14 @@ export const pokemonReducer = (state = pokemonInitState, action) => {
         return { ...state, loading: false, pokemons: action.payload.pokemons, maxPage: action.payload.maxPage };
       case types.POKEMON_LIST_FAILURE:
         return { ...state, loading: false, err: action.payload };
+
+      case types.POKEMON_REQUEST:
+        return { ...state, loading: true };
+      case types.POKEMON_SUCCESS:
+        return { ...state, loading: false, pokemon: action.payload[0] };
+      case types.POKEMON_FAILURE:
+        return { ...state, loading: false, err: action.payload };
+   
       case types.CHANGE_QUERY:
         return { ...state, query: action.payload }
 

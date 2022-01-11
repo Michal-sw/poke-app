@@ -1,5 +1,5 @@
 export const selectPokemons = (state) => state.pokemons.pokemons;
-export const selectPokemon = (state, props) => state.pokemons.pokemons.find(pokemon => pokemon.alias === props.match.params.name) || { };
+export const selectPokemon = (state, props) => state.pokemons.pokemons.find(pokemon => pokemon.alias === props.match.params.name) || state.pokemons.pokemon ;
 export const selectPokemonsLoading = (state) => state.pokemons.loading;
 
 export const selectPokemonsQuery = (state) => state.pokemons.query;

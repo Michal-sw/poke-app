@@ -8,6 +8,7 @@ import {
 
 import PokemonList from './ui/pokemons/PokemonList';
 import Navbar from './ui/components/Navbar';
+import PokemonDetail from './ui/pokemons/PokemonDetail';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Navbar/>
         <Switch>
           <Route path='/pokemons' component={ PokemonList } exact/>
+          <Route path='/pokemons/:name' component={ PokemonDetail } exact/>
         </Switch>
       </BrowserRouter>
     </div>

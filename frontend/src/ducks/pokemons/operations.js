@@ -19,7 +19,6 @@ export const getPokemons = (query) => {
 };
 
 export const getPokemon = (name) => {
-  
   return createAction({
     endpoint: `http://localhost:3001/pokemons/${name}`,
     method: 'GET',
