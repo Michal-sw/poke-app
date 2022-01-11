@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Select from 'react-select';
 
 const options = [
@@ -7,12 +8,12 @@ const options = [
   { label: 'Name desc', value: 'named' },
 ]
 
-const SortSelect = ({ onChange }) => {
+const SortSelect = ({ onChange, defaultValue }) => {
 
   return (
     <Select
       closeMenuOnSelect={true}
-      defaultValue={{ label: 'Pokedex', value: 'id' }}
+      defaultValue={defaultValue}
       onChange={onChange}
       name='sort'
       options={options}

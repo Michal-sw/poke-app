@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from 'react-router-dom';
 
 export const PageButtonContainer = styled.div`
   display: flex;
@@ -32,3 +33,8 @@ export const SearchInput = styled.input`
   box-shadow:inset 1px 1px 5px grey ;
   background: white;
 }`;
+
+export const MyLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+`

@@ -17,3 +17,19 @@ export const getPokemons = (query) => {
     ]
   })
 };
+
+export const getPokemon = (name) => {
+  
+  return createAction({
+    endpoint: `http://localhost:3001/pokemons/${name}`,
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    types: [
+      types.POKEMON_REQUEST,
+      types.POKEMON_SUCCESS,
+      types.POKEMON_FAILURE
+    ]
+  })
+};

@@ -1,12 +1,13 @@
 import Select from 'react-select';
 
-const TypeSelect = ({ typesSelectOptions, onChange }) => {
+const TypeSelect = ({ typesSelectOptions, onChange, value }) => {
 
   return (
     <Select
       closeMenuOnSelect={false}
       onChange={onChange}
       isMulti
+      defaultValue={value}
       name='types'
       placeholder='Types...'
       options={typesSelectOptions}

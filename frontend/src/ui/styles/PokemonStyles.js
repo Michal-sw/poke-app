@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const PokemonCard = styled.div`
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -43,7 +42,9 @@ export const PokemonCardHead = styled.div`
   width: 100%;
   justify-content: center;
 `;
-export const PokemonCardName = styled.h4`
+export const PokemonCardName = styled.p`
+  font-weight: 700;
+  color: black;
   font-family: "Pokemon Pixel Font Regular";
   font-size: 1.3em;
   margin-top: 17px;
