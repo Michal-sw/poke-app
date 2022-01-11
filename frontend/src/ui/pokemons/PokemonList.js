@@ -16,7 +16,7 @@ import PokeSearch from '../components/PokeSearch';
 import TypeSelect from '../components/TypeSelect';
 import SortSelect from '../components/SortSelect';
 
-import { MyLink, PageButton, PageButtonContainer, PageCounter, SearchContainer, SearchInput } from '../styles/MultiUsageStyles';
+import { MainFlexContainer, ItemListContainer, MyLink, PageButton, PageButtonContainer, PageCounter, SearchContainer, SearchInput } from '../styles/MultiUsageStyles';
 import { PokemonCard, PokemonCardHead, PokemonCardName, PokemonSprite} from '../styles/PokemonStyles';
 
 
@@ -47,7 +47,6 @@ const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryA
 
   useEffect(() => {
     const url = new URLSearchParams(location.search);
-    console.log('licze')
     url.get('name') ? setSearchInput(url.get('name')) : setSearchInput('');
     url.get('sort') ? setSelectedSort(url.get('sort')) : setSelectedSort('');
     url.get('types') ? setSelectedTypes(url.get('types').split(',').map(type => typesSelectOptionsMap[type])) : setSelectedTypes([]);
@@ -86,7 +85,7 @@ const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryA
   };
 
   return (
-    <div style={{ display:'flex', flexDirection:'column', alignItems:'center', margin:'0px 50px 0px 50px'}} >
+    <MainFlexContainer >
       <Pokeball />
       <SearchContainer>
         <TypeSelect typesSelectOptions={typesSelectOptions} onChange={changeSelectedTypes} value={selectedTypes}/>
@@ -94,12 +93,14 @@ const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryA
         <SortSelect onChange={changeSelectedSort} value={selectedSort} />
         <PokeSearch onClick={handleSearch}/>
       </SearchContainer>
+
       <PageButtonContainer>
         { page > 1 ? <PageButton onClick={pageDown}>Previous page</PageButton> : null }
         { page >= maxPage ? null : <PageButton onClick={pageUp}>Next page</PageButton> }
       </PageButtonContainer>
       <PageCounter>{page} z {maxPage}</PageCounter>
-      <div style={{ display:'flex', flexWrap:'wrap', justifyContent:'space-around'}}>
+
+      <ItemListContainer >
         { loading ? <Loading/> :
           pokemons.map(pokemon => {
             return (
@@ -114,8 +115,9 @@ const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryA
             )
           })
         }
-      </div>
-    </div>
+      </ItemListContainer>
+
+    </MainFlexContainer>
   );
 }
 

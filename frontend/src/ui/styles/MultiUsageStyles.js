@@ -1,6 +1,17 @@
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
 
+export const MainFlexContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0px 50px 0px 50px;
+`
+export const ItemListContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+`
 export const PageButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
