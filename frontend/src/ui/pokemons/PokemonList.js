@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { useLocation, useHistory } from 'react-router-dom';
 
 import { selectPokemonsLoading, selectPokemons, selectPokemonsQuery, selectPokemonsQueryPage, selectPokemonsMaxPage } from '../../ducks/pokemons/selectors';
-import { selectTypesSelectOptions, selectTypesLoading } from '../../ducks/types/selectors'
+import { selectTypesSelectOptions, selectTypesLoading, selectTypesSelectOptionsMap } from '../../ducks/types/selectors'
 
 import { getPokemons } from '../../ducks/pokemons/operations';
 import actions from '../../ducks/pokemons/actions';
@@ -20,12 +20,12 @@ import { MyLink, PageButton, PageButtonContainer, PageCounter, SearchContainer, 
 import { PokemonCard, PokemonCardHead, PokemonCardName, PokemonSprite} from '../styles/PokemonStyles';
 
 
-const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryAction, maxPage, typesSelectOptions, getTypes }, props) => {
+const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryAction, maxPage, typesSelectOptions, typesSelectOptionsMap, getTypes }, props) => {
   const location = useLocation();
   const history = useHistory();
 
   const [searchInput, setSearchInput] = useState('');
-  const [selectedSort, setSelectedSort] = useState({ label: '', value: '' });
+  const [selectedSort, setSelectedSort] = useState('');
   const [selectedTypes, setSelectedTypes] = useState([]);
 
 
@@ -33,10 +33,10 @@ const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryA
     setSearchInput(input.target.value);
   };
   const changeSelectedSort = (input) => {
-    setSelectedSort(input);
+    setSelectedSort(input.value);
   };
   const changeSelectedTypes = (input) => {
-    setSelectedTypes(input.map(option => option))
+    setSelectedTypes(input)
   };
 
   useEffect(() => {
@@ -47,17 +47,16 @@ const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryA
 
   useEffect(() => {
     const url = new URLSearchParams(location.search);
-    setSearchInput(url.get('name'))
-    setSelectedSort(url.get('sort'))
-    // Wpuscic wszystkie pola state'a wyszukiwania w Reduxa i pobierac je stamtad
-    // page, selectedTypes i searchInput wszystko w state i przy kazdym zaladowaniu
-    // bierzemy aktualne URLSearchParams i robimy update na storze
-    // Potem wracamy
+    console.log('licze')
+    url.get('name') ? setSearchInput(url.get('name')) : setSearchInput('');
+    url.get('sort') ? setSelectedSort(url.get('sort')) : setSelectedSort('');
+    url.get('types') ? setSelectedTypes(url.get('types').split(',').map(type => typesSelectOptionsMap[type])) : setSelectedTypes([]);
+
     if (query.toString() !== url.toString() || pokemons.length === 0) {
       changeQueryAction(url)
       getPokemons(url.toString());
     }
-  }, [location.search]);
+  }, [location.search, typesSelectOptions]);
 
   const pageDown = () => {
     const newUrl = new URLSearchParams(query.toString());
@@ -67,7 +66,7 @@ const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryA
 
   const pageUp = () => {
     const newUrl = new URLSearchParams(query.toString());
-    page ? newUrl.set('page', parseInt(page) + 1) : newUrl.set('page', 2);
+    newUrl.set('page', parseInt(page) + 1);
     history.push(`/pokemons?${newUrl.toString()}`)
   };
 
@@ -78,10 +77,10 @@ const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryA
       ? newUrl.set('name', searchInput)
       : newUrl.delete('name');
     selectedTypes.length > 0
-      ? newUrl.set('types', selectedTypes.reduce((prev, curr) => `${prev},${curr.value}`, selectedTypes[0].value))
+      ? newUrl.set('types', selectedTypes.reduce((prev, curr, index) => index === 0 ? `${curr.value}` : `${prev},${curr.value}` , ''))
       : newUrl.delete('types');
-    selectedSort.value !== ''
-      ? newUrl.set('sort', selectedSort.value)
+    selectedSort !== ''
+      ? newUrl.set('sort', selectedSort)
       : newUrl.delete('sort');
     history.push(`/pokemons?${newUrl.toString()}`)
   };
@@ -91,8 +90,8 @@ const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryA
       <Pokeball />
       <SearchContainer>
         <TypeSelect typesSelectOptions={typesSelectOptions} onChange={changeSelectedTypes} value={selectedTypes}/>
-        <SearchInput onChange={changeSearchInput} placeholder='Name...' defaultValue={searchInput}/>
-        <SortSelect onChange={changeSelectedSort} defaultValue={selectedSort} />
+        <SearchInput onChange={changeSearchInput} placeholder='Name...' value={searchInput} />
+        <SortSelect onChange={changeSelectedSort} value={selectedSort} />
         <PokeSearch onClick={handleSearch}/>
       </SearchContainer>
       <PageButtonContainer>
@@ -128,7 +127,8 @@ const mapStateToProps = (state) => ({
   page: selectPokemonsQueryPage(state),
   maxPage: selectPokemonsMaxPage(state),
 
-  typesSelectOptions: selectTypesSelectOptions(state)
+  typesSelectOptions: selectTypesSelectOptions(state),
+  typesSelectOptionsMap: selectTypesSelectOptionsMap(state),
 });
 
 const mapDispatchToProps = {

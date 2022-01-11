@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import Select from 'react-select';
 
 const options = [
@@ -8,12 +7,12 @@ const options = [
   { label: 'Name desc', value: 'named' },
 ]
 
-const SortSelect = ({ onChange, defaultValue }) => {
+const SortSelect = ({ onChange, value }) => {
 
   return (
     <Select
       closeMenuOnSelect={true}
-      defaultValue={defaultValue}
+      value={options.find(option => option.value === value) || options[0]}
       onChange={onChange}
       name='sort'
       options={options}

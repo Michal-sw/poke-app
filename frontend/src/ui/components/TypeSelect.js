@@ -7,7 +7,7 @@ const TypeSelect = ({ typesSelectOptions, onChange, value }) => {
       closeMenuOnSelect={false}
       onChange={onChange}
       isMulti
-      defaultValue={value}
+      value={value}
       name='types'
       placeholder='Types...'
       options={typesSelectOptions}
