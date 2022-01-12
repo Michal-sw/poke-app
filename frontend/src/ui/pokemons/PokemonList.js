@@ -16,7 +16,7 @@ import PokeSearch from '../components/PokeSearch';
 import TypeSelect from '../components/TypeSelect';
 import SortSelect from '../components/SortSelect';
 
-import { MainFlexContainer, ItemListContainer, MyLink, PageButton, PageButtonContainer, PageCounter, SearchContainer, SearchInput } from '../styles/MultiUsageStyles';
+import { MainListFlexContainer, ItemListContainer, MyLink, PageButton, PageButtonContainer, PageCounter, SearchContainer, SearchInput } from '../styles/MultiUsageStyles';
 import { PokemonCard, PokemonCardHead, PokemonCardName, PokemonSprite} from '../styles/PokemonStyles';
 
 
@@ -88,7 +88,7 @@ const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryA
   };
 
   return (
-    <MainFlexContainer >
+    <MainListFlexContainer >
       <Pokeball />
       <SearchContainer>
         <TypeSelect typesSelectOptions={typesSelectOptions} onChange={changeSelectedTypes} value={selectedTypes}/>
@@ -120,7 +120,7 @@ const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryA
         }
       </ItemListContainer>
 
-    </MainFlexContainer>
+    </MainListFlexContainer>
   );
 }
 

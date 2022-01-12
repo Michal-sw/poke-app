@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
 
-export const MainFlexContainer = styled.div`
+export const MainListFlexContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -45,7 +45,45 @@ export const SearchInput = styled.input`
   background: white;
 }`;
 
+export const StatContainer = styled.div`
+  display: flex;
+  flex-display: row;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+`;
+
+export const StatBar = styled.progress`
+  width:400px;
+  height:25px;
+  padding: 5px 5px 5px 5px;
+  border-radius: 1px;
+
+  &::-webkit-progress-bar {
+    background-color: whitesmoke;
+    border-radius: 10px;
+    padding: 0.6px 0.6px 0.6px 0.6px;
+    box-shadow: 0.01em 0.03em 0.3em 0.04em grey; 
+
+  }
+    
+  &::-webkit-progress-value {
+    background-color: gold;
+    border-radius: 10px;
+    box-shadow: 0.01em 0.03em 0.2em 0.03em grey; 
+  }
+`;
+export const StatName = styled.label`
+  font-size: 1.5em;
+  margin-right: 5px;
+`;
+export const StatListContainer = styled.div`
+  background-color: rgba(130, 255, 203, 0.26);
+  border-radius: 20px;
+  padding: 10px;
+  box-shadow: 0.01em 0.03em 0.2em 0.03em grey; 
+`;
+
 export const MyLink = styled(Link)`
   text-decoration: none;
   color: inherit;
-`
+`;

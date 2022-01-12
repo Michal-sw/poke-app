@@ -8,9 +8,9 @@
 
 @font-face {
   font-family:"Pokemon Pixel Font Regular";
-  src: url("./pokemon_font/pokemon_pixel_font.eot?") format("eot"),
-  url("./pokemon_font/pokemon_pixel_font.woff") format("woff"),
-  url("./pokemon_font/pokemon_pixel_font.ttf") format("truetype");
+  src: url("./assets/pokemon_font/pokemon_pixel_font.eot?") format("eot"),
+  url("./assets/pokemon_font/pokemon_pixel_font.woff") format("woff"),
+  url("./assets/pokemon_font/pokemon_pixel_font.ttf") format("truetype");
   font-weight:normal;
   font-style:normal;
 }

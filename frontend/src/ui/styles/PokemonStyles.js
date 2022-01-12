@@ -61,3 +61,24 @@ export const PokemonSprite = styled.img`
   width: 13em;
   height: auto;
 `;
+
+export const PokemonDetailViewContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 0 30px 0 30px;
+  width: 100%;
+  max-width: 1100px;
+
+`
+
+export const PokemonDetailStatName = styled.label`
+`
+
+export const PokemonDetailInfo = styled.div`
+`
+
+export const PokemonDetailPresentation = styled.div`
+`
