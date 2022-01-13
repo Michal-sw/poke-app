@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
       .sort(sort)
       .skip(offset)
       .limit(limit)
-      .then(result => res.send({ pokemons: result, maxPage, limit, numOfRecords }))
+      .then(result => res.json({ pokemons: result, maxPage, limit, numOfRecords }))
       .catch(err => res.status(500).json(err));  
   } else {
     Pokemon
@@ -49,8 +49,35 @@ router.get('/:name', async (req, res) => {
 
   Pokemon.find({ alias: name })
     .then(result => {
-      if (result.length != 0) {
-        res.json(result)
+      if (result.length) {
+        res.json(result[0])
+      } else {
+        res.sendStatus(404)
+      }
+    })
+    .catch(err => res.status(500).json(err));
+})
+
+router.get('/:name/moves', async (req, res) => {
+  const name = req.params.name;
+
+  Pokemon
+    .aggregate([
+      { $match: { alias: name } },
+      { $lookup: {
+          from: 'moves',
+          localField: 'moves',
+          foreignField: '_id',
+          as: 'moves'
+      }},
+      { $project: {
+        moves: 1,
+        _id: false
+      }}
+    ])
+    .then(result => {
+      if (result.length) {
+        res.json(result[0].moves)
       } else {
         res.sendStatus(404)
       }

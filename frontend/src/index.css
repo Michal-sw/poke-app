@@ -6,10 +6,9 @@ body {
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* background-color: rgba(225, 255, 215, 0.76); */
   /* background-image: url("https://i.redd.it/qmfjuz883g7z.png"); */
-  /* background-image: url("https://wallpaperaccess.com/full/418495.jpg"); */
-  background-image: url("https://mocah.org/uploads/posts/991378-pixel-art-8-bit-green-digital-art-Pokmon.png");
+  /* Link do tla: https://mocah.org/uploads/posts/991378-pixel-art-8-bit-green-digital-art-Pokmon.png */
+  background-image: url("./assets/images/pokemon-grass-background.png");
   background-size: 1500px;
   background-attachment: fixed;
 }

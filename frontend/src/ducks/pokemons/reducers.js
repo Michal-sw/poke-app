@@ -2,7 +2,8 @@ import types from './types';
 
 const pokemonInitState = {
   pokemons: [],
-  pokemon: { types: [] },
+  pokemon: { types: [], moves: [] },
+  pokemonMoves: [],
   loading: false,
   err: '',
   query: new URLSearchParams(),
@@ -21,10 +22,17 @@ export const pokemonReducer = (state = pokemonInitState, action) => {
       case types.POKEMON_REQUEST:
         return { ...state, loading: true };
       case types.POKEMON_SUCCESS:
-        return { ...state, loading: false, pokemon: action.payload[0] };
+        return { ...state, loading: false, pokemon: action.payload };
       case types.POKEMON_FAILURE:
         return { ...state, loading: false, err: action.payload };
-   
+
+      case types.POKEMON_MOVES_REQUEST:
+        return { ...state, loading: true };
+      case types.POKEMON_MOVES_SUCCESS:
+        return { ...state, loading: false, pokemonMoves: action.payload };
+      case types.POKEMON_MOVES_FAILURE:
+        return { ...state, loading: false, err: action.payload };
+        
       case types.CHANGE_QUERY:
         return { ...state, query: action.payload }
 

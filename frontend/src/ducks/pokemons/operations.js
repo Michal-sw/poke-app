@@ -32,3 +32,18 @@ export const getPokemon = (name) => {
     ]
   })
 };
+
+export const getPokemonMoves = (name) => {
+  return createAction({
+    endpoint: `http://localhost:3001/pokemons/${name}/moves`,
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    types: [
+      types.POKEMON_MOVES_REQUEST,
+      types.POKEMON_MOVES_SUCCESS,
+      types.POKEMON_MOVES_FAILURE
+    ]
+  })
+};

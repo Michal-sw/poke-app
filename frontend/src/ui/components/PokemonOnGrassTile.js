@@ -13,6 +13,7 @@ const PokemonOnGrassTile = ({ name, num }) => {
         />
       </GrassTileContainer>
       <SpriteOnTile>
+        {/* On click niech zmienia mu strone w ktora patrzy, routey moga byc w stacie */}
         <PokemonSprite alt={name} src={num ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${num}.png` : null}/>
       </SpriteOnTile>
     </div>

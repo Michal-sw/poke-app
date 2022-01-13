@@ -47,9 +47,6 @@ const PokemonList = ({ pokemons, loading, getPokemons, query, page, changeQueryA
 
   useEffect(() => {
     const url = new URLSearchParams(location.search);
-    // Moze pobierac wartosci dla query z Redux-a?
-    // Czy wtedy przy kazdej zmianie UI dispatchowac akcje i zmieniac query?
-    // Co w wypadku zmiany akcji i reloadu strony bez inicjacji searcha, query jest zmienione :/
     url.get('name') ? setSearchInput(url.get('name')) : setSearchInput('');
     url.get('sort') ? setSelectedSort(url.get('sort')) : setSelectedSort('');
     url.get('types') ? setSelectedTypes(url.get('types').split(',').map(type => typesSelectOptionsMap[type])) : setSelectedTypes([]);
