@@ -6,6 +6,7 @@ const PokemonOnGrassTile = ({ name, num }) => {
     <div>
       <GrassTileContainer>
         <img
+            style={{ imageRendering: 'crisp-edges' }}
             src={require('../../assets/images/grass_tile.png')}
             alt="Grass-tile"
             height="150"

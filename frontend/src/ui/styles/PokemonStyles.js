@@ -60,11 +60,12 @@ export const PokemonCardName = styled.p`
 export const PokemonSprite = styled.img`
   width: 13em;
   height: auto;
+  image-rendering: crisp-edges;
 `;
 
 export const PokemonDetailViewContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-evenly;
@@ -78,6 +79,9 @@ export const PokemonDetailStatName = styled.label`
 `
 
 export const PokemonDetailInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 `
 
 export const PokemonDetailPresentation = styled.div`

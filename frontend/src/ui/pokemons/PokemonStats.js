@@ -71,8 +71,11 @@ const StatName = styled.label`
   margin-right: 5px;
 `;
 const StatListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   background-color: rgba(130, 255, 203, 0.26);
   border-radius: 20px;
   padding: 10px;
   box-shadow: 0.01em 0.03em 0.2em 0.03em grey; 
+  justify-content: space-between;
 `;

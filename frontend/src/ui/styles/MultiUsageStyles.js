@@ -12,6 +12,14 @@ export const ItemListContainer = styled.div`
   flex-wrap: wrap;
   justify-content: space-around;
 `
+export const ItemListFlexColumnContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  width: 300px;
+  overflow-y: scroll;
+`
+
 export const PageButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
