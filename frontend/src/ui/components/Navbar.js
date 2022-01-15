@@ -34,6 +34,7 @@ const NavContainer = styled.nav`
   justify-self:center;
   justify-content: space-around;
   margin-top: 10px;
+  margin-bottom: 15px;
   padding: 10px 5px 10px 5px;
   
 `;

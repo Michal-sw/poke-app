@@ -57,4 +57,5 @@ export const SearchInput = styled.input`
 export const MyLink = styled(Link)`
   text-decoration: none;
   color: inherit;
+
 `;

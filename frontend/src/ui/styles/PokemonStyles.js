@@ -69,7 +69,7 @@ export const PokemonDetailViewContainer = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-evenly;
-  margin: 0 30px 0 30px;
+  margin: 0 30px 20px 30px;
   width: 100%;
   max-width: 1100px;
 
@@ -82,6 +82,10 @@ export const PokemonDetailInfo = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  width: inherit;
+  max-width: 950px;
 `
 
 export const PokemonDetailPresentation = styled.div`
