@@ -9,6 +9,7 @@ import {
 import Navbar from './ui/components/Navbar';
 import PokemonDetail from './ui/pokemons/PokemonDetail';
 import PokemonMasterView from './ui/pokemons/PokemonMasterView';
+import TypeMasterView from './ui/types/TypeMasterView';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Switch>
           <Route path='/pokemons' component={ PokemonMasterView } exact/>
           <Route path='/pokemons/:name' component={ PokemonDetail } exact/>
+          <Route path='/types' component={ TypeMasterView } exact/>
         </Switch>
       </BrowserRouter>
     </div>

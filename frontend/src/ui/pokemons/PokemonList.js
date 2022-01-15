@@ -8,8 +8,8 @@ import Loading from '../components/Loading';
 
 import actions from '../../ducks/pokemons/actions';
 
-import { ItemListContainer, MyLink } from '../styles/MultiUsageStyles';
-import { PokemonCard, PokemonCardHead, PokemonCardName, PokemonSprite} from '../styles/PokemonStyles';
+import { ItemListContainer, MyLink, NameLabel } from '../styles/MultiUsageStyles';
+import { PokemonCard, PokemonCardHead, PokemonSprite} from '../styles/PokemonStyles';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -35,7 +35,7 @@ const PokemonList = ({ pokemons, loading, query, changeQueryAction, getPokemons 
           <MyLink to={`pokemons/${pokemon.alias}`} key={pokemon.num}>
             <PokemonCard>
               <PokemonCardHead>
-                <PokemonCardName>{pokemon.name}</PokemonCardName>
+                <NameLabel>{pokemon.name}</NameLabel>
               </PokemonCardHead>
               <PokemonSprite alt={pokemon.name} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.num}.png`}/>
             </PokemonCard>

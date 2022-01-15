@@ -42,6 +42,21 @@ export const SearchContainer = styled.div`
   flex-wrap: wrap;
 `;
 
+
+export const NameLabel = styled.p`
+  font-weight: 700;
+  color: black;
+  font-family: "Pokemon Pixel Font Regular";
+  font-size: 1.3em;
+  margin-top: 17px;
+  margin-bottom: 17px;
+  background-color: white;
+  width: fit-content;
+  padding: 5px 20px 5px 20px;
+  border-radius: 20px;
+  box-shadow: 0.5px 2px 1.5px silver;
+`
+
 export const SearchInput = styled.input`
   font-family: "Pokemon Pixel Font Regular";
   font-size: 2em;

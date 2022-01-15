@@ -6,6 +6,7 @@ const typeInitState = {
   selectOptionsMap: { },
   loading: false,
   err: '',
+  query: new URLSearchParams(),
 }
 
 export const typeReducer = (state = typeInitState, action) => {
@@ -33,6 +34,9 @@ export const typeReducer = (state = typeInitState, action) => {
       case types.TYPES_LIST_FAILURE:
         return { ...state, loading: false, err: action.payload };
 
+      case types.TYPES_CHANGE_QUERY:
+        return { ...state, query: action.payload }
+  
       default:
         return state;
     }

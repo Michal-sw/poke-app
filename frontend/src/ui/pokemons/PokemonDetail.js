@@ -14,6 +14,7 @@ import PokemonOnGrassTile from '../components/PokemonOnGrassTile';
 import PokemonStats from './PokemonStats';
 import PokemonMoves from './PokemonMoves';
 import TypeLogo from '../components/TypeLogo';
+import PokemonTypeLogos from './PokemonTypeLogos';
 
 // Background Image wrzucic do publica
 const PokemonDetail = ({ pokemon, getPokemon, name, typesMap, getTypes, typesLoading }, props) => {
@@ -25,7 +26,7 @@ const PokemonDetail = ({ pokemon, getPokemon, name, typesMap, getTypes, typesLoa
 
   return (
       <PokemonDetailViewContainer>
-        <TypeLogo type={typesMap[pokemon.types[0]]?.label.toLowerCase()}/>
+        <PokemonTypeLogos />
         <PokemonDetailPresentation>
           <PokemonOnGrassTile name={pokemon.alias} num={pokemon.num}></PokemonOnGrassTile>
         </PokemonDetailPresentation>

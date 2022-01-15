@@ -4,3 +4,5 @@ export const selectTypesSelectOptionsMap = (state) => state.types.selectOptionsM
 export const selectTypesSelectOptions = (state) => state.types.selectOptions;
 
 export const selectTypesLoading = (state) => state.types.loading;
+
+export const selectTypesQuery = (state) => state.types.query;

@@ -11,12 +11,14 @@ const Navbar = () => {
         </Link>
       </NavLink>
       <NavLink>
-        <Link to={'/types'} />
-        <NavName>Types</NavName>
+        <Link to={'/types'}>
+          <NavName>Types</NavName>
+        </Link>
       </NavLink>
       <NavLink>
-        <Link to={'/moves'} />
-        <NavName>Moves</NavName>
+        <Link to={'/moves'}>
+          <NavName>Moves</NavName>
+        </Link>
       </NavLink>
     </NavContainer>
   )

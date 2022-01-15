@@ -17,7 +17,7 @@ const PokemonMoves = ({ moves, pokemon, name, getPokemonMoves, typesMap }) => {
   return (
     <ItemListFlexColumnContainer>
       {moves.map(move => (
-        <MyLink to={`moves/${move.alias}`} key={move.num}>
+        <MyLink to={`/moves/${move.alias}`} key={move.num}>
           <MoveCard type={typesMap[move.type]?.color}>
             <p>{move.name}</p>
             <p>Power: {move.power}</p>

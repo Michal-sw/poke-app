@@ -16,6 +16,7 @@ const PokemonMasterView = ({ }, props) => {
       <PokemonSearch />
       <PokemonPageChanger />
       <PokemonList />
+      <PokemonPageChanger />
     </MainListFlexContainer>
   );
 }
