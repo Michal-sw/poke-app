@@ -24,7 +24,7 @@ const PokemonOnGrassTile = ({ name, num }) => {
 const GrassTileContainer = styled.div`
   z-index: -1;
   position: relative;
-  top: 130px;s
+  top: 130px;
 `
 const SpriteOnTile = styled.div`
   position: relative;

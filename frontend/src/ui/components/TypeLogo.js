@@ -3,12 +3,12 @@ import styled from "styled-components";
 const TypeLogo = ({ type }) => {
   return (
     <LogoContainer>
-      <img
+      {type ? <img
         src={require(`../../assets/types_svg_icons/badge/${type}.svg`)}
         alt="TypeLogo"
         height="83"
         width="85"
-      />
+      /> : null}
     </LogoContainer>
   )
 }
