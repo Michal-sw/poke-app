@@ -3,6 +3,7 @@ import { createMiddleware } from 'redux-api-middleware';
 import {createStore, applyMiddleware, combineReducers, compose} from 'redux';
 import logger from 'redux-logger';
 import { pokemonReducer } from './pokemons/reducers';
+import { moveReducer } from './moves/reducers';
 import { typeReducer } from './types/reducers';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -10,6 +11,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const combinedReducers = combineReducers(
   {
     pokemons: pokemonReducer,
+    moves: moveReducer,
     types: typeReducer
   }
 )

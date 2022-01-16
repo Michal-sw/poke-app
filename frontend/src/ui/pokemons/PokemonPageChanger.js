@@ -6,7 +6,7 @@ import { selectTypesSelectOptions } from '../../ducks/types/selectors'
 
 import { getTypes } from '../../ducks/types/operations'
 
-import { PageButton, PageButtonContainer, PageCounter } from '../styles/MultiUsageStyles';
+import { FlexRowContainer, PageButton, PageCounter } from '../styles/MultiUsageStyles';
 
 
 const PokemonPageChanger = ({ query, page, maxPage }, props) => {
@@ -26,10 +26,10 @@ const PokemonPageChanger = ({ query, page, maxPage }, props) => {
 
   return (
     <div>
-      <PageButtonContainer>
+      <FlexRowContainer>
         { page > 1 ? <PageButton onClick={pageDown}>Previous page</PageButton> : null }
         { page >= maxPage ? null : <PageButton onClick={pageUp}>Next page</PageButton> }
-      </PageButtonContainer>
+      </FlexRowContainer>
       <PageCounter>{page} z {maxPage}</PageCounter>
     </div>
   );

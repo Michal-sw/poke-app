@@ -4,30 +4,44 @@ const router = express.Router({ mergeParams: true });
 const Move = require('../models/Move');
 
 router.get('/', async (req, res) => {
-  const numOfRecords = req.query.name ? await Move.find({ name: { "$regex": new RegExp(`^${req.query.name.toLowerCase()}`) } }).count() : await Move.count();
+  const query = { };
+  const sort = { };
+  req.query.type ? query.type = req.query.type : null;
+  req.query.name ? query.alias = { "$regex": new RegExp(`^${req.query.name.toLowerCase()}`) } : null;
+
+  switch (req.query.sort) {
+    case 'name': sort.name = 1; break;
+    case 'named': sort.name = -1; break;
+    case 'id': sort.num = 1; break;
+    case 'idd': sort.num = -1; break;
+    default: sort.num = 1;
+  }
+  
+  const numOfRecords = await Move.find(query).count();
   const limit = parseInt(req.query.limit) || 30;
   const maxPage = Math.ceil(numOfRecords/limit)
 
-  const p = req.query.page
-  const page = p >= 2 && p <= Math.ceil(numOfRecords/limit) ? p : 1
+  const p = req.query.page;
+  const page = p >= 2 && p <= maxPage ? p : 1;
   const offset = (page - 1) * limit
 
-  if (req.query.name) {
+  if (req.query.name || req.query.type || sort.name) {
     Move
-      .find({ num: {'$gt': offset}, name: { "$regex": new RegExp(`^${req.query.name.toLowerCase()}`) } })
-      .sort({ num: 1 })
+      .find(query)
+      .sort(sort)
       .skip(offset)
       .limit(limit)
-      .then(result => res.send({ moves: result, maxPage }))
+      .then(result => res.json({ moves: result, maxPage, limit, numOfRecords }))
       .catch(err => res.status(500).json(err));  
   } else {
     Move
-    .find({ num: {'$gt': offset} })
-    .sort({ num: 1 })
-    .limit(limit)
-    .then(result => res.send({ moves: result, maxPage }))
-    .catch(err => res.status(500).json(err));
+      .find({ num: sort.num === -1 ? {'$lt': numOfRecords - offset} : {'$gt': offset} })
+      .sort(sort)
+      .limit(limit)
+      .then(result => res.json({ moves: result, maxPage, limit, numOfRecords }))
+      .catch(err => res.status(500).json(err));
   }
+
 });
 
 router.get('/:name', async (req, res) => {

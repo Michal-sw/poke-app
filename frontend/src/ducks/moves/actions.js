@@ -1,7 +1,7 @@
 import types from './types';
 
 const changeQueryAction = (query) => ({
-  type: types.POKEMON_CHANGE_QUERY,
+  type: types.MOVE_CHANGE_QUERY,
   payload: query
 })
 

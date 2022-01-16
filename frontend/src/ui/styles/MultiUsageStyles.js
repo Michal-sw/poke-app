@@ -22,9 +22,12 @@ export const ItemListFlexColumnContainer = styled.div`
   overflow-y: scroll;
 `
 
-export const PageButtonContainer = styled.div`
+export const FlexRowContainer = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
 `;
 export const PageButton = styled.button`
   font-family: "Pokemon Pixel Font Regular";
@@ -59,6 +62,11 @@ export const NameLabel = styled.p`
   box-shadow: 0.5px 2px 1.5px silver;
 `
 
+export const BigText = styled.p`
+  font-size: 1.4em;
+  margin: 20px;
+`;
+
 export const SearchInput = styled.input`
   font-family: "Pokemon Pixel Font Regular";
   font-size: 2em;
@@ -75,4 +83,24 @@ export const MyLink = styled(Link)`
   text-decoration: none;
   color: inherit;
 
+`;
+
+export const MyButton = styled.button`
+  margin-top: 10px;
+  font-family: "Pokemon Pixel Font Regular";
+  font-size: 1.2em;
+  padding: 10px;
+  background-color: whitesmoke;
+  border:none;
+  box-shadow: 0px 0px 2px 1px grey;
+  border-radius: 10px;
+  transition: 0.2s linear;
+  &:hover {
+    cursor: pointer;
+    background-color: white;
+  }
+  &:active {
+    box-shadow: inset 0px 0px 3px 1px grey;
+    color: black
+  }
 `;

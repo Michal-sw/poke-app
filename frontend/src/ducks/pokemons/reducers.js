@@ -33,7 +33,7 @@ export const pokemonReducer = (state = pokemonInitState, action) => {
       case types.POKEMON_MOVES_FAILURE:
         return { ...state, loading: false, err: action.payload };
         
-      case types.CHANGE_QUERY:
+      case types.POKEMON_CHANGE_QUERY:
         return { ...state, query: action.payload }
 
       default:

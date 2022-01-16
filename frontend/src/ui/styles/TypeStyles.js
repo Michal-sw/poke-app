@@ -35,3 +35,11 @@ export const TypeDetailViewContainer = styled.div`
   align-items: center;
 `;
 
+export const AssociatedTypesContainer = styled.div`
+  background-color: whitesmoke;
+  border-radius: 20px;
+  padding: 0px 10px 20px 10px;
+  box-shadow: 0px 0px 2px 1px grey;
+  max-width: 400px;
+  max-height: fit-content;
+`;

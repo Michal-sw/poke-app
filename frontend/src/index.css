@@ -9,7 +9,7 @@ body {
   /* background-image: url("https://i.redd.it/qmfjuz883g7z.png"); */
   /* Link do tla: https://mocah.org/uploads/posts/991378-pixel-art-8-bit-green-digital-art-Pokmon.png */
   background-image: url("./assets/images/pokemon-grass-background.png");
-  background-size: 1500px;
+  background-size: cover;
   background-attachment: fixed;
 }
 

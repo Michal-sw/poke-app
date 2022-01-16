@@ -23,7 +23,7 @@ export const typeReducer = (state = typeInitState, action) => {
           typesMap: action.payload.reduce((prev, type) => ({
             ...prev,
             [type._id]: type
-          })),
+          }), { }),
           selectOptions: action.payload.map(type => ({ 
             label: type.name,
             value: type._id,

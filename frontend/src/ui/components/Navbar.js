@@ -38,7 +38,7 @@ const NavContainer = styled.nav`
   margin-top: 10px;
   margin-bottom: 15px;
   padding: 10px 5px 10px 5px;
-  
+  min-width: 300px;
 `;
 
 const NavLink = styled.div`
