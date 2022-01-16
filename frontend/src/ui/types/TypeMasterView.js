@@ -6,6 +6,8 @@ import TypeList from './TypeList';
 
 const TypeMasterView = ({ }, props) => {
 
+  // Pomyslec czy query jest potrzebne dla typow???
+  // Ich jest tak malo ze w sumie nie trzeba robic filtrow
   return (
     <MainListFlexContainer >
       <TypeList />

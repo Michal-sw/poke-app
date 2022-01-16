@@ -10,7 +10,9 @@ const PokemonTypeLogos = ({ pokemon, typesMap }) => {
     <ItemListContainer>
       {pokemon.types ? pokemon.types.map(type => (
         <MyLink  key={type} to={`/types/${typesMap[type]?.value}`}>
-          <TypeLogo type={typesMap[type]?.label.toLowerCase()}/>
+          <ItemListContainer>
+            <TypeLogo type={typesMap[type]?.label.toLowerCase()}/>
+          </ItemListContainer>
         </MyLink>
       )) : null}
     </ItemListContainer>

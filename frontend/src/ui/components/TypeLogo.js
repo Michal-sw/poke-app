@@ -4,6 +4,8 @@ const TypeLogo = ({ type }) => {
   return (
     <LogoContainer>
       {type ? <img
+      // Question mark placeholder
+      // https://pic.onlinewebfonts.com/svg/img_147474.png
         src={require(`../../assets/types_svg_icons/badge/${type}.svg`)}
         alt="TypeLogo"
         height="83"
@@ -24,7 +26,6 @@ const LogoContainer = styled.div`
   transition: all 0.4s;
   background-color: whitesmoke;
   box-shadow: inset 0px 0px 1px 10px black;
-  margin-right: 5px;
   &:hover {
     background-color: black;
   }

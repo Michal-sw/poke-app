@@ -11,6 +11,8 @@ export const ItemListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  gap: 10px;
+  max-width: 1300px;
 `
 export const ItemListFlexColumnContainer = styled.div`
   display: flex;

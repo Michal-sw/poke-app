@@ -8,7 +8,7 @@ export const PokemonCard = styled.div`
   // #FFCC29
   // background-color: #ffde20;
   // background-color: #18394a;
-  margin: 5px 10px 27px;
+  margin: 5px 5px 17px 5px;
 
   height:13em;
   width: 13em;

@@ -13,7 +13,6 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { TypeCard } from '../styles/TypeStyles';
 
-
 const TypeList = ({ types, loading, query, changeQueryAction, getTypes }, props) => {
   const location = useLocation();
 
@@ -35,7 +34,7 @@ const TypeList = ({ types, loading, query, changeQueryAction, getTypes }, props)
           <MyLink to={`types/${type._id}`} key={type.num}>
             <TypeCard>
               <TypeLogo type={type.name.toLowerCase()}/>
-              <NameLabel>{type.name}</NameLabel>
+                <NameLabel>{type.name}</NameLabel>
             </TypeCard>
           </MyLink>
         )
