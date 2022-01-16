@@ -1,7 +1,6 @@
 const TYPES_LIST_REQUEST = 'TYPES_LIST_REQUEST';
 const TYPES_LIST_SUCCESS = 'TYPES_LIST_SUCCESS';
 const TYPES_LIST_FAILURE = 'TYPES_LIST_FAILURE';
-const TYPES_CHANGE_QUERY = 'TYPES_CHANGE_QUERY';
 
 
 const types = {
@@ -9,7 +8,6 @@ const types = {
     TYPES_LIST_REQUEST,
     TYPES_LIST_SUCCESS,
 
-    TYPES_CHANGE_QUERY
 }
 
 export default types;

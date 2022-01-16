@@ -6,7 +6,7 @@ const TypeLogo = ({ type }) => {
       {type ? <img
       // Question mark placeholder
       // https://pic.onlinewebfonts.com/svg/img_147474.png
-        src={require(`../../assets/types_svg_icons/badge/${type}.svg`)}
+        src={require(`../../assets/types_svg_icons/badge/${type.toLowerCase()}.svg`)}
         alt="TypeLogo"
         height="83"
         width="85"

@@ -10,6 +10,7 @@ import Navbar from './ui/components/Navbar';
 import PokemonDetail from './ui/pokemons/PokemonDetail';
 import PokemonMasterView from './ui/pokemons/PokemonMasterView';
 import TypeMasterView from './ui/types/TypeMasterView';
+import TypeDetail from './ui/types/TypeDetail';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path='/pokemons' component={ PokemonMasterView } exact/>
           <Route path='/pokemons/:name' component={ PokemonDetail } exact/>
           <Route path='/types' component={ TypeMasterView } exact/>
+          <Route path='/types/:id' component={ TypeDetail } exact/>
         </Switch>
       </BrowserRouter>
     </div>

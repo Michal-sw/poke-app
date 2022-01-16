@@ -2,11 +2,13 @@ import types from './types';
 
 const typeInitState = {
   types: [],
+  typesMap: { },
+
   selectOptions: [],
   selectOptionsMap: { },
+
   loading: false,
   err: '',
-  query: new URLSearchParams(),
 }
 
 export const typeReducer = (state = typeInitState, action) => {
@@ -18,6 +20,10 @@ export const typeReducer = (state = typeInitState, action) => {
           ...state,
           loading: false,
           types: action.payload,
+          typesMap: action.payload.reduce((prev, type) => ({
+            ...prev,
+            [type._id]: type
+          })),
           selectOptions: action.payload.map(type => ({ 
             label: type.name,
             value: type._id,
@@ -34,8 +40,6 @@ export const typeReducer = (state = typeInitState, action) => {
       case types.TYPES_LIST_FAILURE:
         return { ...state, loading: false, err: action.payload };
 
-      case types.TYPES_CHANGE_QUERY:
-        return { ...state, query: action.payload }
   
       default:
         return state;

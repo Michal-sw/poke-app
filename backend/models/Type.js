@@ -16,13 +16,16 @@ const typeSchema = new Schema({
       required: 'Color required'
     },
     immunes: [{
-      type: String
+      type: Schema.Types.ObjectId,
+      ref: "Type",
     }],
     weaknesses: [{
-      type: String
+      type: Schema.Types.ObjectId,
+      ref: "Type",
     }],
     strengths: [{
-      type: String
+      type: Schema.Types.ObjectId,
+      ref: "Type",
     }]
 });
 

@@ -6,24 +6,18 @@ import { getTypes } from '../../ducks/types/operations';
 
 import Loading from '../components/Loading';
 
-import actions from '../../ducks/types/actions';
 import TypeLogo from '../components/TypeLogo';
 import { ItemListContainer, MyLink, NameLabel } from '../styles/MultiUsageStyles';
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { TypeCard } from '../styles/TypeStyles';
 
-const TypeList = ({ types, loading, query, changeQueryAction, getTypes }, props) => {
-  const location = useLocation();
+const TypeList = ({ types, loading, getTypes }, props) => {
 
   useEffect(() => {
-    const url = new URLSearchParams(location.search);
-
-    if (query.toString() !== url.toString() || types.length === 0) {
-      changeQueryAction(url)
-      getTypes(url.toString());
+    if (types.length === 0) {
+      getTypes();
     }
-  }, [location.search]);
+  }, []);
 
   
   return (
@@ -34,7 +28,7 @@ const TypeList = ({ types, loading, query, changeQueryAction, getTypes }, props)
           <MyLink to={`types/${type._id}`} key={type.num}>
             <TypeCard>
               <TypeLogo type={type.name.toLowerCase()}/>
-                <NameLabel>{type.name}</NameLabel>
+              <NameLabel>{type.name}</NameLabel>
             </TypeCard>
           </MyLink>
         )
@@ -48,12 +42,10 @@ const TypeList = ({ types, loading, query, changeQueryAction, getTypes }, props)
 const mapStateToProps = (state) => ({
   types: selectTypes(state),
   loading: selectTypesLoading(state),
-  query: selectTypesQuery(state)
 });
 
 const mapDispatchToProps = {
   getTypes,
-  changeQueryAction: actions.changeTypeQueryAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TypeList);
