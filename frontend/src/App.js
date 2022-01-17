@@ -12,6 +12,7 @@ import PokemonMasterView from './ui/pokemons/PokemonMasterView';
 import TypeMasterView from './ui/types/TypeMasterView';
 import TypeDetail from './ui/types/TypeDetail';
 import MoveMasterView from './ui/moves/MoveMasterView';
+import MoveDetail from './ui/moves/MoveDetail';
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
           <Route path='/types' component={ TypeMasterView } exact/>
           <Route path='/types/:id' component={ TypeDetail } exact/>
           <Route path='/moves' component={ MoveMasterView } exact/>
-          {/* <Route path='/moves/:name' component={ MoveDetail } exact/> */}
+          <Route path='/moves/:name' component={ MoveDetail } exact/>
 
         </Switch>
       </BrowserRouter>

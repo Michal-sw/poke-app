@@ -19,10 +19,14 @@ const MoveSearch = ({ query, typesSelectOptions, typesSelectOptionsMap, getTypes
   const history = useHistory();
 
   const [searchInput, setSearchInput] = useState('');
+  const [powerInput, setPowerInput] = useState(0);
   const [selectedSort, setSelectedSort] = useState('');
   const [selectedTypes, setSelectedTypes] = useState([]);
 
 
+  const changePowerInput = (input) => {
+    setPowerInput(input.target.value)
+  }
   const changeSearchInput = (input) => {
     setSearchInput(input.target.value);
   };
@@ -43,6 +47,7 @@ const MoveSearch = ({ query, typesSelectOptions, typesSelectOptionsMap, getTypes
     const url = new URLSearchParams(location.search);
     url.get('name') ? setSearchInput(url.get('name')) : setSearchInput('');
     url.get('sort') ? setSelectedSort(url.get('sort')) : setSelectedSort('');
+    url.get('power') ? setPowerInput(url.get('power')) : setPowerInput(0);
     url.get('types') ? setSelectedTypes(url.get('types').split(',').map(type => typesSelectOptionsMap[type])) : setSelectedTypes([]);
   }, [location.search, typesSelectOptions]);
 
@@ -52,6 +57,9 @@ const MoveSearch = ({ query, typesSelectOptions, typesSelectOptionsMap, getTypes
     searchInput !== '' 
       ? newUrl.set('name', searchInput)
       : newUrl.delete('name');
+    powerInput !== 0 
+      ? newUrl.set('power', powerInput)
+      : newUrl.delete('power');
     selectedTypes.length > 0
       ? newUrl.set('types', selectedTypes.reduce((prev, curr, index) => index === 0 ? `${curr.value}` : `${prev},${curr.value}` , ''))
       : newUrl.delete('types');
@@ -65,6 +73,7 @@ const MoveSearch = ({ query, typesSelectOptions, typesSelectOptionsMap, getTypes
       <SearchContainer>
         <TypeSelect typesSelectOptions={typesSelectOptions} onChange={changeSelectedTypes} value={selectedTypes}/>
         <SearchInput onChange={changeSearchInput} placeholder='Name...' value={searchInput} />
+        <SearchInput onChange={changePowerInput} placeholder='Power...' value={powerInput} type='number' max={250} min={0} width='100px'/>
         <SortSelect onChange={changeSelectedSort} value={selectedSort} />
         <PokeSearch onClick={handleSearch}/>
       </SearchContainer>

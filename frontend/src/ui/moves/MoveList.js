@@ -8,7 +8,7 @@ import Loading from '../components/Loading';
 
 import actions from '../../ducks/moves/actions';
 
-import { BigText, ItemListContainer, ItemListFlexColumnContainer, MyLink  } from '../styles/MultiUsageStyles';
+import { BigText, MyLink  } from '../styles/MultiUsageStyles';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { MoveCard, MoveListScrollable } from '../styles/MoveStyles';

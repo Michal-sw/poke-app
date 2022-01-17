@@ -8,6 +8,7 @@ router.get('/', async (req, res) => {
   const query = { };
   const sort = { };
   req.query.types ? query.types = { "$in": req.query.types.split(',').map(typeId => Types.ObjectId(typeId)) } : null;
+  req.query.name ? req.query.name = req.query.name.replace(/[^A-Z0-9]+/ig, "") : null;
   req.query.name ? query.alias = { "$regex": new RegExp(`^${req.query.name.toLowerCase()}`) } : null;
 
   switch (req.query.sort) {
@@ -47,10 +48,10 @@ router.get('/', async (req, res) => {
 router.get('/:name', async (req, res) => {
   const name = req.params.name;
 
-  Pokemon.find({ alias: name })
+  Pokemon.findOne({ alias: name })
     .then(result => {
-      if (result.length) {
-        res.json(result[0])
+      if (result) {
+        res.json(result)
       } else {
         res.sendStatus(404)
       }
@@ -77,7 +78,7 @@ router.get('/:name/moves', async (req, res) => {
     ])
     .then(result => {
       if (result.length) {
-        res.json(result[0].moves)
+        res.json({ pokemon: name, moves: result[0].moves })
       } else {
         res.sendStatus(404)
       }

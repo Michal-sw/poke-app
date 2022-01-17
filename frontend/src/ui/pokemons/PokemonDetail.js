@@ -13,16 +13,14 @@ import { getTypes } from '../../ducks/types/operations'
 import PokemonOnGrassTile from '../components/PokemonOnGrassTile';
 import PokemonStats from './PokemonStats';
 import PokemonMoves from './PokemonMoves';
-import TypeLogo from '../components/TypeLogo';
 import PokemonTypeLogos from './PokemonTypeLogos';
 
-// Background Image wrzucic do publica
 const PokemonDetail = ({ pokemon, getPokemon, name, typesMap, getTypes, typesLoading }, props) => {
 
   useEffect(() => {
-    if (!pokemon.num) getPokemon(name);
+    if (pokemon.alias !== name) getPokemon(name);
     if (!typesMap[pokemon.types[0]] && !typesLoading) getTypes();
-  }, [pokemon.num])
+  }, [pokemon.alias])
 
   return (
       <PokemonDetailViewContainer>

@@ -1,18 +1,18 @@
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
-import { selectPokemon, selectPokemonMoves } from "../../ducks/pokemons/selectors";
-import { ItemListContainer, ItemListFlexColumnContainer } from "../styles/MultiUsageStyles";
+import { selectPokemon, selectPokemonMoves, selectPokemonMovesName } from "../../ducks/pokemons/selectors";
+import { ItemListFlexColumnContainer } from "../styles/MultiUsageStyles";
 import { MyLink } from '../styles/MultiUsageStyles';
 import { getPokemonMoves } from '../../ducks/pokemons/operations';
 import { useEffect } from "react";
 import { selectTypesSelectOptionsMap } from "../../ducks/types/selectors";
 
-const PokemonMoves = ({ moves, pokemon, name, getPokemonMoves, typesMap }) => {
+const PokemonMoves = ({ moves, pokemon, name, getPokemonMoves, movesPokemonName, typesMap }) => {
 
   useEffect(() => {
-    if (moves[0]?._id !== pokemon.moves[0]) getPokemonMoves(name);
-  }, [pokemon.num])
+    if (movesPokemonName !== name) getPokemonMoves(name);
+  }, [pokemon.num]);
 
   return (
     <ItemListFlexColumnContainer>
@@ -52,6 +52,7 @@ const MoveCard = styled.div`
   const mapStateToProps = (state, props) => ({
     name: props.match.params.name,
     moves: selectPokemonMoves(state),
+    movesPokemonName: selectPokemonMovesName(state),
     pokemon: selectPokemon(state, props),
     typesMap: selectTypesSelectOptionsMap(state),
   });

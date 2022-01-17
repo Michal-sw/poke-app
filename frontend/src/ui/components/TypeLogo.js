@@ -25,7 +25,7 @@ const LogoContainer = styled.div`
   width: 85px;
   transition: all 0.4s;
   background-color: whitesmoke;
-  box-shadow: inset 0px 0px 1px 10px black;
+  box-shadow: inset 0px 0px 1px 6px black;
   &:hover {
     background-color: black;
   }

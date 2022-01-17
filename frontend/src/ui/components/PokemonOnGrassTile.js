@@ -1,7 +1,11 @@
+import { useState } from 'react'
 import styled from 'styled-components'
 import { PokemonSprite } from '../styles/PokemonStyles'
 
 const PokemonOnGrassTile = ({ name, num }) => {
+  const [showFrontSide, setShowFrontSide] = useState(true);
+  const handleOrientationChange = () => setShowFrontSide(!showFrontSide);
+
   return (
     <div>
       <GrassTileContainer>
@@ -14,8 +18,11 @@ const PokemonOnGrassTile = ({ name, num }) => {
         />
       </GrassTileContainer>
       <SpriteOnTile>
-        {/* On click niech zmienia mu strone w ktora patrzy, routey moga byc w stacie */}
-        <PokemonSprite alt={name} src={num ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${num}.png` : null}/>
+
+      {showFrontSide 
+        ? <PokemonSprite onClick={handleOrientationChange} alt={name} src={num ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${num}.png` : null}/>
+        : <PokemonSprite onClick={handleOrientationChange} alt={name} src={num ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${num}.png` : null}/>
+      }
       </SpriteOnTile>
     </div>
     )

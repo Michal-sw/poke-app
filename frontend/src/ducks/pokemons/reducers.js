@@ -3,7 +3,7 @@ import types from './types';
 const pokemonInitState = {
   pokemons: [],
   pokemon: { types: [], moves: [] },
-  pokemonMoves: [],
+  pokemonMoves: { pokemon: '', moves: [] },
   loading: false,
   err: '',
   query: new URLSearchParams(),

@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import { StatBar, StatContainer, StatListContainer, StatName } from "../styles/MultiUsageStyles";
+
 
 const PokemonStats = ({ stats }) => {
   return (
@@ -38,44 +39,3 @@ const PokemonStats = ({ stats }) => {
 }
 
 export default PokemonStats;
-
-const StatContainer = styled.div`
-  display: flex;
-  flex-display: row;
-  justify-content: flex-end;
-  margin-bottom: 10px;
-`;
-
-const StatBar = styled.progress`
-  width:400px;
-  height:25px;
-  padding: 5px 5px 5px 5px;
-  border-radius: 1px;
-
-  &::-webkit-progress-bar {
-    background-color: whitesmoke;
-    border-radius: 10px;
-    padding: 0.6px 0.6px 0.6px 0.6px;
-    box-shadow: 0.01em 0.03em 0.3em 0.04em grey; 
-
-  }
-    
-  &::-webkit-progress-value {
-    background-color: gold;
-    border-radius: 10px;
-    box-shadow: 0.01em 0.03em 0.2em 0.03em grey; 
-  }
-`;
-const StatName = styled.label`
-  font-size: 1.5em;
-  margin-right: 5px;
-`;
-const StatListContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: rgba(130, 255, 203, 0.26);
-  border-radius: 20px;
-  padding: 10px;
-  box-shadow: 0.01em 0.03em 0.2em 0.03em grey; 
-  justify-content: space-between;
-`;
