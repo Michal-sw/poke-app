@@ -3,7 +3,6 @@ import types from './types';
 
 
 export const getMoves = (query) => {
-  
   return createAction({
     endpoint: `http://localhost:3001/moves?${query}`,
     method: 'GET',

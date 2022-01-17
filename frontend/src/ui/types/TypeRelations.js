@@ -13,7 +13,7 @@ const TypeRelations = ({ type, typesMap, relation }, props) => {
       <BigText>{relation[0].toUpperCase() + relation.substring(1)}:</BigText>
       <ItemListContainer>
         {type[relation] ? type[relation].map(typeId => (
-          <MyLink to={`/types/${typeId}`}>
+          <MyLink to={`/types/${typeId}`} key={typeId}>
             <TypeLogo type={typesMap[typeId]?.name}/>
           </MyLink>
         )) : null}

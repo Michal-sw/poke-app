@@ -13,7 +13,11 @@ export const TypeCard = styled.div`
 
   background-color: whitesmoke;
   box-shadow: 0px 0px 5px 1px grey;
-  padding: 10px 0px 0px 0px;
+
+  // border: 3px solid black;
+  // border-style: ridge;
+
+  padding: 10px 1px 0px 1px;
   width: 120px;
 
   &:hover{
@@ -40,6 +44,7 @@ export const AssociatedTypesContainer = styled.div`
   border-radius: 20px;
   padding: 0px 10px 20px 10px;
   box-shadow: 0px 0px 2px 1px grey;
+  
   max-width: 400px;
   max-height: fit-content;
 `;

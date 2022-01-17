@@ -1,12 +1,14 @@
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { selectMovesQuery } from "../../ducks/moves/selectors";
+import { selectPokemonsQuery } from '../../ducks/pokemons/selectors';
 
-const Navbar = () => {
-
+const Navbar = ({ pokemonQuery, moveQuery }) => {
   return (
     <NavContainer>
       <NavLink>
-        <Link to={'/pokemons'}>
+        <Link to={`/pokemons?${pokemonQuery.toString()}`}>
           <NavName>Pokemons</NavName>
         </Link>
       </NavLink>
@@ -16,7 +18,7 @@ const Navbar = () => {
         </Link>
       </NavLink>
       <NavLink>
-        <Link to={'/moves'}>
+        <Link to={`/moves?${moveQuery.toString()}`}>
           <NavName>Moves</NavName>
         </Link>
       </NavLink>
@@ -63,4 +65,9 @@ const NavName = styled.p`
   margin-bottom:11px;
 `;
 
-export default Navbar;
+const mapStateToProps = (state) => ({
+  pokemonQuery: selectPokemonsQuery(state),
+  moveQuery: selectMovesQuery(state)
+});
+
+export default connect(mapStateToProps, null)(Navbar);

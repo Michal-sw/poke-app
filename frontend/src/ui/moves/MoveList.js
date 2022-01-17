@@ -8,9 +8,10 @@ import Loading from '../components/Loading';
 
 import actions from '../../ducks/moves/actions';
 
-import { ItemListContainer, MyLink  } from '../styles/MultiUsageStyles';
+import { BigText, ItemListContainer, ItemListFlexColumnContainer, MyLink  } from '../styles/MultiUsageStyles';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { MoveCard, MoveListScrollable } from '../styles/MoveStyles';
 
 
 const MoveList = ({ moves, loading, query, changeQueryAction, getMoves }, props) => {
@@ -18,7 +19,6 @@ const MoveList = ({ moves, loading, query, changeQueryAction, getMoves }, props)
 
   useEffect(() => {
     const url = new URLSearchParams(location.search);
-
     if (query.toString() !== url.toString() || moves.length === 0) {
       changeQueryAction(url)
       getMoves(url.toString());
@@ -27,17 +27,20 @@ const MoveList = ({ moves, loading, query, changeQueryAction, getMoves }, props)
 
   
   return (
-    <ItemListContainer >
+    <MoveListScrollable >
     { loading ? <Loading/> :
       moves.map(move => {
         return (
-          <MyLink to={`moves/${move.alias}`} key={move.num}>
-            {move.name}
+          <MyLink to={`moves/${move.alias}`} key={move._id}>
+            <MoveCard>
+              <BigText>{move.name}</BigText>
+              <BigText>Power: {move.power}</BigText>
+            </MoveCard>
           </MyLink>
         )
       })
     }
-    </ItemListContainer>
+    </MoveListScrollable>
   );
 }
 
