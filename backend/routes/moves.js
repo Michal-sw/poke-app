@@ -22,8 +22,8 @@ router.get('/', async (req, res) => {
     case 'powerd': sort.power = -1; break;
     default: sort.num = 1;
   }
-  
-  const numOfRecords = await Move.find(query).count();
+  // + 3 poniewaz niektore move'y posiadaja kilka wersji o tym samym pokedex id (np. 237)
+  const numOfRecords = await Move.find(query).count() + 3;
   const limit = parseInt(req.query.limit) || 60;
   const maxPage = Math.ceil(numOfRecords/limit)
 
@@ -72,15 +72,41 @@ router.get('/:name/pokemons', async (req, res) => {
 
   Pokemon.find({ moves: moveId })
     .then(result => {
-      if (result.length != 0) {
-        res.json({ move: name, pokemons: result })
-      } else {
-        res.sendStatus(404)
-      }
+      res.json({ move: name, pokemons: result })
     })
     .catch(err => res.status(500).json(err));
 })
 
+router.put('/:name/edit', async (req, res) => {
+  const name = req.params.name;
+  const moveObject = req.body;
 
+  Move.findOneAndUpdate({ alias: name }, moveObject, { new: true })
+    .then(move => {
+      if ( move !== null) {
+        return res.json(move)
+      } else {
+        return res.status(404).json({ error: "Move does not exist"})
+      }
+    })
+    .catch(err => console.error(err))
+});
+
+router.post('/', async (req, res) => {
+  // + 3 poniewaz niektore move'y posiadaja kilka wersji o tym samym pokedex id (np. 237)
+  const newNum = await Move.count() + 3;
+  const newMove = { 
+    num: newNum,
+    type: Types.ObjectId(req.body.type),
+    ...req.body 
+  };
+
+  new Move(newMove)
+    .save()
+    .then((move) => {
+      return res.json(move)
+    })
+    .catch(err => res.status(500).json(err))
+})
 
 module.exports = router;

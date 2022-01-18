@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
+import { ErrorMessage, Field } from 'formik';
 
 export const MainListFlexContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0px 50px 0px 50px;
+  margin: 0px 50px 20px 50px;
 `
 export const ItemListContainer = styled.div`
   display: flex;
@@ -145,4 +146,44 @@ export const StatListContainer = styled.div`
   padding: 10px;
   box-shadow: 0.01em 0.03em 0.2em 0.03em grey; 
   justify-content: space-between;
+`;
+
+export const FormInputContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1px;
+  margin-bottom: 5px;
+  width: 252px;
+  label {
+    font-size: 1.5em
+  }
+`;
+
+export const FormFieldContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 320px;
+  margin: 0px;
+  > p {
+    font-size: 1.5em;
+    margin: 0px;
+  }
+`;
+export const MyField = styled(Field)`
+  padding-left: 5px;
+  font-size: 1.5em;
+  font-family: "Pokemon Pixel Font Regular";
+  margin: 0px 10px 0px 10px;
+  border-radius: 10px;
+  border: 5px ridge whitesmoke;
+`;
+
+export const FormContainer = styled.div`
+  background-color: whitesmoke;
+  border-radius: 20px;
+  border: 5px ridge whitesmoke;
+  padding: 0px 20px 20px 20px;
 `;

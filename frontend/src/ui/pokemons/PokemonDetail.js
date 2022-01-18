@@ -14,6 +14,7 @@ import PokemonOnGrassTile from '../components/PokemonOnGrassTile';
 import PokemonStats from './PokemonStats';
 import PokemonMoves from './PokemonMoves';
 import PokemonTypeLogos from './PokemonTypeLogos';
+import { MyButton, MyLink, NameLabel } from '../styles/MultiUsageStyles';
 
 const PokemonDetail = ({ pokemon, getPokemon, name, typesMap, getTypes, typesLoading }, props) => {
 
@@ -25,15 +26,17 @@ const PokemonDetail = ({ pokemon, getPokemon, name, typesMap, getTypes, typesLoa
   return (
       <PokemonDetailViewContainer>
         <PokemonTypeLogos />
+        <NameLabel style={{marginBottom: '-30px'}}>{pokemon.name}</NameLabel>
         <PokemonDetailPresentation>
           <PokemonOnGrassTile name={pokemon.alias} num={pokemon.num}></PokemonOnGrassTile>
         </PokemonDetailPresentation>
-
         <PokemonDetailInfo>
           <PokemonStats stats={pokemon.stats} />
           <PokemonMoves />
         </PokemonDetailInfo>
-
+      <MyLink to={`/pokemons/${pokemon.alias}/edit`}>
+        <MyButton>Edit Pokemon</MyButton>
+      </MyLink>
       </PokemonDetailViewContainer>
   )
 };

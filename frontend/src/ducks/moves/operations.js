@@ -46,3 +46,37 @@ export const getMovePokemons = (name) => {
     ]
   })
 };
+
+export const addMove = (move) => {
+  return createAction({
+    endpoint: `http://localhost:3001/moves`,
+    body: JSON.stringify(move),
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    types: [
+      types.MOVE_ADD_REQUEST,
+      types.MOVE_ADD_SUCCESS,
+      types.MOVE_ADD_FAILURE
+    ]
+  })
+};
+
+
+export const editMove = (move) => {
+  console.log(move.alias)
+  return createAction({
+    endpoint: `http://localhost:3001/moves/${move.alias}/edit`,
+    body: JSON.stringify(move),
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    types: [
+      types.MOVE_EDIT_REQUEST,
+      types.MOVE_EDIT_SUCCESS,
+      types.MOVE_EDIT_FAILURE
+    ]
+  })
+};

@@ -5,7 +5,7 @@ import Pokeball from '../components/Pokeball';
 import PokemonSearch from './PokemonSearch';
 import PokemonPageChanger from './PokemonPageChanger';
 
-import { MainListFlexContainer } from '../styles/MultiUsageStyles';
+import { MainListFlexContainer, MyButton, MyLink } from '../styles/MultiUsageStyles';
 
 
 const PokemonMasterView = ({ }, props) => {
@@ -17,6 +17,9 @@ const PokemonMasterView = ({ }, props) => {
       <PokemonPageChanger />
       <PokemonList />
       <PokemonPageChanger />
+      <MyLink to={'pokemons/add'}>
+        <MyButton>Add Pokemon</MyButton>
+      </MyLink>
     </MainListFlexContainer>
   );
 }

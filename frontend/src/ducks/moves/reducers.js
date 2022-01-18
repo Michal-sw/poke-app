@@ -26,7 +26,20 @@ export const moveReducer = (state = moveInitState, action) => {
       case types.MOVE_FAILURE:
         return { ...state, loading: false, err: action.payload };
 
-
+      case types.MOVE_ADD_REQUEST:
+        return { ...state, loading: true };
+      case types.MOVE_ADD_SUCCESS:
+        return { ...state, loading: false };
+      case types.MOVE_ADD_FAILURE:
+        return { ...state, loading: false, err: action.payload };
+        
+      case types.MOVE_EDIT_REQUEST:
+        return { ...state, loading: true };
+      case types.MOVE_EDIT_SUCCESS:
+        return { ...state, loading: false };
+      case types.MOVE_EDIT_FAILURE:
+        return { ...state, loading: false, err: action.payload };
+  
       case types.MOVE_POKEMONS_REQUEST:
         return { ...state, loading: true };
       case types.MOVE_POKEMONS_SUCCESS:

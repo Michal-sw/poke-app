@@ -47,3 +47,36 @@ export const getPokemonMoves = (name) => {
     ]
   })
 };
+
+export const addPokemon = (pokemon) => {
+  return createAction({
+    endpoint: `http://localhost:3001/pokemons`,
+    body: JSON.stringify(pokemon),
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    types: [
+      types.POKEMON_ADD_REQUEST,
+      types.POKEMON_ADD_SUCCESS,
+      types.POKEMON_ADD_FAILURE
+    ]
+  })
+};
+
+export const editPokemon = (pokemon) => {
+  console.log(pokemon.alias)
+  return createAction({
+    endpoint: `http://localhost:3001/pokemons/${pokemon.alias}/edit`,
+    body: JSON.stringify(pokemon),
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    types: [
+      types.POKEMON_EDIT_REQUEST,
+      types.POKEMON_EDIT_SUCCESS,
+      types.POKEMON_EDIT_FAILURE
+    ]
+  })
+};

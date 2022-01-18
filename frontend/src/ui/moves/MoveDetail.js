@@ -9,9 +9,8 @@ import { getMove } from '../../ducks/moves/operations';
 
 import { getTypes } from '../../ducks/types/operations'
 import TypeLogo from '../components/TypeLogo';
-import { BigText, MainListFlexContainer, NameLabel } from '../styles/MultiUsageStyles';
+import { MainListFlexContainer, MyButton, MyLink, NameLabel } from '../styles/MultiUsageStyles';
 import MovePokemons from './MovePokemons';
-import { MoveInfo } from '../styles/MoveStyles';
 import MoveStats from './MoveStats';
 
 const MoveDetail = ({ move, getMove, name, typesMap, getTypes, typesLoading }, props) => {
@@ -23,12 +22,17 @@ const MoveDetail = ({ move, getMove, name, typesMap, getTypes, typesLoading }, p
 
   return (
       <MainListFlexContainer>
-        <TypeLogo type={typesMap[move.type]?.label}/>
+        <MyLink to={`/types/${typesMap[move.type]?.value}`}>
+          <TypeLogo type={typesMap[move.type]?.label}/>
+        </MyLink>
         <NameLabel>{move.name}</NameLabel>
 
         <MoveStats power={move.power} accuracy={move.accuracy} />
 
         <MovePokemons />
+        <MyLink to={`/moves/${move.alias}/edit`}>
+          <MyButton>Edit</MyButton>
+        </MyLink>
       </MainListFlexContainer>
   )
 };
