@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
-import { ErrorMessage, Field } from 'formik';
+import { Field } from 'formik';
 
 export const MainListFlexContainer = styled.div`
   display: flex;
@@ -161,7 +161,7 @@ export const FormInputContainer = styled.div`
   }
 `;
 
-export const FormFieldContainer = styled.div`
+export const FormRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;

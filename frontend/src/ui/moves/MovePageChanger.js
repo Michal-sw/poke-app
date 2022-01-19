@@ -1,13 +1,11 @@
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
+import { selectMovesMaxPage, selectMovesQuery, selectMovesQueryPage } from '../../ducks/moves/selectors';
 import { selectTypesSelectOptions } from '../../ducks/types/selectors'
-
 import { getTypes } from '../../ducks/types/operations'
 
 import { FlexRowContainer, PageButton, PageCounter } from '../styles/MultiUsageStyles';
-import { selectMovesMaxPage, selectMovesQuery, selectMovesQueryPage } from '../../ducks/moves/selectors';
-
 
 const MovesPageChanger = ({ query, page, maxPage }, props) => {
   const history = useHistory();

@@ -1,60 +1,71 @@
-import { Form, Formik, Field, ErrorMessage } from 'formik'
+import { useEffect } from 'react';
 import { connect } from 'react-redux'
 import { withRouter, useHistory } from 'react-router-dom'
+import { Form, Formik, Field, ErrorMessage } from 'formik'
 import * as yup from 'yup';
-import { selectPokemon } from '../../ducks/pokemons/selectors';
-import { addPokemon, editPokemon, getPokemon } from '../../ducks/pokemons/operations'
-import { useEffect } from 'react';
-import { selectTypesSelectOptions, selectTypesSelectOptionsMap } from '../../ducks/types/selectors'
-import { getTypes } from '../../ducks/types/operations';
-import TypeSelectForm from '../components/TypeSelectForm';
-import { BigText, FormContainer, FormFieldContainer, FormInputContainer, MyField } from '../styles/MultiUsageStyles';
 
-const PokemonForm = ({ name, pokemon, addPokemon, editPokemon, types, typesMap, getTypes }, props) => {
+import { selectTypesSelectOptions, selectTypesSelectOptionsMap } from '../../ducks/types/selectors'
+import { selectPokemon, selectPokemonMoves, selectPokemonMovesName, selectPokemonsLoading } from '../../ducks/pokemons/selectors';
+import { addPokemon, editPokemon, getPokemon, getPokemonMoves } from '../../ducks/pokemons/operations'
+import { getTypes } from '../../ducks/types/operations';
+
+import TypeSelectForm from '../components/TypeSelectForm';
+import Loading from '../components/Loading';
+import FormFieldContainer from '../components/FormFieldContainer';
+import PokemonMoveSelectForm from './PokemonMoveSelectForm';
+
+import { BigText, FormContainer, FormRow, FormInputContainer, MyButton } from '../styles/MultiUsageStyles';
+
+const PokemonForm = ({ name, pokemon, pokemonMovesName, loading, addPokemon, editPokemon, types, typesMap, getPokemon, getTypes, getPokemonMoves }, props) => {
     
   const history = useHistory();
 
   useEffect(() => {
     if (!types.length) getTypes();
     if (name && !pokemon._id) getPokemon(name);
+    if ( name && name !== pokemonMovesName) getPokemonMoves(name)
   }, [types.length]);
 
   const handleSubmit = (formObject) => {
     if (!formObject.alias) {
       formObject.alias = formObject.name.replace(/[^A-Z0-9]+/ig, "").toLowerCase()
     }
+    const newPokemon = {
+      name: formObject.name,
+      alias: formObject.alias,
+      abilities: formObject.abilities,
+      stats: {
+        atk: formObject.atk,
+        def: formObject.def,
+        hp: formObject.hp,
+        spa: formObject.spa,
+        spd: formObject.spd,
+        spe: formObject.spe,
+      },
+      types: formObject.types,
+      moves: formObject.moves
+    }
+    
     if (pokemon._id) {
-      editPokemon(formObject);
+      editPokemon(newPokemon);
       history.push(`/pokemons`)
     } else {
-      addPokemon(formObject)
+      addPokemon(newPokemon)
       history.push('/pokemons')
     }
   }
   // ZROBIC EDYCJE I DODAWANIE DLA POKEMONA I USUWANIE 
 
   const validationSchema = yup.object({
-      name: yup
-        .string()
-        .required(<p>Required</p>),
-      power: yup
-        .number()
-        .min(0, <p>Minimum 0</p>)
-        .max(250, <p>Maximum 250</p>)
-        .required(<p>Required</p>),
-      accuracy: yup
-        .number()
-        .min(0, <p>Minimum 0</p>)
-        .max(100, <p>Maximum 100</p>)
-        .required(<p>Required</p>),
-      target: yup
-        .string()
-        .oneOf(['self', 'normal'], <p>Must be "self" or "normal"</p>)
-        .required(<p>Required</p>),
-      type: yup
-        .string()
-        .oneOf(types.map(option => option.value))
-        .required(<p>Required</p>)
+      name: yup.string().required(<p>Required</p>),
+      moves: yup.array().required(<p>Required</p>),
+      atk: yup.number().min(0, <p>Minimum 0</p>).max(150, <p>Maximum 150</p>).required(<p>Required</p>),
+      def: yup.number().min(0, <p>Minimum 0</p>).max(150, <p>Maximum 150</p>).required(<p>Required</p>),
+      hp: yup.number().min(0, <p>Minimum 0</p>).max(150, <p>Maximum 150</p>).required(<p>Required</p>),
+      spa: yup.number().min(0, <p>Minimum 0</p>).max(150, <p>Maximum 150</p>).required(<p>Required</p>),
+      spd: yup.number().min(0, <p>Minimum 0</p>).max(150, <p>Maximum 150</p>).required(<p>Required</p>),
+      spe: yup.number().min(0, <p>Minimum 0</p>).max(150, <p>Maximum 150</p>).required(<p>Required</p>),
+      types: yup.array().oneOf(types.map(option => option.value)).required(<p>Required</p>)
   })
   const initialValues = name
     ? {
@@ -70,60 +81,58 @@ const PokemonForm = ({ name, pokemon, addPokemon, editPokemon, types, typesMap, 
         spe: pokemon.stats?.spe,
         types: pokemon.types
       }
-    : { name: '', alias: '', abilities: [], moves: [], atk: 0, def: 0, hp: 0, spa: 0, spd: 0, spe: 0, types: [] };
+    : {
+        name: '',
+        alias: '',
+        abilities: [],
+        moves: [],
+        atk: 0,
+        def: 0,
+        hp: 0,
+        spa: 0,
+        spd: 0,
+        spe: 0,
+        types: []
+    };
 
   return (
-      <Formik
+      loading ? <Loading />
+      : <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
           enableReinitialize={true}>
           <Form>
             <FormContainer>
-              <BigText>Add pokemon</BigText>
-              <FormFieldContainer>
-                <FormInputContainer>
-                    <label>Name</label>
-                    <MyField name="name"/>
-                </FormInputContainer>
-                <ErrorMessage name="name"/>
-              </FormFieldContainer>
+              <BigText>{name ? `Edit ${pokemon.name}` : "Add pokemon"}</BigText>
 
-              <FormFieldContainer>
-                <FormInputContainer>
-                  <label>Power</label>
-                  <MyField type="number" name="power"/>
-                </FormInputContainer>
-                <ErrorMessage name="power"/>
-              </FormFieldContainer>
+              <FormFieldContainer name="name" label="Name" />
+              <FormFieldContainer name="atk" label="Attack" />
+              <FormFieldContainer name="def" label="Defense" />
+              <FormFieldContainer name="hp" label="Health" />
+              <FormFieldContainer name="spa" label="Special Attack" />
+              <FormFieldContainer name="spd" label="Special Defense" />
+              <FormFieldContainer name="spe" label="Speed" />
 
-              <FormFieldContainer>
+              <FormRow>
                 <FormInputContainer>
-                  <label>Accuracy</label>
-                  <MyField type="number" name="accuracy"/>
-                </FormInputContainer>
-                <ErrorMessage name="accuracy"/>
-              </FormFieldContainer>
-
-              <FormFieldContainer>
-                <FormInputContainer>
-                  <label>Type</label>
-                  <Field name="type" component={TypeSelectForm} typesSelectOptions={types} defaultValue={typesMap[pokemon.type]} />
+                  <label>Types</label>
+                  <Field name="types" component={TypeSelectForm} limit={2} selectOptions={types} defaultValue={pokemon?.types.map(pokemonType => typesMap[pokemonType])} />
                 </FormInputContainer>
                 <ErrorMessage name="type"/>
-              </FormFieldContainer>
-
-              <FormFieldContainer>
+              </FormRow>
+              <FormRow>
                 <FormInputContainer>
-                  <label>Target</label>
-                  <MyField name="target"/>
+                  <label>Moves</label>
                 </FormInputContainer>
-                <ErrorMessage name="target"/>
-              </FormFieldContainer>
+                <ErrorMessage name="moves"/>
+              </FormRow>
+              
+              <Field name="moves" component={PokemonMoveSelectForm} />
 
-                <button type="submit">
+                <MyButton type="submit">
                   Confirm
-                </button>
+                </MyButton>
             </FormContainer>
           </Form>
       </Formik>
@@ -133,13 +142,18 @@ const PokemonForm = ({ name, pokemon, addPokemon, editPokemon, types, typesMap, 
 const mapStateToProps = (state, props) => ({
     pokemon: selectPokemon(state, props),
     name: props.match.params.name,
+    pokemonMoves: selectPokemonMoves(state),
+    pokemonMovesName: selectPokemonMovesName(state),
     types: selectTypesSelectOptions(state),
-    typesMap: selectTypesSelectOptionsMap(state)
+    typesMap: selectTypesSelectOptionsMap(state),
+    loading: selectPokemonsLoading(state)
 })
 
 const mapDispatchToProps = {
   addPokemon,
   editPokemon,
+  getPokemonMoves,
+  getPokemon,
   getTypes
 }
 

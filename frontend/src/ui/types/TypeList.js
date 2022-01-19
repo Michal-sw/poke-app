@@ -1,14 +1,13 @@
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { selectTypesLoading, selectTypes, selectTypesQuery } from '../../ducks/types/selectors';
-
+import { selectTypesLoading, selectTypes } from '../../ducks/types/selectors';
 import { getTypes } from '../../ducks/types/operations';
 
 import Loading from '../components/Loading';
-
 import TypeLogo from '../components/TypeLogo';
+
 import { ItemListContainer, MyLink, NameLabel } from '../styles/MultiUsageStyles';
-import { useEffect } from 'react';
 import { TypeCard } from '../styles/TypeStyles';
 
 const TypeList = ({ types, loading, getTypes }, props) => {

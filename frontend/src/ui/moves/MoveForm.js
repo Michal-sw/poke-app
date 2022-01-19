@@ -1,16 +1,21 @@
+import { useEffect } from 'react';
 import { Form, Formik, Field, ErrorMessage } from 'formik'
 import { connect } from 'react-redux'
 import { withRouter, useHistory } from 'react-router-dom'
 import * as yup from 'yup';
-import { selectMove } from '../../ducks/moves/selectors';
-import { addMove, editMove, getMove } from '../../ducks/moves/operations'
-import { useEffect } from 'react';
-import { selectTypesSelectOptions, selectTypesSelectOptionsMap } from '../../ducks/types/selectors'
-import { getTypes } from '../../ducks/types/operations';
-import TypeSelectForm from '../components/TypeSelectForm';
-import { BigText, FormContainer, FormFieldContainer, FormInputContainer, MyField } from '../styles/MultiUsageStyles';
 
-const MoveForm = ({ name, move, addMove, editMove, types, typesMap, getTypes }, props) => {
+import { selectMove, selectMovesLoading } from '../../ducks/moves/selectors';
+import { selectTypesSelectOptions, selectTypesSelectOptionsMap } from '../../ducks/types/selectors'
+import { addMove, editMove, getMove } from '../../ducks/moves/operations'
+import { getTypes } from '../../ducks/types/operations';
+
+import TypeSelectForm from '../components/TypeSelectForm';
+import FormFieldContainer from '../components/FormFieldContainer';
+import Loading from '../components/Loading';
+
+import { BigText, FormContainer, FormRow, FormInputContainer, MyButton } from '../styles/MultiUsageStyles';
+
+const MoveForm = ({ name, move, loading, addMove, getMove, editMove, types, typesMap, getTypes }, props) => {
     
   const history = useHistory();
 
@@ -64,57 +69,31 @@ const MoveForm = ({ name, move, addMove, editMove, types, typesMap, getTypes }, 
     type: name ? move.type : ''
   };
   return (
-      <Formik
+      loading ? <Loading />
+      : <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
           enableReinitialize={true}>
           <Form>
             <FormContainer>
-              <BigText>Add move</BigText>
-              <FormFieldContainer>
-                <FormInputContainer>
-                    <label>Name</label>
-                    <MyField name="name"/>
-                </FormInputContainer>
-                <ErrorMessage name="name"/>
-              </FormFieldContainer>
+              <BigText>{name ? `Edit ${move.name}` : 'Add move'}</BigText>
 
-              <FormFieldContainer>
-                <FormInputContainer>
-                  <label>Power</label>
-                  <MyField type="number" name="power"/>
-                </FormInputContainer>
-                <ErrorMessage name="power"/>
-              </FormFieldContainer>
-
-              <FormFieldContainer>
-                <FormInputContainer>
-                  <label>Accuracy</label>
-                  <MyField type="number" name="accuracy"/>
-                </FormInputContainer>
-                <ErrorMessage name="accuracy"/>
-              </FormFieldContainer>
-
-              <FormFieldContainer>
+              <FormFieldContainer name="name" label="Name" />
+              <FormFieldContainer name="power" label="Power" type="number" />
+              <FormFieldContainer name="accuracy" label="Accuracy" type="number" />
+              <FormRow>
                 <FormInputContainer>
                   <label>Type</label>
-                  <Field name="type" component={TypeSelectForm} typesSelectOptions={types} defaultValue={typesMap[move.type]} />
+                  <Field name="type" component={TypeSelectForm} selectOptions={types} defaultValue={typesMap[move.type]} />
                 </FormInputContainer>
                 <ErrorMessage name="type"/>
-              </FormFieldContainer>
+              </FormRow>
+              <FormFieldContainer name="target" label="Target"/>
 
-              <FormFieldContainer>
-                <FormInputContainer>
-                  <label>Target</label>
-                  <MyField name="target"/>
-                </FormInputContainer>
-                <ErrorMessage name="target"/>
-              </FormFieldContainer>
-
-                <button type="submit">
+                <MyButton type="submit">
                   Confirm
-                </button>
+                </MyButton>
             </FormContainer>
           </Form>
       </Formik>
@@ -125,13 +104,15 @@ const mapStateToProps = (state, props) => ({
     move: selectMove(state, props),
     name: props.match.params.name,
     types: selectTypesSelectOptions(state),
-    typesMap: selectTypesSelectOptionsMap(state)
+    typesMap: selectTypesSelectOptionsMap(state),
+    loading: selectMovesLoading(state)
 })
 
 const mapDispatchToProps = {
   addMove,
   editMove,
-  getTypes
+  getTypes,
+  getMove
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MoveForm));

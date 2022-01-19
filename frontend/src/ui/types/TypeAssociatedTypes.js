@@ -2,8 +2,10 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { selectType } from '../../ducks/types/selectors';
-import { FlexRowContainer } from '../styles/MultiUsageStyles';
+
 import TypeRelations from './TypeRelations';
+
+import { FlexRowContainer } from '../styles/MultiUsageStyles';
 
 const TypeAssociatedTypes = ({ type }, props) => {
 

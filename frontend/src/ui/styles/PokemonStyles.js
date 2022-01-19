@@ -61,9 +61,6 @@ export const PokemonDetailViewContainer = styled.div`
 
 `
 
-export const PokemonDetailStatName = styled.label`
-`
-
 export const PokemonDetailInfo = styled.div`
   display: flex;
   flex-direction: row;
@@ -74,5 +71,22 @@ export const PokemonDetailInfo = styled.div`
   max-width: 950px;
 `
 
-export const PokemonDetailPresentation = styled.div`
-`
+export const PokemonMoveCard = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 2px;
+  border-radius: 20px;
+  padding: 10px;
+  transition: all 0.3s;
+  background-color: whitesmoke;
+  box-shadow: ${props => `inset 0px 0px 1px 4px ${props.type}` || '0px 0px 5px 1px whitesmoke' };
+  & > p {
+    font-size: 1.2em;
+    padding: 0px;
+    margin: 0px;
+  }
+  &:hover {
+    background-color: ${props => props.type};
+  }
+`;

@@ -4,14 +4,14 @@ import { withRouter } from 'react-router-dom';
 
 import { selectMove } from '../../ducks/moves/selectors';
 import { selectTypesLoading, selectTypesSelectOptionsMap } from '../../ducks/types/selectors'
-
 import { getMove } from '../../ducks/moves/operations';
-
 import { getTypes } from '../../ducks/types/operations'
+
 import TypeLogo from '../components/TypeLogo';
-import { MainListFlexContainer, MyButton, MyLink, NameLabel } from '../styles/MultiUsageStyles';
 import MovePokemons from './MovePokemons';
 import MoveStats from './MoveStats';
+
+import { MainListFlexContainer, MyButton, MyLink, NameLabel } from '../styles/MultiUsageStyles';
 
 const MoveDetail = ({ move, getMove, name, typesMap, getTypes, typesLoading }, props) => {
 

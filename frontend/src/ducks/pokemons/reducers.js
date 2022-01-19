@@ -26,6 +26,21 @@ export const pokemonReducer = (state = pokemonInitState, action) => {
       case types.POKEMON_FAILURE:
         return { ...state, loading: false, err: action.payload };
 
+      case types.POKEMON_ADD_REQUEST:
+        return { ...state, loading: true };
+      case types.POKEMON_ADD_SUCCESS:
+        return { ...state, loading: false };
+      case types.POKEMON_ADD_FAILURE:
+        return { ...state, loading: false, err: action.payload };
+        
+      case types.POKEMON_EDIT_REQUEST:
+        return { ...state, loading: true };
+      case types.POKEMON_EDIT_SUCCESS:
+        return { ...state, loading: false };
+      case types.POKEMON_EDIT_FAILURE:
+        return { ...state, loading: false, err: action.payload };
+  
+
       case types.POKEMON_MOVES_REQUEST:
         return { ...state, loading: true };
       case types.POKEMON_MOVES_SUCCESS:

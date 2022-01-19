@@ -4,7 +4,6 @@ import { useLocation, useHistory } from 'react-router-dom';
 
 import { selectPokemonsQuery } from '../../ducks/pokemons/selectors';
 import { selectTypesSelectOptions, selectTypesSelectOptionsMap } from '../../ducks/types/selectors'
-
 import { getTypes } from '../../ducks/types/operations'
 
 import PokeSearch from '../components/PokeSearch';

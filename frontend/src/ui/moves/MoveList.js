@@ -1,18 +1,15 @@
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 import { selectMovesLoading, selectMoves, selectMovesQuery } from '../../ducks/moves/selectors';
-
+import actions from '../../ducks/moves/actions';
 import { getMoves } from '../../ducks/moves/operations';
 
 import Loading from '../components/Loading';
 
-import actions from '../../ducks/moves/actions';
-
 import { BigText, MyLink  } from '../styles/MultiUsageStyles';
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { MoveCard, MoveListScrollable } from '../styles/MoveStyles';
-
 
 const MoveList = ({ moves, loading, query, changeQueryAction, getMoves }, props) => {
   const location = useLocation();

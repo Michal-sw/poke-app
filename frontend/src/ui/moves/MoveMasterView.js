@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 
-import { MainListFlexContainer, MyButton, MyLink } from '../styles/MultiUsageStyles';
 import MoveList from './MoveList';
 import MovePageChanger from './MovePageChanger';
 import MoveSearch from './MoveSearch';
 
+import { MainListFlexContainer, MyButton, MyLink } from '../styles/MultiUsageStyles';
 
 const MoveMasterView = ({ }, props) => {
 

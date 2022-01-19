@@ -1,8 +1,11 @@
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+
 import { selectPokemon } from "../../ducks/pokemons/selectors";
 import { selectTypesSelectOptionsMap } from "../../ducks/types/selectors";
+
 import TypeLogo from "../components/TypeLogo";
+
 import { ItemListContainer, MyLink } from "../styles/MultiUsageStyles";
 
 const PokemonTypeLogos = ({ pokemon, typesMap }) => {

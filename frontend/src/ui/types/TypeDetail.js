@@ -3,16 +3,15 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { selectType, selectTypes, selectTypesMap } from '../../ducks/types/selectors';
+import { getTypes } from '../../ducks/types/operations'
+
+import TypeAssociatedTypes from './TypeAssociatedTypes';
+import TypeLogo from '../components/TypeLogo';
 
 import { TypeDetailViewContainer } from '../styles/TypeStyles';
-
-import { getTypes } from '../../ducks/types/operations'
-import TypeLogo from '../components/TypeLogo';
 import { MyButton, MyLink, NameLabel } from '../styles/MultiUsageStyles';
-import TypeAssociatedTypes from './TypeAssociatedTypes';
 
-// Background Image wrzucic do publica
-const TypeDetail = ({ type, typesMap, types, getTypes }, props) => {
+const TypeDetail = ({ type, getTypes }, props) => {
 
   useEffect(() => {
     if (!type.num) getTypes();

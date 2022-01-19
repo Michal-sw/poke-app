@@ -1,18 +1,15 @@
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { selectPokemonsLoading, selectPokemons, selectPokemonsQuery } from '../../ducks/pokemons/selectors';
-
 import { getPokemons } from '../../ducks/pokemons/operations';
+import actions from '../../ducks/pokemons/actions';
 
 import Loading from '../components/Loading';
 
-import actions from '../../ducks/pokemons/actions';
-
-import { ItemListContainer, MyLink, NameLabel } from '../styles/MultiUsageStyles';
 import { PokemonCard, PokemonCardHead, PokemonSprite} from '../styles/PokemonStyles';
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-
+import { ItemListContainer, MyLink, NameLabel } from '../styles/MultiUsageStyles';
 
 const PokemonList = ({ pokemons, loading, query, changeQueryAction, getPokemons }, props) => {
   const location = useLocation();

@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 
 import { selectPokemonsQuery, selectPokemonsQueryPage, selectPokemonsMaxPage } from '../../ducks/pokemons/selectors';
 import { selectTypesSelectOptions } from '../../ducks/types/selectors'
-
 import { getTypes } from '../../ducks/types/operations'
 
 import { FlexRowContainer, PageButton, PageCounter } from '../styles/MultiUsageStyles';

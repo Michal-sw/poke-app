@@ -80,33 +80,42 @@ router.get('/:name/pokemons', async (req, res) => {
 router.put('/:name/edit', async (req, res) => {
   const name = req.params.name;
   const moveObject = req.body;
+  try {
+    Move
+      .findOneAndUpdate({ alias: name }, { ...moveObject, type: Types.ObjectId(moveObject.type)}, { new: true })
+      .then(move => {
+        if ( move !== null) {
+          return res.json(move)
+        } else {
+          return res.status(404).json('Move does not exist')
+        }
+      })
+      .catch(err => res.status(500).json(err.message))
+  } catch {
+    res.sendStatus(400)
+  }
+})
 
-  Move.findOneAndUpdate({ alias: name }, moveObject, { new: true })
-    .then(move => {
-      if ( move !== null) {
-        return res.json(move)
-      } else {
-        return res.status(404).json({ error: "Move does not exist"})
-      }
-    })
-    .catch(err => console.error(err))
-});
 
 router.post('/', async (req, res) => {
   // + 3 poniewaz niektore move'y posiadaja kilka wersji o tym samym pokedex id (np. 237)
-  const newNum = await Move.count() + 3;
-  const newMove = { 
-    num: newNum,
-    type: Types.ObjectId(req.body.type),
-    ...req.body 
-  };
-
-  new Move(newMove)
+  try {
+    const newNum = await Move.count() + 3;
+    const newMove = { 
+      num: newNum,
+      type: Types.ObjectId(req.body.type),
+      ...req.body 
+    };
+    new Move(newMove)
     .save()
     .then((move) => {
       return res.json(move)
     })
-    .catch(err => res.status(500).json(err))
+    .catch(err => res.status(500).json(err.message))
+  } catch {
+    res.sendStatus(400)
+  }
+
 })
 
 module.exports = router;

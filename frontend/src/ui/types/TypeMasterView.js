@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
-
-import { MainListFlexContainer } from '../styles/MultiUsageStyles';
 import TypeList from './TypeList';
+import { MainListFlexContainer } from '../styles/MultiUsageStyles';
 
 
 const TypeMasterView = ({ }, props) => {

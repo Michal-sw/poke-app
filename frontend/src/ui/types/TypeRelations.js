@@ -1,9 +1,8 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-
 import { selectType, selectTypesMap } from '../../ducks/types/selectors';
-import { AssociatedTypesContainer } from '../styles/TypeStyles';
 import TypeLogo from '../components/TypeLogo';
+import { AssociatedTypesContainer } from '../styles/TypeStyles';
 import { BigText, ItemListContainer, MyLink } from '../styles/MultiUsageStyles';
 
 const TypeRelations = ({ type, typesMap, relation }, props) => {

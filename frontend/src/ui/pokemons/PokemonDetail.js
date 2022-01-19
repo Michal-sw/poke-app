@@ -2,21 +2,21 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { selectPokemon } from '../../ducks/pokemons/selectors';
+import { selectPokemon, selectPokemonsLoading } from '../../ducks/pokemons/selectors';
 import { selectTypesLoading, selectTypesSelectOptionsMap } from '../../ducks/types/selectors'
-
-import { PokemonDetailViewContainer, PokemonDetailInfo, PokemonDetailPresentation } from '../styles/PokemonStyles';
-
 import { getPokemon } from '../../ducks/pokemons/operations';
-
 import { getTypes } from '../../ducks/types/operations'
-import PokemonOnGrassTile from '../components/PokemonOnGrassTile';
+
 import PokemonStats from './PokemonStats';
 import PokemonMoves from './PokemonMoves';
 import PokemonTypeLogos from './PokemonTypeLogos';
+import Loading from '../components/Loading';
+import PokemonOnGrassTile from '../components/PokemonOnGrassTile';
+
+import { PokemonDetailViewContainer, PokemonDetailInfo } from '../styles/PokemonStyles';
 import { MyButton, MyLink, NameLabel } from '../styles/MultiUsageStyles';
 
-const PokemonDetail = ({ pokemon, getPokemon, name, typesMap, getTypes, typesLoading }, props) => {
+const PokemonDetail = ({ pokemon, getPokemon, name, typesMap, getTypes, typesLoading, loading }, props) => {
 
   useEffect(() => {
     if (pokemon.alias !== name) getPokemon(name);
@@ -24,20 +24,19 @@ const PokemonDetail = ({ pokemon, getPokemon, name, typesMap, getTypes, typesLoa
   }, [pokemon.alias])
 
   return (
-      <PokemonDetailViewContainer>
-        <PokemonTypeLogos />
-        <NameLabel style={{marginBottom: '-30px'}}>{pokemon.name}</NameLabel>
-        <PokemonDetailPresentation>
+      loading ? <Loading/>
+      : <PokemonDetailViewContainer>
+          <PokemonTypeLogos />
+          <NameLabel style={{marginBottom: '-30px'}}>{pokemon.name}</NameLabel>
           <PokemonOnGrassTile name={pokemon.alias} num={pokemon.num}></PokemonOnGrassTile>
-        </PokemonDetailPresentation>
-        <PokemonDetailInfo>
-          <PokemonStats stats={pokemon.stats} />
-          <PokemonMoves />
-        </PokemonDetailInfo>
-      <MyLink to={`/pokemons/${pokemon.alias}/edit`}>
-        <MyButton>Edit Pokemon</MyButton>
-      </MyLink>
-      </PokemonDetailViewContainer>
+          <PokemonDetailInfo>
+            <PokemonStats stats={pokemon.stats} />
+            <PokemonMoves />
+          </PokemonDetailInfo>
+          <MyLink to={`/pokemons/${pokemon.alias}/edit`}>
+            <MyButton>Edit Pokemon</MyButton>
+          </MyLink>
+        </PokemonDetailViewContainer>
   )
 };
 
@@ -47,6 +46,7 @@ const mapStateToProps = (state, props) => ({
   pokemon: selectPokemon(state, props),
   typesMap: selectTypesSelectOptionsMap(state),
   typesLoading: selectTypesLoading(state),
+  loading: selectPokemonsLoading(state)
 });
 
 const mapDispatchToProps = {
