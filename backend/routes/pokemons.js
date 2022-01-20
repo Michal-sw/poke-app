@@ -88,36 +88,58 @@ router.get('/:name/moves', async (req, res) => {
 
 
 router.put('/:name/edit', async (req, res) => {
-  const name = req.params.name;
-  const pokemonObject = req.body;
+  try {
+    const name = req.params.name;
+    const pokemonObject = req.body;
 
-  Pokemon.findOneAndUpdate({ alias: name }, pokemonObject, { new: true })
-    .then(pokemon => {
-      if ( pokemon !== null) {
-        return res.json(pokemon)
-      } else {
-        return res.status(404).json({ error: "Pokemon does not exist"})
-      }
-    })
-    .catch(err => console.error(err))
+    Pokemon.findOneAndUpdate({ alias: name }, pokemonObject, { new: true })
+      .then(pokemon => {
+        if ( pokemon !== null) {
+          return res.json(pokemon)
+        } else {
+          return res.status(404).json({ error: 'Pokemon not found' })
+        }
+      })
+      .catch(err => res.status(500).json(err))
+  } catch {
+      res.sendStatus(400)
+    }
+});
+
+router.delete('/:name', async (req, res) => {
+  const name = req.params.name;
+  
+  Pokemon.findOneAndDelete({ alias: name })
+  .then(pokemon => {
+    if ( pokemon !== null) {
+      return res.json(pokemon)
+    } else {
+      return res.sendStatus(404).json({ error: 'Pokemon not found' })
+    }
+  })
+  .catch(err => res.status(500).json(err))
 });
 
 router.post('/', async (req, res) => {
-  // + 3 poniewaz niektore move'y posiadaja kilka wersji o tym samym pokedex id (np. 237)
-  const newNum = await Pokemon.count();
-  const newPokemon = { 
-    num: newNum,
-    types: req.body.types.map(type => Types.ObjectId(type)),
-    moves: req.body.moves.map(move => Types.ObjectId(move)),
-    ...req.body 
-  };
+  try {
+    // + 3 poniewaz niektore move'y posiadaja kilka wersji o tym samym pokedex id (np. 237)
+    const newNum = await Pokemon.count();
+    const newPokemon = { 
+      num: newNum,
+      types: req.body.types.map(type => Types.ObjectId(type)),
+      moves: req.body.moves.map(move => Types.ObjectId(move)),
+      ...req.body 
+    };
 
-  new Pokemon(newPokemon)
-    .save()
-    .then((pokemon) => {
-      return res.json(pokemon)
-    })
-    .catch(err => res.status(500).json(err))
+    new Pokemon(newPokemon)
+      .save()
+      .then((pokemon) => {
+        return res.json(pokemon)
+      })
+      .catch(err => res.status(500).json(err))
+  } catch {
+    res.sendStatus(400)
+  }
 })
 
 module.exports = router;

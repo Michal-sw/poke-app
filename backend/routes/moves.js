@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
     default: sort.num = 1;
   }
   // + 3 poniewaz niektore move'y posiadaja kilka wersji o tym samym pokedex id (np. 237)
-  const numOfRecords = await Move.find(query).count() + 3;
+  const numOfRecords = await Move.find(query).count()+3;
   const limit = parseInt(req.query.limit) || 60;
   const maxPage = Math.ceil(numOfRecords/limit)
 
@@ -96,6 +96,19 @@ router.put('/:name/edit', async (req, res) => {
   }
 })
 
+router.delete('/:name', async (req, res) => {
+  const name = req.params.name;
+
+    Move.findOneAndDelete({ alias: name })
+    .then(move => {
+      if ( move !== null) {
+        return res.json(move)
+      } else {
+        return res.sendStatus(404).json({ error: 'Move not found' })
+      }
+    })
+    .catch(err => res.status(500).json(err))
+});
 
 router.post('/', async (req, res) => {
   // + 3 poniewaz niektore move'y posiadaja kilka wersji o tym samym pokedex id (np. 237)

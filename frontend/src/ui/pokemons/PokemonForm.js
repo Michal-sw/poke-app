@@ -6,7 +6,7 @@ import * as yup from 'yup';
 
 import { selectTypesSelectOptions, selectTypesSelectOptionsMap } from '../../ducks/types/selectors'
 import { selectPokemon, selectPokemonMoves, selectPokemonMovesName, selectPokemonsLoading } from '../../ducks/pokemons/selectors';
-import { addPokemon, editPokemon, getPokemon, getPokemonMoves } from '../../ducks/pokemons/operations'
+import { addPokemon, deletePokemon, editPokemon, getPokemon, getPokemonMoves } from '../../ducks/pokemons/operations'
 import { getTypes } from '../../ducks/types/operations';
 
 import TypeSelectForm from '../components/TypeSelectForm';
@@ -14,19 +14,23 @@ import Loading from '../components/Loading';
 import FormFieldContainer from '../components/FormFieldContainer';
 import PokemonMoveSelectForm from './PokemonMoveSelectForm';
 
-import { BigText, FormContainer, FormRow, FormInputContainer, MyButton } from '../styles/MultiUsageStyles';
+import { BigText, FormContainer, FormRow, FormInputContainer, DeleteButton } from '../styles/MultiUsageStyles';
+import { getMoves } from '../../ducks/moves/operations';
+import { selectMoves } from '../../ducks/moves/selectors';
 
-const PokemonForm = ({ name, pokemon, pokemonMovesName, loading, addPokemon, editPokemon, types, typesMap, getPokemon, getTypes, getPokemonMoves }, props) => {
+const PokemonForm = ({ name, pokemon, pokemonMovesName, loading, addPokemon, editPokemon, deletePokemon, types, typesMap, moves, getPokemon, getTypes, getPokemonMoves, getMoves }, props) => {
     
   const history = useHistory();
 
   useEffect(() => {
     if (!types.length) getTypes();
     if (name && !pokemon._id) getPokemon(name);
-    if ( name && name !== pokemonMovesName) getPokemonMoves(name)
+    if (!moves.length) getMoves('');
+    if ( name && name !== pokemonMovesName) getPokemonMoves(name);
   }, [types.length]);
 
   const handleSubmit = (formObject) => {
+    console.log(formObject.moves)
     if (!formObject.alias) {
       formObject.alias = formObject.name.replace(/[^A-Z0-9]+/ig, "").toLowerCase()
     }
@@ -45,7 +49,7 @@ const PokemonForm = ({ name, pokemon, pokemonMovesName, loading, addPokemon, edi
       types: formObject.types,
       moves: formObject.moves
     }
-    
+
     if (pokemon._id) {
       editPokemon(newPokemon);
       history.push(`/pokemons`)
@@ -54,7 +58,12 @@ const PokemonForm = ({ name, pokemon, pokemonMovesName, loading, addPokemon, edi
       history.push('/pokemons')
     }
   }
-  // ZROBIC EDYCJE I DODAWANIE DLA POKEMONA I USUWANIE 
+
+  const handleRemove = () => {
+    deletePokemon(name);
+    history.push('/pokemons')
+  }
+
 
   const validationSchema = yup.object({
       name: yup.string().required(<p>Required</p>),
@@ -65,7 +74,7 @@ const PokemonForm = ({ name, pokemon, pokemonMovesName, loading, addPokemon, edi
       spa: yup.number().min(0, <p>Minimum 0</p>).max(150, <p>Maximum 150</p>).required(<p>Required</p>),
       spd: yup.number().min(0, <p>Minimum 0</p>).max(150, <p>Maximum 150</p>).required(<p>Required</p>),
       spe: yup.number().min(0, <p>Minimum 0</p>).max(150, <p>Maximum 150</p>).required(<p>Required</p>),
-      types: yup.array().oneOf(types.map(option => option.value)).required(<p>Required</p>)
+      types: yup.array().required(<p>Required</p>)
   })
   const initialValues = name
     ? {
@@ -130,10 +139,11 @@ const PokemonForm = ({ name, pokemon, pokemonMovesName, loading, addPokemon, edi
               
               <Field name="moves" component={PokemonMoveSelectForm} />
 
-                <MyButton type="submit">
+                <button type="submit">
                   Confirm
-                </MyButton>
+                </button>
             </FormContainer>
+            {name ? <DeleteButton type="button" onClick={handleRemove}>REMOVE</DeleteButton> : null}
           </Form>
       </Formik>
   )
@@ -146,15 +156,18 @@ const mapStateToProps = (state, props) => ({
     pokemonMovesName: selectPokemonMovesName(state),
     types: selectTypesSelectOptions(state),
     typesMap: selectTypesSelectOptionsMap(state),
-    loading: selectPokemonsLoading(state)
+    loading: selectPokemonsLoading(state),
+    moves: selectMoves(state)
 })
 
 const mapDispatchToProps = {
   addPokemon,
   editPokemon,
+  deletePokemon,
   getPokemonMoves,
   getPokemon,
-  getTypes
+  getTypes,
+  getMoves,
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PokemonForm));

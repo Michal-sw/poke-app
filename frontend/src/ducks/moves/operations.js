@@ -65,7 +65,6 @@ export const addMove = (move) => {
 
 
 export const editMove = (move) => {
-  console.log(move.alias)
   return createAction({
     endpoint: `http://localhost:3001/moves/${move.alias}/edit`,
     body: JSON.stringify(move),
@@ -77,6 +76,21 @@ export const editMove = (move) => {
       types.MOVE_EDIT_REQUEST,
       types.MOVE_EDIT_SUCCESS,
       types.MOVE_EDIT_FAILURE
+    ]
+  })
+};
+
+export const deleteMove = (name) => {
+  return createAction({
+    endpoint: `http://localhost:3001/moves/${name}`,
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    types: [
+      types.MOVE_DELETE_REQUEST,
+      types.MOVE_DELETE_SUCCESS,
+      types.MOVE_DELETE_FAILURE
     ]
   })
 };

@@ -26,8 +26,8 @@ const PokemonMoveSelectForm = ({ form, field, name, pokemonMoves, moves, getMove
     <div>
       <div>
         <FlexRowContainer>
-          { page > 1 ? <PageButton onClick={pageDown}>Previous page</PageButton> : null }
-          { page >= maxPage ? null : <PageButton onClick={pageUp}>Next page</PageButton> }
+          { page > 1 ? <PageButton type='button' onClick={pageDown}>Previous page</PageButton> : null }
+          { page >= maxPage ? null : <PageButton type='button' onClick={pageUp}>Next page</PageButton> }
         </FlexRowContainer>
         <PageCounter>{page} z {maxPage}</PageCounter>
       </div>

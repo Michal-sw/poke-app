@@ -65,7 +65,7 @@ export const addPokemon = (pokemon) => {
 };
 
 export const editPokemon = (pokemon) => {
-  console.log(pokemon.alias)
+
   return createAction({
     endpoint: `http://localhost:3001/pokemons/${pokemon.alias}/edit`,
     body: JSON.stringify(pokemon),
@@ -77,6 +77,18 @@ export const editPokemon = (pokemon) => {
       types.POKEMON_EDIT_REQUEST,
       types.POKEMON_EDIT_SUCCESS,
       types.POKEMON_EDIT_FAILURE
+    ]
+  })
+};
+
+export const deletePokemon = (name) => {
+  return createAction({
+    endpoint: `http://localhost:3001/pokemons/${name}`,
+    method: 'DELETE',
+    types: [
+      types.POKEMON_DELETE_REQUEST,
+      types.POKEMON_DELETE_SUCCESS,
+      types.POKEMON_DELETE_FAILURE
     ]
   })
 };

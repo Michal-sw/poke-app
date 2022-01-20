@@ -6,17 +6,16 @@ import * as yup from 'yup';
 
 import { selectMove, selectMovesLoading } from '../../ducks/moves/selectors';
 import { selectTypesSelectOptions, selectTypesSelectOptionsMap } from '../../ducks/types/selectors'
-import { addMove, editMove, getMove } from '../../ducks/moves/operations'
+import { addMove, editMove, getMove, deleteMove } from '../../ducks/moves/operations'
 import { getTypes } from '../../ducks/types/operations';
 
 import TypeSelectForm from '../components/TypeSelectForm';
 import FormFieldContainer from '../components/FormFieldContainer';
 import Loading from '../components/Loading';
 
-import { BigText, FormContainer, FormRow, FormInputContainer, MyButton } from '../styles/MultiUsageStyles';
+import { BigText, FormContainer, FormRow, FormInputContainer, MyButton, DeleteButton } from '../styles/MultiUsageStyles';
 
-const MoveForm = ({ name, move, loading, addMove, getMove, editMove, types, typesMap, getTypes }, props) => {
-    
+const MoveForm = ({ name, move, loading, addMove, getMove, deleteMove, editMove, types, typesMap, getTypes }, props) => {
   const history = useHistory();
 
   useEffect(() => {
@@ -35,6 +34,10 @@ const MoveForm = ({ name, move, loading, addMove, getMove, editMove, types, type
       addMove(formObject)
       history.push('/moves')
     }
+  }
+  const handleRemove = () => {
+    deleteMove(name);
+    history.push('/moves')
   }
 
   const validationSchema = yup.object({
@@ -95,6 +98,7 @@ const MoveForm = ({ name, move, loading, addMove, getMove, editMove, types, type
                   Confirm
                 </MyButton>
             </FormContainer>
+            {name ? <DeleteButton type="button" onClick={handleRemove}>REMOVE</DeleteButton> : null}
           </Form>
       </Formik>
   )
@@ -111,6 +115,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = {
   addMove,
   editMove,
+  deleteMove,
   getTypes,
   getMove
 }

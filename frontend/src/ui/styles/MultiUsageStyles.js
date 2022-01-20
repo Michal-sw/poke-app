@@ -32,9 +32,12 @@ export const FlexRowContainer = styled.div`
 `;
 export const PageButton = styled.button`
   font-family: "Pokemon Pixel Font Regular";
-  font-size: 1.2em;
-  &:active: {
-    background-color: black;
+  font-size: 1.5em;
+  border-radius: 20px;
+  background-color: whitesmoke;
+  &:active {
+    background-color: white;
+    color: black
   }
 `;
 export const PageCounter = styled.p`
@@ -186,4 +189,21 @@ export const FormContainer = styled.div`
   border-radius: 20px;
   border: 5px ridge whitesmoke;
   padding: 0px 20px 20px 20px;
+`;
+
+export const DeleteButton = styled.div`
+  display: inline-block;
+  margin-top:5px;
+  margin-bottom:5px;
+  font-weight: 700;
+  font-size: 1.8em;
+  width: 125px;
+  background-color: red;
+  border-radius: 20px;
+  transition: 0.1s linear;
+  &:hover {
+    cursor: pointer;
+    background-color: black;
+    color: red;
+  }
 `;

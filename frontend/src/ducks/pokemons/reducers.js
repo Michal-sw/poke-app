@@ -29,17 +29,23 @@ export const pokemonReducer = (state = pokemonInitState, action) => {
       case types.POKEMON_ADD_REQUEST:
         return { ...state, loading: true };
       case types.POKEMON_ADD_SUCCESS:
-        return { ...state, loading: false };
+        return { ...state, loading: false, pokemons: state.pokemons.map(pokemon => pokemon._id === action.payload._id ? action.payload : pokemon) };
       case types.POKEMON_ADD_FAILURE:
         return { ...state, loading: false, err: action.payload };
         
       case types.POKEMON_EDIT_REQUEST:
         return { ...state, loading: true };
       case types.POKEMON_EDIT_SUCCESS:
-        return { ...state, loading: false };
+        return { ...state, loading: false, pokemons: state.pokemons.map(pokemon => pokemon._id === action.payload._id ? action.payload : pokemon), pokemon: action.payload, pokemonMoves: pokemonInitState.pokemonMoves };
       case types.POKEMON_EDIT_FAILURE:
         return { ...state, loading: false, err: action.payload };
   
+      case types.POKEMON_DELETE_REQUEST:
+        return { ...state, loading: true };
+      case types.POKEMON_DELETE_SUCCESS:
+        return { ...state, loading: false, pokemons: state.pokemons.filter(pokemon => pokemon._id !== action.payload._id), pokemon: pokemonInitState.pokemon , pokemonMoves: pokemonInitState.pokemonMoves };
+      case types.POKEMON_DELETE_FAILURE:
+        return { ...state, loading: false, err: action.payload };
 
       case types.POKEMON_MOVES_REQUEST:
         return { ...state, loading: true };
