@@ -19,11 +19,35 @@ const chatMessageReceived = (message) => ({
   payload: message
 })
 
+const chatMessageSent = (message) => ({
+  type: types.CHAT_MESSAGE_SENT,
+  payload: message
+})
+
+const moveReceived = (move) => ({
+  type: types.MOVE_RECEIVED,
+  payload: move
+})
+
+const moveSent = (move) => ({
+  type: types.MOVE_SENT,
+  payload: move
+})
+
+const enemyPokemonReceived = (move) => ({
+  type: types.ENEMY_POKEMON_RECEIVED,
+  payload: move
+})
+
 const actions = {
   connectionInit,
   connectionSuccess,
   connectionFail,
-  chatMessageReceived
+  chatMessageReceived,
+  chatMessageSent,
+  moveReceived,
+  moveSent,
+  enemyPokemonReceived,
 };
 
 export default actions;

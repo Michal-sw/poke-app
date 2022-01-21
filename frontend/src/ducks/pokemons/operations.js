@@ -1,6 +1,6 @@
 import { createAction } from "redux-api-middleware"
 import types from './types';
-
+import mqttTypes from '../mqtt_handler/types';
 
 export const getPokemons = (query) => {
   
@@ -32,6 +32,23 @@ export const getPokemon = (name) => {
     ]
   })
 };
+
+export const getEnemyFightPokemon = (name) => {
+  console.log(name)
+  return createAction({
+    endpoint: `http://localhost:3001/pokemons/${name}`,
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    types: [
+      'ENEMY_POKEMON_REQUEST',
+      mqttTypes.ENEMY_POKEMON_RECEIVED,
+      'ENEMY_POKEMON_FAIL'
+    ]
+  })
+};
+
 
 export const getPokemonMoves = (name) => {
   return createAction({
