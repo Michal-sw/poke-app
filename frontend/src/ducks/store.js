@@ -6,6 +6,7 @@ import mqttHandler from '../middlewares/mqttHandler';
 import { pokemonReducer } from './pokemons/reducers';
 import { moveReducer } from './moves/reducers';
 import { typeReducer } from './types/reducers';
+import { mqttReducer } from './mqtt_handler/reducers';
 import apiErrorHandler from '../middlewares/apiErrorHandler';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -14,7 +15,8 @@ const combinedReducers = combineReducers(
   {
     pokemons: pokemonReducer,
     moves: moveReducer,
-    types: typeReducer
+    types: typeReducer,
+    mqtt: mqttReducer
   }
 )
 

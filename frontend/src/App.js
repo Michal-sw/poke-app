@@ -15,6 +15,7 @@ import MoveMasterView from './ui/moves/MoveMasterView';
 import MoveDetail from './ui/moves/MoveDetail';
 import MoveForm from './ui/moves/MoveForm';
 import PokemonForm from './ui/pokemons/PokemonForm';
+import MqttTest from './ui/mqtt_test/MqttTest';
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
         <Switch>
           <Route path='/pokemons' component={ PokemonMasterView } exact/>
           <Route path='/pokemons/add' component={ PokemonForm } exact/>
+
+          <Route path='/pokemons/fight' component={ MqttTest } exact/>
+
           <Route path='/pokemons/:name' component={ PokemonDetail } exact/>
           <Route path='/pokemons/:name/edit' component={ PokemonForm } exact/>
 
