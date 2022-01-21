@@ -6,6 +6,12 @@ const options = {
   connectTimeout: 30 * 1000,
 }
 
+// sigma HOST -
+// const host = 'ws://10.45.3.136:8000/mqtt'
+
+// Local host -
+// const host = 'ws://192.168.0.13:8000/mqtt'
+
 const host = 'ws://10.45.3.136:8000/mqtt'
 
 // -t "fights/roomID" -m JSON.stringify(attack:attackName) || JSON.stringify(message:message)
