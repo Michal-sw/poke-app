@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "follow-redirects": "^1.14.7",
     "formik": "^2.2.9",
     "mqtt": "^4.3.4",
     "mqtt-react-hooks": "^2.0.3",
