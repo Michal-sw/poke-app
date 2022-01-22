@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const pokemons = require('./routes/pokemons');
 const moves = require('./routes/moves');
 const types = require('./routes/types');
+const fights = require('./routes/fights');
 
 const corsOptions = {
   origin: 'http://localhost:3000',
@@ -15,7 +16,8 @@ app.use(express.json());
 app.use(cors(corsOptions));
 app.use('/pokemons', pokemons);
 app.use('/moves', moves);
-app.use('/types', types)
+app.use('/types', types);
+app.use('/fights', fights);
 
 require('dotenv').config();
 const dbConnData = {
