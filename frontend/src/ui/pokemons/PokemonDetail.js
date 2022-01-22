@@ -6,6 +6,7 @@ import { selectPokemon, selectPokemonsLoading } from '../../ducks/pokemons/selec
 import { selectTypesLoading, selectTypesSelectOptionsMap } from '../../ducks/types/selectors'
 import { getPokemon } from '../../ducks/pokemons/operations';
 import { getTypes } from '../../ducks/types/operations'
+import actions from '../../ducks/mqtt_handler/actions';
 
 import PokemonStats from './PokemonStats';
 import PokemonMoves from './PokemonMoves';
@@ -16,12 +17,16 @@ import PokemonOnGrassTile from '../components/PokemonOnGrassTile';
 import { PokemonDetailViewContainer, PokemonDetailInfo } from '../styles/PokemonStyles';
 import { MyButton, MyLink, NameLabel } from '../styles/MultiUsageStyles';
 
-const PokemonDetail = ({ pokemon, getPokemon, name, typesMap, getTypes, typesLoading, loading }, props) => {
+const PokemonDetail = ({ pokemon, getPokemon, name, typesMap, getTypes, typesLoading, loading, chooseFightPokemon }, props) => {
 
   useEffect(() => {
     if (pokemon.alias !== name) getPokemon(name);
     if (!typesMap[pokemon.types[0]] && !typesLoading) getTypes();
   }, [pokemon.alias])
+
+  const handleFightChoose = () => {
+    chooseFightPokemon(pokemon)
+  };
 
   return (
       loading ? <Loading/>
@@ -35,6 +40,9 @@ const PokemonDetail = ({ pokemon, getPokemon, name, typesMap, getTypes, typesLoa
           </PokemonDetailInfo>
           <MyLink to={`/pokemons/${pokemon.alias}/edit`}>
             <MyButton>Edit Pokemon</MyButton>
+          </MyLink>
+          <MyLink to={`/pokemons/fight`}>
+            <MyButton onClick={handleFightChoose}>Select for fight!</MyButton>
           </MyLink>
         </PokemonDetailViewContainer>
   )
@@ -51,7 +59,8 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = {
   getPokemon,
-  getTypes
+  getTypes,
+  chooseFightPokemon: actions.clientPokemonChosen,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PokemonDetail));

@@ -7,7 +7,7 @@ const options = {
   clean: true,
   reconnectPeriod: 30000,
   connectTimeout: 30 * 1000,
-}
+};
 
 // sigma HOST -
 // const host = 'ws://10.45.3.136:8000/mqtt'
@@ -24,21 +24,35 @@ const host = 'ws://10.45.3.136:8000/mqtt'
 
 const middleware = store => next => action => {
   if (action.type === types.CONNECTION_INIT) {
-    const client = mqtt.connect(host, options)
+    
+    const client = mqtt.connect(host, {
+      ...options,
+      will: {
+        ...options.will,
+        payload: JSON.stringify({ room: action.payload, payload: -1 })
+      }
+    })
 
     client.on('connect', async (conn) => {
-      client.subscribe('fights/roomID', {
+      client.subscribe(`fights/${action.payload}`, {
+        qos: 2,
         will: {
-          topic: 'WillMsg',
-          payload: 'Connection Closed abnormally..!',
+          topic: 'fights/connect',
+          payload: JSON.stringify({ room: action.payload, payload: -1 }),
           qos: 0,
           retain: false
         }
-      }, () => store.dispatch(actions.connectionSuccess(client)))
+      }, () => {
+        client.publish('fights/connect', JSON.stringify({ room: action.payload, payload: 1 }));
+        store.dispatch(actions.connectionSuccess({ client, roomId: action.payload }))
+      })
     })
 
     client.on('close', () => {
-      console.log('closed')
+      client.publish(
+        'fights/connect',
+        JSON.stringify({ room: store.getState().mqtt.roomId, payload: -1 })
+        );
     })
     
     client.on('message', (topic, mess) => {
@@ -51,8 +65,6 @@ const middleware = store => next => action => {
       };
       if (messageJson.move) {
         // {"move":"${num}"} -> znajdz w store ->
-        console.log(messageJson.move)
-        console.log(store.getState().mqtt.enemyPokemon.moves)
         const move = store
           .getState().mqtt.enemyPokemon.moves
             .find(move => messageJson.move === move._id);

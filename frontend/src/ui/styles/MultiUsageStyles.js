@@ -103,6 +103,7 @@ export const MyButton = styled.button`
   &:hover {
     cursor: pointer;
     background-color: white;
+    box-shadow: 0px 0px 0.5px 0.5px grey;
   }
   &:active {
     box-shadow: inset 0px 0px 3px 1px grey;

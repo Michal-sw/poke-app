@@ -31,9 +31,9 @@ client.on('message', (topic, mess) => {
   const roomId = messageJson.room;
   // -1 na wyjscie, 1 na wejscie ->
   const payload = messageJson.payload;
-
   const fill = rooms[roomId];
   fill ? rooms[roomId] = fill + payload : rooms[roomId] = 1;
+  
   console.log(rooms)
 })
 

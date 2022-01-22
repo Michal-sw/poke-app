@@ -39,6 +39,11 @@ const enemyPokemonReceived = (move) => ({
   payload: move
 })
 
+const clientPokemonChosen = (pokemon) => ({
+  type: types.CLIENT_POKEMON_CHOSEN,
+  payload: pokemon
+})
+
 const actions = {
   connectionInit,
   connectionSuccess,
@@ -48,6 +53,7 @@ const actions = {
   moveReceived,
   moveSent,
   enemyPokemonReceived,
+  clientPokemonChosen,
 };
 
 export default actions;
