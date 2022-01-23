@@ -13,13 +13,15 @@ const mqttInitState = {
 
 export const mqttReducer = (state = mqttInitState, action) => {
     switch(action.type) {
+      case types.CONNECTION_INIT:
+        return { ...state, loading: true }
       case types.CONNECTION_SUCCESS:
-        return { ...state, client: action.payload.client, roomId: action.payload.roomId };
+        return { ...state, loading: false, client: action.payload.client, roomId: action.payload.roomId };
+      case types.CONNECTION_FAIL: 
+        return { ...state, loading: false, client: null }
+
       case types.CHAT_MESSAGE_RECEIVED:
         return { ...state, messages: [...state.messages, action.payload] }
-      case types.CONNECTION_FAIL: 
-        return { ...state, client: null }
-
       case types.CHAT_MESSAGE_SENT: 
         return { ...state, messages: [...state.messages, action.payload] }
 
@@ -32,7 +34,12 @@ export const mqttReducer = (state = mqttInitState, action) => {
         return { ...state, enemyPokemon: { ...action.payload, fightHp: action.payload.stats.hp } }
       case types.CLIENT_POKEMON_CHOSEN: 
         return { ...state, clientPokemon: { ...action.payload, fightHp: action.payload.stats.hp } }
-    
+
+      case types.PLAYER_ROOM_JOIN:
+        return { ...state, messages: [...state.messages, 'A Player joined the room!'] }
+      case types.PLAYER_ROOM_LEFT:
+        return { ...state, messages: [...state.messages, 'A Player left the room!'], enemyPokemon: mqttInitState.enemyPokemon }
+  
       default:
         return state;
     }

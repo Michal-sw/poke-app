@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router({mergeParams: true});
 const mqtt = require('mqtt');
 const host = 'mqtt://10.45.3.136:1883/mqtt';
+
 const options = {
   clean: true,
   reconnectPeriod: 5000,
@@ -32,8 +33,14 @@ client.on('message', (topic, mess) => {
   // -1 na wyjscie, 1 na wejscie ->
   const payload = messageJson.payload;
   const fill = rooms[roomId];
-  fill ? rooms[roomId] = fill + payload : rooms[roomId] = 1;
-  
+  if (fill && fill !== 0) {
+    client.publish(
+      `fights/${roomId}`,
+      JSON.stringify({ fill: fill+payload }),
+      { qos: 2 }
+    )
+    rooms[roomId] = fill + payload;
+  } else rooms[roomId] = 1;
   console.log(rooms)
 })
 

@@ -17,43 +17,33 @@ const options = {
 
 const host = 'ws://10.45.3.136:8000/mqtt'
 
-// -t "fights/roomID" -m JSON.stringify(attack:attackName) || JSON.stringify(message:message)
-// chat i ataki beda przesylane na tej samej scieżce
-// klienci moga sie podlaczyc pod dowolny pokoj 
-// ktorego ID bedzie uzywane jako topic ${roomID}
-
 const middleware = store => next => action => {
-  if (action.type === types.CONNECTION_INIT) {
-    
+  if (action.type === types.CONNECTION_INIT) {   
+    const roomId = parseInt(action.payload);
     const client = mqtt.connect(host, {
       ...options,
       will: {
-        ...options.will,
-        payload: JSON.stringify({ room: action.payload, payload: -1 })
+        topic: 'fights/connect',
+        payload: JSON.stringify({ room: roomId, payload: -1 }),
+        qos: 2
       }
-    })
+    });
 
     client.on('connect', async (conn) => {
-      client.subscribe(`fights/${action.payload}`, {
+      client.subscribe(`fights/${roomId}`, {
         qos: 2,
-        will: {
-          topic: 'fights/connect',
-          payload: JSON.stringify({ room: action.payload, payload: -1 }),
-          qos: 0,
-          retain: false
-        }
       }, () => {
-        client.publish('fights/connect', JSON.stringify({ room: action.payload, payload: 1 }));
-        store.dispatch(actions.connectionSuccess({ client, roomId: action.payload }))
+          client.publish('fights/connect', JSON.stringify({ room: roomId, payload: 1 }));
+          store.dispatch(actions.connectionSuccess({ client, roomId }))
       })
-    })
+    });
 
     client.on('close', () => {
       client.publish(
         'fights/connect',
         JSON.stringify({ room: store.getState().mqtt.roomId, payload: -1 })
-        );
-    })
+      );
+    });
     
     client.on('message', (topic, mess) => {
       console.log(mess)
@@ -71,6 +61,16 @@ const middleware = store => next => action => {
         // sprawdz czy zadaje 2x, 0.5x lub 1x dmg ->
         // dispatch({ move: ${move.name}, damage: ${move.power}}) ->
         store.dispatch(actions.moveReceived({ move: move.name, damage: move.power }))
+      }
+
+      // Wprowadzic jakis mechanizm sprawdzenia przepelnienia pokoju przed wejsciem
+      // GET do API pyatajacy o ilosc graczy, jezeli jest < 2 to dolacz,
+      // Jezeli nie to daj wiadomosc i na froncie ja wyswietli
+      if (messageJson.fill) {
+        // {"fill":1||2}
+        messageJson.fill === 2
+          ? store.dispatch(actions.playerJoinedRoom())
+          : store.dispatch(actions.playerLeftRoom());
       }
     })
   }
