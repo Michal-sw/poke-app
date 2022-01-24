@@ -18,13 +18,21 @@ const options = {
 const host = 'ws://10.45.3.136:8000/mqtt'
 
 const middleware = store => next => action => {
-  if (action.type === types.CONNECTION_INIT) { 
+  if (action.type === types.CONNECTION_INIT) {
+    const roomId = parseInt(action.payload.roomId);
+    const username = action.payload.username;
+
     if (!store.getState().fightClient.pokemon.num) {
       store.dispatch(actions.connectionFail('Pokemon must be selected!'))
       return next(action)
     }
-    const roomId = parseInt(action.payload.roomId);
-    const username = action.payload.username;
+    const isRoomFilled = fetch(`http://localhost:3001/fights/${roomId}/size`)
+      .then(r => r.json())
+      .then(fill => fill >= 2);
+    if (isRoomFilled) {
+      store.dispatch(actions.connectionFail('Room is filled!'))
+      return next(action)
+    }
 
     const client = mqtt.connect(host, {
       ...options,
@@ -77,10 +85,6 @@ const middleware = store => next => action => {
         // dispatch({ move: ${move.name}, damage: ${move.power}}) ->
         store.dispatch(actions.moveReceived({ move: move.name, damage: move.power }))
       }
-
-      // Wprowadzic jakis mechanizm sprawdzenia przepelnienia pokoju przed wejsciem
-      // GET do API pyatajacy o ilosc graczy, jezeli jest < 2 to dolacz,
-      // Jezeli nie to daj wiadomosc i na froncie ja wyswietli
     })
   }
 

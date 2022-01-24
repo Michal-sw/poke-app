@@ -50,7 +50,7 @@ client.on('message', (topic, mess) => {
 router.get('/:roomId/size', (req, res) => {
   const roomId = req.params.roomId;
   rooms[roomId]
-    ? res.json(rooms[roomId])
+    ? res.json(rooms[roomId].length)
     : res.json(0);
 })
 
