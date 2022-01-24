@@ -12,7 +12,7 @@ const FightMoves = ({ pokemon }) => {
 }
 
 const mapStateToProps = (state, props) => ({
-  pokemon: props.isEnemy ? state.mqtt.enemyPokemon : state.mqtt.clientPokemon,
+  pokemon: props.isEnemy ? state.fightEnemy.pokemon : state.fightClient.pokemon,
   connectionClient: state.mqtt.client
 });
 

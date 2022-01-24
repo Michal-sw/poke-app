@@ -1,8 +1,8 @@
 import types from './types';
 
-const connectionInit = (topic) => ({
+const connectionInit = (connectParams) => ({
   type: types.CONNECTION_INIT,
-  payload: topic
+  payload: connectParams
 });
 
 const connectionSuccess = (client) => ({
@@ -10,8 +10,9 @@ const connectionSuccess = (client) => ({
   payload: client
 });
 
-const connectionFail = () => ({
-  type: types.CONNECTION_FAIL
+const connectionFail = (message) => ({
+  type: types.CONNECTION_FAIL,
+  payload: message
 });
 
 const chatMessageReceived = (message) => ({
@@ -44,12 +45,14 @@ const clientPokemonChosen = (pokemon) => ({
   payload: pokemon
 });
 
-const playerJoinedRoom = () => ({
-  type: types.PLAYER_ROOM_JOIN
+const playerJoinedRoom = (username) => ({
+  type: types.PLAYER_ROOM_JOIN,
+  payload: username
 });
 
-const playerLeftRoom = () => ({
-  type: types.PLAYER_ROOM_LEFT
+const playerLeftRoom = (username) => ({
+  type: types.PLAYER_ROOM_LEFT,
+  payload: username
 });
 
 const actions = {

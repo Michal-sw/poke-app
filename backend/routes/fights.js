@@ -15,16 +15,9 @@ const client = mqtt.connect(host, options)
 
 client.on('connect', async (conn) => {
   // schemat wiadomosc ->
-  //  {room:${roomId}, payload:1||-1}
-  client.subscribe(`fights/connect`, {
-    qos: 2,
-    will: {
-      topic: 'WillMsg',
-      payload: 'Connection Closed abnormally..!',
-      qos: 0,
-      retain: false
-    }
-  }, () => console.log('MQTT subscribed to all connecting/disconnecting'));
+  //  {room:${roomId}, payload:1||-1, username}
+  client.subscribe(`fights/connect`, { qos: 2 },
+    () => console.log('MQTT subscribed to all connecting/disconnecting'));
 });
 
 client.on('message', (topic, mess) => {
@@ -32,15 +25,25 @@ client.on('message', (topic, mess) => {
   const roomId = messageJson.room;
   // -1 na wyjscie, 1 na wejscie ->
   const payload = messageJson.payload;
-  const fill = rooms[roomId];
-  if (fill && fill !== 0) {
+  const username = messageJson.username;
+  const roomMembers = rooms[roomId] || [];
+
+  if (payload === -1) {
+    const newMembers = roomMembers.filter(member => member !== username);
+    rooms[roomId] = newMembers;
     client.publish(
       `fights/${roomId}`,
-      JSON.stringify({ fill: fill+payload }),
+      JSON.stringify({ left: username }),
       { qos: 2 }
     )
-    rooms[roomId] = fill + payload;
-  } else rooms[roomId] = 1;
+  } else {
+    const newMembers = [...roomMembers, username];
+    rooms[roomId] = newMembers;
+    if (newMembers.length > 1) client.publish(
+      `fights/${roomId}`,
+      JSON.stringify({ roomMembers: rooms[roomId] })
+    )
+  }
   console.log(rooms)
 })
 

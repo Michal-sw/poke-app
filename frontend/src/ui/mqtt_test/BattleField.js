@@ -17,8 +17,8 @@ const BattleField = ({ enemyPokemon, clientPokemon }) => {
 };
 
 const mapStateToProps = (state) => ({
-  enemyPokemon: state.mqtt.enemyPokemon,
-  clientPokemon: state.mqtt.clientPokemon,
+  enemyPokemon: state.fightEnemy.pokemon,
+  clientPokemon: state.fightClient.pokemon,
 });
 
 const mapDispatchToProps = {

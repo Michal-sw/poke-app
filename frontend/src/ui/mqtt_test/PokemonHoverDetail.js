@@ -18,7 +18,7 @@ const PokemonHoverDetail = ({ pokemon, typesSelectMap }) => {
 
 const mapStateToProps = (state, props) => ({
   isEnemy: props.isEnemy,
-  pokemon: props.isEnemy ? state.mqtt.enemyPokemon : state.mqtt.clientPokemon,
+  pokemon: props.isEnemy ? state.fightEnemy.pokemon : state.fightClient.pokemon,
   typesSelectMap: state.types.selectOptionsMap
 });
 

@@ -18,45 +18,60 @@ const options = {
 const host = 'ws://10.45.3.136:8000/mqtt'
 
 const middleware = store => next => action => {
-  if (action.type === types.CONNECTION_INIT) {   
-    const roomId = parseInt(action.payload);
+  if (action.type === types.CONNECTION_INIT) { 
+    if (!store.getState().fightClient.pokemon.num) {
+      store.dispatch(actions.connectionFail('Pokemon must be selected!'))
+      return next(action)
+    }
+    const roomId = parseInt(action.payload.roomId);
+    const username = action.payload.username;
+
     const client = mqtt.connect(host, {
       ...options,
       will: {
         topic: 'fights/connect',
-        payload: JSON.stringify({ room: roomId, payload: -1 }),
+        payload: JSON.stringify({ room: roomId, payload: -1, username }),
         qos: 2
       }
     });
 
     client.on('connect', async (conn) => {
+      client.subscribe(`fights/${roomId}/${username}`, { qos: 2 })
       client.subscribe(`fights/${roomId}`, {
         qos: 2,
       }, () => {
-          client.publish('fights/connect', JSON.stringify({ room: roomId, payload: 1 }));
-          store.dispatch(actions.connectionSuccess({ client, roomId }))
+          client.publish('fights/connect', JSON.stringify({
+            room: roomId,
+            payload: 1,
+            username
+          }));
+          store.dispatch(actions.connectionSuccess({ client, roomId, username }))
       })
     });
 
-    client.on('close', () => {
-      client.publish(
-        'fights/connect',
-        JSON.stringify({ room: store.getState().mqtt.roomId, payload: -1 })
-      );
-    });
-    
+    client.on('offline',  () => {
+      store.dispatch(actions.connectionFail('Websocket is offline!'))
+    })
+
+
     client.on('message', (topic, mess) => {
-      console.log(mess)
       const messageJson = JSON.parse(mess.toString());
       if (messageJson.chat) store.dispatch(actions.chatMessageReceived(messageJson.chat));
-      if (messageJson.pokemon) {
-        // {"pokemon":"${alias}"} -> wywolaj operacje pobierajaca z API -> 
-        store.dispatch(getEnemyFightPokemon(messageJson.pokemon))
+      if (messageJson.pokemon) store.dispatch(getEnemyFightPokemon(messageJson.pokemon));
+      if (messageJson.left) store.dispatch(actions.playerLeftRoom(messageJson.left));
+      if (messageJson.roomMembers) {
+        const newUsername =
+          messageJson.roomMembers
+          .find(memberUsername => memberUsername !== store.getState().fightClient.username);
+        client.publish(`fights/${roomId}/${newUsername}`, JSON.stringify({
+          pokemon: store.getState().fightClient.pokemon.alias
+        }));
+        store.dispatch(actions.playerJoinedRoom(newUsername));
       };
       if (messageJson.move) {
         // {"move":"${num}"} -> znajdz w store ->
         const move = store
-          .getState().mqtt.enemyPokemon.moves
+          .getState().fightEnemy.pokemon.moves
             .find(move => messageJson.move === move._id);
         // sprawdz czy zadaje 2x, 0.5x lub 1x dmg ->
         // dispatch({ move: ${move.name}, damage: ${move.power}}) ->
@@ -66,12 +81,6 @@ const middleware = store => next => action => {
       // Wprowadzic jakis mechanizm sprawdzenia przepelnienia pokoju przed wejsciem
       // GET do API pyatajacy o ilosc graczy, jezeli jest < 2 to dolacz,
       // Jezeli nie to daj wiadomosc i na froncie ja wyswietli
-      if (messageJson.fill) {
-        // {"fill":1||2}
-        messageJson.fill === 2
-          ? store.dispatch(actions.playerJoinedRoom())
-          : store.dispatch(actions.playerLeftRoom());
-      }
     })
   }
 

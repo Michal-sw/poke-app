@@ -34,7 +34,6 @@ export const getPokemon = (name) => {
 };
 
 export const getEnemyFightPokemon = (name) => {
-  console.log(name)
   return createAction({
     endpoint: `http://localhost:3001/pokemons/${name}`,
     method: 'GET',

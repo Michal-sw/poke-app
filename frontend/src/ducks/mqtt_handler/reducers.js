@@ -4,11 +4,15 @@ const mqttInitState = {
   client: null,
   messages: [],
   roomId: 0,
-  clientPokemon: { hp: 0, moves: [], types: [] },
-  enemyPokemon: { hp: 0, moves: [], types: [] },
+  roomFill: 0,
   battleLog: [],
   loading: false,
   err: '',
+}
+
+const fightParticipantInitState = {
+  username: '',
+  pokemon: { hp: 0, moves: [], types: [] },
 }
 
 export const mqttReducer = (state = mqttInitState, action) => {
@@ -18,7 +22,7 @@ export const mqttReducer = (state = mqttInitState, action) => {
       case types.CONNECTION_SUCCESS:
         return { ...state, loading: false, client: action.payload.client, roomId: action.payload.roomId };
       case types.CONNECTION_FAIL: 
-        return { ...state, loading: false, client: null }
+        return { ...state, loading: false, client: null, err: action.payload }
 
       case types.CHAT_MESSAGE_RECEIVED:
         return { ...state, messages: [...state.messages, action.payload] }
@@ -26,21 +30,49 @@ export const mqttReducer = (state = mqttInitState, action) => {
         return { ...state, messages: [...state.messages, action.payload] }
 
       case types.MOVE_RECEIVED: 
-        return { ...state, clientPokemon: { ...state.clientPokemon, hp: state.hp - action.payload.damage }, battleLog: [...state.battleLog, action.payload] }
+        return { ...state, battleLog: [...state.battleLog, action.payload] }
       case types.MOVE_SENT: 
         return { ...state, battleLog: [...state.battleLog, action.payload] }
     
-      case types.ENEMY_POKEMON_RECEIVED: 
-        return { ...state, enemyPokemon: { ...action.payload, fightHp: action.payload.stats.hp } }
-      case types.CLIENT_POKEMON_CHOSEN: 
-        return { ...state, clientPokemon: { ...action.payload, fightHp: action.payload.stats.hp } }
-
       case types.PLAYER_ROOM_JOIN:
-        return { ...state, messages: [...state.messages, 'A Player joined the room!'] }
+        return { ...state, messages: [...state.messages, `${action.payload} joined the room!`], roomFill: state.roomFill + 1 }
       case types.PLAYER_ROOM_LEFT:
-        return { ...state, messages: [...state.messages, 'A Player left the room!'], enemyPokemon: mqttInitState.enemyPokemon }
+        return { ...state, messages: [...state.messages, `${action.payload} left the room!`], roomFill: state.roomFill - 1 }
   
       default:
         return state;
-    }
-}
+    };
+};
+
+export const fightEnemyReducer = (state = fightParticipantInitState, action) => {
+  switch(action.type) {
+    case types.ENEMY_POKEMON_RECEIVED: 
+      return { ...state, pokemon: { ...action.payload, fightHp: action.payload.stats.hp } }
+    
+    case types.PLAYER_ROOM_JOIN:
+      console.log(action.payload)
+      return { ...state, username: action.payload }
+
+    case types.PLAYER_ROOM_LEFT:
+      return { ...state, pokemon: fightParticipantInitState.pokemon, username: fightParticipantInitState.username }
+
+    case types.MOVE_RECEIVED: 
+      return { ...state, pokemon: { ...state.pokemon, hp: state.hp - action.payload.damage } }
+
+    default:
+      return state;
+  };
+};
+
+export const fightClientReducer = (state = fightParticipantInitState, action) => {
+  switch(action.type) {
+    case types.CLIENT_POKEMON_CHOSEN: 
+      return { ...state, pokemon: { ...action.payload, fightHp: action.payload.stats.hp } }
+      
+    case types.CONNECTION_SUCCESS:
+      return { ...state, roomId: action.payload.roomId, username: action.payload.username };
+
+    default:
+      return state;
+  };
+};

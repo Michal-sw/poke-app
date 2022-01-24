@@ -42,7 +42,7 @@ const PokemonAnimated = ({ pokemon, isEnemy }) => {
 
 const mapStateToProps = (state, props) => ({
   isEnemy: props.isEnemy ? true : false,
-  pokemon: props.isEnemy ? state.mqtt.enemyPokemon : state.mqtt.clientPokemon,
+  pokemon: props.isEnemy ? state.fightEnemy.pokemon : state.fightClient.pokemon,
 });
 
 const mapDispatchToProps = {

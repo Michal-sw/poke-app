@@ -6,7 +6,7 @@ import mqttHandler from '../middlewares/mqttHandler';
 import { pokemonReducer } from './pokemons/reducers';
 import { moveReducer } from './moves/reducers';
 import { typeReducer } from './types/reducers';
-import { mqttReducer } from './mqtt_handler/reducers';
+import { mqttReducer, fightEnemyReducer, fightClientReducer } from './mqtt_handler/reducers';
 import apiErrorHandler from '../middlewares/apiErrorHandler';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -16,11 +16,21 @@ const combinedReducers = combineReducers(
     pokemons: pokemonReducer,
     moves: moveReducer,
     types: typeReducer,
-    mqtt: mqttReducer
+    mqtt: mqttReducer,
+    fightEnemy: fightEnemyReducer,
+    fightClient:  fightClientReducer,
   }
 )
 
 const store = createStore(combinedReducers,
-  composeEnhancers(applyMiddleware(thunk, createMiddleware(), apiErrorHandler, mqttHandler, logger)));
+  composeEnhancers(
+    applyMiddleware(
+      thunk,
+      createMiddleware(),
+      apiErrorHandler,
+      mqttHandler,
+      logger
+    )
+  ));
 
 export default store;
