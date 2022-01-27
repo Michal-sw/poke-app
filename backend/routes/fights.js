@@ -47,11 +47,20 @@ client.on('message', (topic, mess) => {
   console.log(rooms)
 })
 
-router.get('/:roomId/size', (req, res) => {
-  const roomId = req.params.roomId;
-  rooms[roomId]
-    ? res.json(rooms[roomId].length)
-    : res.json(0);
+router.get('/:roomId/:username/can-join', (req, res) => {
+  const room = rooms[req.params.roomId];
+  const username = req.params.username;
+
+  if (room) {
+    const usernameTaken = room.find(user => user === username);
+    const isFilled = room.length >= 2;
+
+    if (isFilled) res.json({ value: false, err: 'Room is filled' })
+    else if (usernameTaken) res.json({ value: false, err: 'Username already taken' })
+    else res.json({ value: true });
+  } else {
+    res.json({ res: true })
+  }
 })
 
 module.exports = router;

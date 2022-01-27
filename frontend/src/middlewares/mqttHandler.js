@@ -17,7 +17,7 @@ const options = {
 
 const host = 'ws://10.45.3.136:8000/mqtt'
 
-const middleware = store => next => action => {
+const middleware = store => next => async action => {
   if (action.type === types.CONNECTION_INIT) {
     const roomId = parseInt(action.payload.roomId);
     const username = action.payload.username;
@@ -26,12 +26,14 @@ const middleware = store => next => action => {
       store.dispatch(actions.connectionFail('Pokemon must be selected!'))
       return next(action)
     }
-    const isRoomFilled = fetch(`http://localhost:3001/fights/${roomId}/size`)
+    
+    const roomJoinError = await fetch(`http://localhost:3001/fights/${roomId}/${username}/can-join`)
       .then(r => r.json())
-      .then(fill => fill >= 2);
-    if (isRoomFilled) {
-      store.dispatch(actions.connectionFail('Room is filled!'))
-      return next(action)
+      .then(res => res.err);
+      
+    if (roomJoinError) {
+        store.dispatch(actions.connectionFail(roomJoinError))
+        return next(action)
     }
 
     const client = mqtt.connect(host, {
