@@ -1,4 +1,6 @@
 const express = require('express');
+const https = require('https');
+const fs = require('fs');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const pokemons = require('./routes/pokemons');
@@ -10,6 +12,10 @@ const corsOptions = {
   origin: 'http://localhost:3000',
   optionsSuccessStatus: 200
 }
+const sslOptions = {
+  key: fs.readFileSync('.cert/klucz_TLS_no_passphrase.key'),
+  cert: fs.readFileSync('.cert/tls_certificate.crt')
+};
 
 const app = express();
 app.use(express.json());
@@ -35,8 +41,10 @@ mongoose
         console.log(`Connected to MongoDB. Database name: "${response.connections[0].name}"`)
         const apiPort = process.env.PORT || 3001
         const apiHost = process.env.API_HOST || 'localhost';
-        app.listen(apiPort, () => {
-            console.log(`API server available from: http://${apiHost}:${apiPort}`);
-        });
+        https
+          .createServer(sslOptions, app)
+          .listen(apiPort, () => {
+            console.log(`API server available from: https://${apiHost}:${apiPort}`);
+          })
     })
     .catch(error => console.error('Error connecting to MongoDB', error));

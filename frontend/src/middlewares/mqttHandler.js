@@ -2,6 +2,7 @@ import types from '../ducks/mqtt_handler/types'
 import actions from '../ducks/mqtt_handler/actions'
 import mqtt from 'mqtt/dist/mqtt'
 import { getEnemyFightPokemon } from '../ducks/pokemons/operations'
+const endpoint = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : 'https://localhost:3001/'
 
 const options = {
   clean: true,
@@ -27,10 +28,10 @@ const middleware = store => next => async action => {
       return next(action)
     }
     
-    const roomJoinError = await fetch(`http://localhost:3001/fights/${roomId}/${username}/can-join`)
+    const roomJoinError = await fetch(`${endpoint}fights/${roomId}/${username}/can-join`)
       .then(r => r.json())
       .then(res => res.err);
-      
+
     if (roomJoinError) {
         store.dispatch(actions.connectionFail(roomJoinError))
         return next(action)

@@ -1,10 +1,11 @@
 import { createAction } from "redux-api-middleware"
 import types from './types';
+const endpoint = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : 'https://localhost:3001/'
 
 
 export const getMoves = (query) => {
   return createAction({
-    endpoint: `http://localhost:3001/moves?${query}`,
+    endpoint: `${endpoint}moves?${query}`,
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -19,7 +20,7 @@ export const getMoves = (query) => {
 
 export const getMove = (name) => {
   return createAction({
-    endpoint: `http://localhost:3001/moves/${name}`,
+    endpoint: `${endpoint}moves/${name}`,
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -34,7 +35,7 @@ export const getMove = (name) => {
 
 export const getMovePokemons = (name) => {
   return createAction({
-    endpoint: `http://localhost:3001/moves/${name}/pokemons`,
+    endpoint: `${endpoint}moves/${name}/pokemons`,
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -49,7 +50,7 @@ export const getMovePokemons = (name) => {
 
 export const addMove = (move) => {
   return createAction({
-    endpoint: `http://localhost:3001/moves`,
+    endpoint: `${endpoint}moves`,
     body: JSON.stringify(move),
     method: 'POST',
     headers: {
@@ -66,7 +67,7 @@ export const addMove = (move) => {
 
 export const editMove = (move) => {
   return createAction({
-    endpoint: `http://localhost:3001/moves/${move.alias}/edit`,
+    endpoint: `${endpoint}moves/${move.alias}/edit`,
     body: JSON.stringify(move),
     method: 'PUT',
     headers: {
@@ -82,7 +83,7 @@ export const editMove = (move) => {
 
 export const deleteMove = (name) => {
   return createAction({
-    endpoint: `http://localhost:3001/moves/${name}`,
+    endpoint: `${endpoint}moves/${name}`,
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'

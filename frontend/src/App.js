@@ -15,7 +15,7 @@ import MoveMasterView from './ui/moves/MoveMasterView';
 import MoveDetail from './ui/moves/MoveDetail';
 import MoveForm from './ui/moves/MoveForm';
 import PokemonForm from './ui/pokemons/PokemonForm';
-import MqttTest from './ui/mqtt_test/MqttTest';
+import FightMainView from './ui/mqtt_test/FightMainView';
 
 function App() {
   return (
@@ -26,7 +26,7 @@ function App() {
           <Route path='/pokemons' component={ PokemonMasterView } exact/>
           <Route path='/pokemons/add' component={ PokemonForm } exact/>
 
-          <Route path='/pokemons/fight' component={ MqttTest } exact/>
+          <Route path='/pokemons/fight' component={ FightMainView } exact/>
 
           <Route path='/pokemons/:name' component={ PokemonDetail } exact/>
           <Route path='/pokemons/:name/edit' component={ PokemonForm } exact/>

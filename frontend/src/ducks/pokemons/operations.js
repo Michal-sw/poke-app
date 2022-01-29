@@ -1,11 +1,12 @@
 import { createAction } from "redux-api-middleware"
 import types from './types';
 import mqttTypes from '../mqtt_handler/types';
+const endpoint = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : 'https://localhost:3001/'
 
 export const getPokemons = (query) => {
-  
+  console.log(process.env)
   return createAction({
-    endpoint: `http://localhost:3001/pokemons?${query}`,
+    endpoint: `${endpoint}pokemons?${query}`,
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -20,7 +21,7 @@ export const getPokemons = (query) => {
 
 export const getPokemon = (name) => {
   return createAction({
-    endpoint: `http://localhost:3001/pokemons/${name}`,
+    endpoint: `${endpoint}pokemons/${name}`,
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -35,7 +36,7 @@ export const getPokemon = (name) => {
 
 export const getEnemyFightPokemon = (name) => {
   return createAction({
-    endpoint: `http://localhost:3001/pokemons/${name}`,
+    endpoint: `${endpoint}pokemons/${name}`,
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -51,7 +52,7 @@ export const getEnemyFightPokemon = (name) => {
 
 export const getPokemonMoves = (name) => {
   return createAction({
-    endpoint: `http://localhost:3001/pokemons/${name}/moves`,
+    endpoint: `${endpoint}pokemons/${name}/moves`,
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -66,7 +67,7 @@ export const getPokemonMoves = (name) => {
 
 export const addPokemon = (pokemon) => {
   return createAction({
-    endpoint: `http://localhost:3001/pokemons`,
+    endpoint: `${endpoint}pokemons`,
     body: JSON.stringify(pokemon),
     method: 'POST',
     headers: {
@@ -83,7 +84,7 @@ export const addPokemon = (pokemon) => {
 export const editPokemon = (pokemon) => {
 
   return createAction({
-    endpoint: `http://localhost:3001/pokemons/${pokemon.alias}/edit`,
+    endpoint: `${endpoint}pokemons/${pokemon.alias}/edit`,
     body: JSON.stringify(pokemon),
     method: 'PUT',
     headers: {
@@ -99,7 +100,7 @@ export const editPokemon = (pokemon) => {
 
 export const deletePokemon = (name) => {
   return createAction({
-    endpoint: `http://localhost:3001/pokemons/${name}`,
+    endpoint: `${endpoint}pokemons/${name}`,
     method: 'DELETE',
     types: [
       types.POKEMON_DELETE_REQUEST,

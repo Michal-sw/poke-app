@@ -6,7 +6,7 @@ import TopicConnect from './TopicConnect';
 import BattleField from './BattleField';
 import AsideMessages from './AsideMessages';
 
-const MqttTest = ({ connectionClient }) => {
+const FightMainView = ({ connectionClient }) => {
 
   return (
     <MainListFlexContainer>
@@ -32,4 +32,4 @@ const mapDispatchToProps = {
   connectionInit: mqttActions.connectionInit,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MqttTest);
+export default connect(mapStateToProps, mapDispatchToProps)(FightMainView);

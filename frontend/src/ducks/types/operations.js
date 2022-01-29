@@ -1,11 +1,12 @@
 import { createAction } from "redux-api-middleware"
 import types from './types';
+const endpoint = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : 'https://localhost:3001/'
 
 
 export const getTypes = () => {
   
   return createAction({
-    endpoint: `http://localhost:3001/types`,
+    endpoint: `${endpoint}types`,
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
