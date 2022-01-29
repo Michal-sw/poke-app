@@ -67,7 +67,7 @@ const middleware = store => next => async action => {
 
     client.on('message', (topic, mess) => {
       const messageJson = JSON.parse(mess.toString());
-      if (messageJson.chat) store.dispatch(actions.chatMessageReceived(messageJson.chat));
+      if (messageJson.chat) store.dispatch(actions.chatMessageReceived({ author: messageJson.author, content: messageJson.chat }));
       if (messageJson.pokemon) store.dispatch(getEnemyFightPokemon(messageJson.pokemon));
       if (messageJson.left) store.dispatch(actions.playerLeftRoom(messageJson.left));
       if (messageJson.roomMembers) {

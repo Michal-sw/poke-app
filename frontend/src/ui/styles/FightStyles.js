@@ -4,6 +4,7 @@ export const FightMainContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  gap: 10px;
   justify-content: space-around;
   align-items: flex-start;
 `;
@@ -11,7 +12,17 @@ export const FightMainContainer = styled.div`
 export const AsideContainer = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 5px;
 `;
+
+export const AsideSectionContainer = styled.section`
+  display: flex;
+  flex-direction: column;
+  background-color: whitesmoke;
+  border-radius: 20px;
+  padding: 0px 5px 5px 5px;
+  gap: 3px;
+`
 
 export const MessagesContainer = styled.div`
   display: flex;
@@ -19,6 +30,65 @@ export const MessagesContainer = styled.div`
   height: 200px;
   width: 300px;
   overflow-y: scroll;
+  background-color: whitesmoke;
+  border-radius:20px;
+  border: 3px ridge black;
+  gap: 5px;
+  align-items: flex-end;
+`;
+export const Message = styled.div`
+  display: flex;
+  flex-direction: row;
+  font-weight: ${props => props.isSpecial ? '700' : '500'};
+  background-color: ${props => props.isSpecial ? 'salmon' : 'pink'};
+  border-radius:10px;
+  padding: 5px 5px 5px 5px;
+  gap: 5px;
+`;
+
+export const MessageAuthor = styled.p`
+  margin: 0px;
+  background-color: white;
+  border-radius: 20px;
+  padding-left: 4px;
+  padding-right: 4px;
+  height: fit-content;
+`;
+
+export const MessageContent = styled.p`
+  margin: 0px;
+  max-width: 250px;
+`;
+
+export const MessageInput = styled.textarea`
+  font-family: "Pokemon Pixel Font Regular";
+  font-size: 1.4em;
+  resize: vertical; 
+
+  padding-left: 4px;
+  padding-top: 4px;
+  width: 220px;
+  max-width: 240px;
+  max-height: 150px;
+  
+  border: 5px solid whitesmoke;
+  border-style: ridge;
+  border-radius: 5px;
+  background: white;
+`;
+
+export const MessageInputContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 5px;
+  > button {
+    font-weight: 700;
+    background-color: #e6a28d;
+    &:hover {
+      background-color: #c96767;
+    }
+  }
 `;
 
 //   // Yellow gym (fajny)
@@ -41,7 +111,9 @@ export const BattleContainer = styled.div`
   width: 500px;
   height: 400px;
 
-  background-image: url(https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d88iryq-e4aad28b-1a49-4b6d-89eb-a66b79700f06.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzJmYjI4MjFhLTE0MDYtNGExZC05YjA0LTY2NjhmMjc4ZTk0NFwvZDg4aXJ5cS1lNGFhZDI4Yi0xYTQ5LTRiNmQtODllYi1hNjZiNzk3MDBmMDYucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.--vt8oRuBlp_DmQXHzey_ThnTJD-ioKS3XKDnNPOFKo);
+  background-image: url(https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d83pwna-4c6af056-47c2-41e0-9d1c-acccc38e06c1.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzJmYjI4MjFhLTE0MDYtNGExZC05YjA0LTY2NjhmMjc4ZTk0NFwvZDgzcHduYS00YzZhZjA1Ni00N2MyLTQxZTAtOWQxYy1hY2NjYzM4ZTA2YzEucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.pV7ILn5oqMI_SoNdzq74VuV73_ECfUo1qB4z3O_EIuc);
+  background-size: 700px;
+  background-position: center bottom;
   border: 10px ridge black;
   border-radius: 5px;
 `;
@@ -53,16 +125,19 @@ export const SpriteAnimated = styled.div`
 
 export const PokemonHoverDetailContainer = styled.div`
   background-color: whitesmoke;
+  width: 100px;
   padding: 10px;
   border-radius: 20px;
   position: relative;
   float: right;
   margin-top: -40px;
-  margin-right:  -60px;
+  margin-right:  -40px;
   margin-bottom: -40px;
+  margin-left: -40px;
   top: -40px;
-  right: 60px;
+  right: -40px;
   bottom: -40px;
+  left: -40px;
   z-index: 2;
   display: none;
   transform: all 0.2s linear;

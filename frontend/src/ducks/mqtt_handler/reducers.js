@@ -35,9 +35,9 @@ export const mqttReducer = (state = mqttInitState, action) => {
         return { ...state, battleLog: [...state.battleLog, action.payload] }
     
       case types.PLAYER_ROOM_JOIN:
-        return { ...state, messages: [...state.messages, `${action.payload} joined the room!`], roomFill: state.roomFill + 1 }
+        return { ...state, messages: [...state.messages, { author: 'system', content: `${action.payload} joined the room!` }], roomFill: state.roomFill + 1 }
       case types.PLAYER_ROOM_LEFT:
-        return { ...state, messages: [...state.messages, `${action.payload} left the room!`], roomFill: state.roomFill - 1 }
+        return { ...state, messages: [...state.messages, { author: 'system', content: `${action.payload} left the room!` }], roomFill: state.roomFill - 1 }
   
       default:
         return state;
@@ -55,6 +55,9 @@ export const fightEnemyReducer = (state = fightParticipantInitState, action) => 
 
     case types.PLAYER_ROOM_LEFT:
       return { ...state, pokemon: fightParticipantInitState.pokemon, username: fightParticipantInitState.username }
+    
+    case types.CONNECTION_FAIL: 
+    return { ...state, pokemon: fightParticipantInitState.pokemon, username: fightParticipantInitState.username }
 
     case types.MOVE_RECEIVED: 
       return { ...state, pokemon: { ...state.pokemon, hp: state.hp - action.payload.damage } }

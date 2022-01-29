@@ -4,7 +4,6 @@ import mqttTypes from '../mqtt_handler/types';
 const endpoint = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : 'https://localhost:3001/'
 
 export const getPokemons = (query) => {
-  console.log(process.env)
   return createAction({
     endpoint: `${endpoint}pokemons?${query}`,
     method: 'GET',

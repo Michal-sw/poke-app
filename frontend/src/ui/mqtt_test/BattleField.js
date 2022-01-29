@@ -9,8 +9,8 @@ const BattleField = ({ enemyPokemon, clientPokemon }) => {
   return (
     <BattleContainer>
       <FightMoves isEnemy/>
-      {enemyPokemon.alias ? <PokemonAnimated isEnemy alias={enemyPokemon.alias} /> : null}
-      {clientPokemon.alias ? <PokemonAnimated alias={clientPokemon.alias}/> : null}
+      {enemyPokemon.alias ? <PokemonAnimated isEnemy /> : null}
+      {clientPokemon.alias ? <PokemonAnimated /> : null}
       <FightMoves/>
     </BattleContainer>
   )
