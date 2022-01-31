@@ -3,28 +3,15 @@ import actions from '../ducks/mqtt_handler/actions';
 
 const fightEndHandler = store => next => action => {
   const result = next(action);
-  if (action.type === mqttTypes.MOVE_SENT) {
-    const hp = store.getState().fightEnemy.pokemon.fightHp;
-    const mqttClient = store.getState().mqtt.client;
-    const roomId = store.getState().mqtt.roomId;
 
-    if (hp <= 0) {
-      store.dispatch(actions.endFight(action.payload.author))
-      setTimeout(() => {
-        mqttClient.publish('fights/connect', JSON.stringify({
-          room: roomId,
-          payload: -1,
-          username: action.payload.author
-        }), {}, () => mqttClient.end());
-        store.dispatch(actions.dropConnection())
-      }, 5000);
-    }
-  } else if (action.type === mqttTypes.MOVE_RECEIVED) {
-    const hp = store.getState().fightClient.pokemon.fightHp ;
-    const mqttClient = store.getState().mqtt.client;
-    const roomId = store.getState().mqtt.roomId;
-    const winnerUsername = store.getState().fightEnemy.username;
-    const clientUsername = store.getState().fightClient.username;
+  if (action.type === mqttTypes.MOVE_SENT || action.type === mqttTypes.MOVE_RECEIVED) {
+    const isMoveReceived = action.type === mqttTypes.MOVE_RECEIVED;
+    const state = store.getState();
+    const hp = isMoveReceived ? state.fightClient.pokemon.fightHp : state.fightEnemy.pokemon.fightHp;
+    const winnerUsername = isMoveReceived ? state.fightEnemy.username : action.payload.author;
+    const clientUsername = state.fightClient.username;
+    const mqttClient = state.mqtt.client;
+    const roomId = state.mqtt.roomId;
 
     if (hp <= 0) {
       store.dispatch(actions.endFight(winnerUsername))
@@ -33,11 +20,11 @@ const fightEndHandler = store => next => action => {
           room: roomId,
           payload: -1,
           username: clientUsername
-        }), {}, () => mqttClient.end());
+        }), { }, () => mqttClient.end());
         store.dispatch(actions.dropConnection())
-      }, 5000);    
+      }, 5000);
     }
-  };
+  }
 
   return result;
 } 

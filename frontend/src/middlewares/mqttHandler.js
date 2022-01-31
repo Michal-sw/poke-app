@@ -18,7 +18,7 @@ const options = {
 
 const host = 'ws://10.45.3.136:8000/mqtt'
 
-const middleware = store => next => async action => {
+const mqttHandler = store => next => async action => {
   if (action.type === types.CONNECTION_INIT) {
     const roomId = parseInt(action.payload.roomId);
     const username = action.payload.username;
@@ -114,4 +114,4 @@ const middleware = store => next => async action => {
   return next(action)
 }
 
-export default middleware;
+export default mqttHandler;
