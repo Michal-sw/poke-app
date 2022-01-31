@@ -53,7 +53,7 @@ const FightMoves = ({ clientPokemon, enemyPokemon, mqttClient, roomId, clientUse
   return (
     <FightMovesContainer>
       {clientPokemon.moves.map(move => (
-        <FightMove key={move._id} isClientTurn={isClientTurn} onClick={() => handleMoveSelect(move)}>
+        <FightMove key={move._id} isClientTurn={isClientTurn} onClick={() => enemyPokemon.stats ? handleMoveSelect(move) : null}>
           <p>{move.name}</p>
           <FightMoveDetail>
             <p>{`Power: ${move.power}`}</p>
