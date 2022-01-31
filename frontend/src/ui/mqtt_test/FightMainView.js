@@ -1,19 +1,24 @@
 import { connect } from 'react-redux';
 import mqttActions from '../../ducks/mqtt_handler/actions'
-import { MainListFlexContainer, NameLabel } from '../styles/MultiUsageStyles'
+import { BigText, MainListFlexContainer, NameLabel } from '../styles/MultiUsageStyles'
 import { FightMainContainer } from '../styles/FightStyles'
 import TopicConnect from './TopicConnect';
 import BattleField from './BattleField';
 import AsideMessages from './AsideMessages';
 
-const FightMainView = ({ connectionClient }) => {
+const FightMainView = ({ connectionClient, error }) => {
 
   return (
     <MainListFlexContainer>
       {
         connectionClient 
-        ? <NameLabel>Connected</NameLabel>
-        : <TopicConnect/>
+          ? <NameLabel>Connected</NameLabel>
+          : <TopicConnect/>
+      }
+      {
+        error 
+          ? <BigText>{error}</BigText>
+          : null
       }
       <FightMainContainer>
         <BattleField />
@@ -25,7 +30,8 @@ const FightMainView = ({ connectionClient }) => {
 };
 
 const mapStateToProps = (state) => ({
-  connectionClient: state.mqtt.client
+  connectionClient: state.mqtt.client,
+  error: state.mqtt.err
 });
 
 const mapDispatchToProps = {

@@ -22,7 +22,7 @@ export const mqttReducer = (state = mqttInitState, action) => {
       case types.CONNECTION_INIT:
         return { ...state, loading: true }
       case types.CONNECTION_SUCCESS:
-        return { ...state, loading: false, client: action.payload.client, roomId: action.payload.roomId };
+        return { ...state, loading: false, client: action.payload.client, roomId: action.payload.roomId, err: '' };
       case types.CONNECTION_FAIL: 
         return { ...state, loading: false, client: null, err: action.payload }
 
