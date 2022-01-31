@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { selectMovesQuery } from "../../ducks/moves/selectors";
 import { selectPokemonsQuery } from '../../ducks/pokemons/selectors';
-import { NavContainer, NavName } from "../styles/MultiUsageStyles";
+import { NavContainer, NavLink, NavName } from "../styles/MultiUsageStyles";
 
 const Navbar = ({ pokemonQuery, moveQuery }) => {
   return (
