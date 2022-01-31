@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { selectClientPokemon, selectEnemyPokemon } from '../../ducks/mqtt_handler/selectors';
 import HpBar from '../mqtt_test/HpBar';
 import PokemonHoverDetail from '../mqtt_test/PokemonHoverDetail';
 import { PokemonAnimatedContainer, SpriteAnimated } from '../styles/FightStyles'
@@ -29,7 +30,7 @@ const PokemonAnimated = ({ pokemon, isEnemy }) => {
 
 const mapStateToProps = (state, props) => ({
   isEnemy: props.isEnemy ? true : false,
-  pokemon: props.isEnemy ? state.fightEnemy.pokemon : state.fightClient.pokemon,
+  pokemon: props.isEnemy ? selectEnemyPokemon(state) : selectClientPokemon(state),
 });
 
 const mapDispatchToProps = {

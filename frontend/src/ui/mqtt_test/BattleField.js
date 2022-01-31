@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { selectClientPokemon, selectEnemyPokemon, selectWinner } from '../../ducks/mqtt_handler/selectors';
 import PokemonAnimated from '../components/PokemonAnimated';
 import { BattleContainer } from '../styles/FightStyles'
 import FightMoves from './FightMoves';
@@ -17,9 +18,9 @@ const BattleField = ({ enemyPokemon, clientPokemon, winner }) => {
 };
 
 const mapStateToProps = (state) => ({
-  enemyPokemon: state.fightEnemy.pokemon,
-  clientPokemon: state.fightClient.pokemon,
-  winner: state.mqtt.winner
+  enemyPokemon: selectEnemyPokemon(state),
+  clientPokemon: selectClientPokemon(state),
+  winner: selectWinner(state)
 });
 
 const mapDispatchToProps = {

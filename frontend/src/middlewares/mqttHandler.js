@@ -68,11 +68,7 @@ const mqttHandler = store => next => async action => {
     client.on('message', (topic, mess) => {
       const messageJson = JSON.parse(mess.toString());
       if (messageJson.chat) store.dispatch(actions.chatMessageReceived({ author: messageJson.author, content: messageJson.chat }));
-
-      if (messageJson.pokemon) {
-        store.dispatch(getEnemyFightPokemon(messageJson.pokemon));
-      }
-
+      if (messageJson.pokemon) store.dispatch(getEnemyFightPokemon(messageJson.pokemon));
       if (messageJson.left) store.dispatch(actions.playerLeftRoom(messageJson.left));
 
       if (messageJson.roomMembers) {
@@ -83,7 +79,7 @@ const mqttHandler = store => next => async action => {
         }));
         store.dispatch(actions.playerJoinedRoom(newUsername));
       };
-
+      
       if (messageJson.move) {
         const fightClient = store.getState().fightClient;
         if (messageJson.target === fightClient.username) {

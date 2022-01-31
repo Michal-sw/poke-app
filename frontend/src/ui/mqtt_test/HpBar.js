@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import { FightHpContainer, FightHpStatBar, FightHpStatName } from "../styles/FightStyles";
+import { FightHpContainer, FightHpStatBar, FightHpStatName, HoverHpBar } from "../styles/FightStyles";
 
 const HpBar = ({ currHp, fullHp, isEnemy }) => {
   return (
@@ -11,11 +10,5 @@ const HpBar = ({ currHp, fullHp, isEnemy }) => {
     </HoverHpBar>
   )
 }
-
-const HoverHpBar = styled.div`
-  position: relative;
-  z-index: 2;
-  bottom: ${props => props.isEnemy ? '0px' : '25px'};
-`;
 
 export default HpBar;

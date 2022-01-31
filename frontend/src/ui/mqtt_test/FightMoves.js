@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { TypeStamp, FightMove, FightMovesContainer, FightMoveDetail } from '../styles/FightStyles';
 import actions from '../../ducks/mqtt_handler/actions'
 import { selectTypesMap } from '../../ducks/types/selectors'
+import { selectClientUsername, selectConnectionClient, selectEnemyUsername, selectIsClientTurn, selectRoomId } from '../../ducks/mqtt_handler/selectors';
 
 const FightMoves = ({ clientPokemon, enemyPokemon, mqttClient, roomId, clientUsername, enemyUsername, isClientTurn, moveSent, typesMap }) => {
 
@@ -67,11 +68,11 @@ const FightMoves = ({ clientPokemon, enemyPokemon, mqttClient, roomId, clientUse
 const mapStateToProps = (state, props) => ({
   clientPokemon: props.isEnemy ? state.fightEnemy.pokemon : state.fightClient.pokemon,
   enemyPokemon: props.isEnemy ? state.fighClient.pokemon : state.fightEnemy.pokemon,
-  mqttClient: state.mqtt.client,
-  roomId: state.mqtt.roomId,
-  clientUsername: state.fightClient.username,
-  enemyUsername: state.fightEnemy.username,
-  isClientTurn: state.mqtt.isClientTurn,
+  mqttClient: selectConnectionClient(state),
+  roomId: selectRoomId(state),
+  clientUsername: selectClientUsername(state),
+  enemyUsername: selectEnemyUsername(state),
+  isClientTurn: selectIsClientTurn(state),
   typesMap: selectTypesMap(state)
 
 });

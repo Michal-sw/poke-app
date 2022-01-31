@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { LoadingText } from '../styles/MultiUsageStyles'
 
 const Loading = () => {
   return (
@@ -8,7 +8,5 @@ const Loading = () => {
   )
 };
 
-const LoadingText = styled.p`
-  font-size: 3em;
-`;
+
 export default Loading;

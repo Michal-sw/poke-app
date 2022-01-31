@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { WinnerContainer } from "../styles/FightStyles";
 import { NameLabel } from "../styles/MultiUsageStyles";
 
 const WinnerMessage = ({ winner }) => {
@@ -8,16 +8,5 @@ const WinnerMessage = ({ winner }) => {
     </WinnerContainer>
   )
 }
-
-const WinnerContainer = styled.div`
-  width: fit-content;
-  align-self: center;
-  position: relative;
-  margin-top: -140px;
-  background-color: gold;
-  border-radius: 20px;
-  padding: 20px;
-  z-index: 3;
-`;
 
 export default WinnerMessage;

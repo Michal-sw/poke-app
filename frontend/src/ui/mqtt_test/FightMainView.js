@@ -5,6 +5,7 @@ import { FightMainContainer } from '../styles/FightStyles'
 import TopicConnect from './TopicConnect';
 import BattleField from './BattleField';
 import AsideMessages from './AsideMessages';
+import { selectConnectionClient, selectConnectionError } from '../../ducks/mqtt_handler/selectors';
 
 const FightMainView = ({ connectionClient, error }) => {
 
@@ -30,8 +31,8 @@ const FightMainView = ({ connectionClient, error }) => {
 };
 
 const mapStateToProps = (state) => ({
-  connectionClient: state.mqtt.client,
-  error: state.mqtt.err
+  connectionClient: selectConnectionClient(state),
+  error: selectConnectionError(state)
 });
 
 const mapDispatchToProps = {

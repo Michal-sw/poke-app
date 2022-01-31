@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
+import { selectBattleLog } from '../../ducks/mqtt_handler/selectors';
 import { AsideSectionContainer, Message, MessageAuthor, MessageBoldText, MessagesContainer } from '../styles/FightStyles'
 import { BigText, TextNoMargin } from '../styles/MultiUsageStyles';
 
@@ -29,7 +30,7 @@ const BattleLog = ({ battleLog }) => {
 };
 
 const mapStateToProps = (state) => ({
-  battleLog: state.mqtt.battleLog,
+  battleLog: selectBattleLog(state),
 });
 
 const mapDispatchToProps = {

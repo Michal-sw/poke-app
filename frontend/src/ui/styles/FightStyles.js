@@ -286,3 +286,20 @@ export const FightHpStatContainer = styled.div`
   box-shadow: 0.01em 0.03em 0.2em 0.03em grey; 
   justify-content: space-between;
 `;
+
+export const WinnerContainer = styled.div`
+width: fit-content;
+align-self: center;
+position: relative;
+margin-top: -140px;
+background-color: gold;
+border-radius: 20px;
+padding: 20px;
+z-index: 3;
+`;
+
+export const HoverHpBar = styled.div`
+  position: relative;
+  z-index: 2;
+  bottom: ${props => props.isEnemy ? '0px' : '25px'};
+`;

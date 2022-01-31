@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import styled from 'styled-components'
 import { PokemonSprite } from '../styles/PokemonStyles'
+import { GrassTileContainer, SpriteOnTile } from '../styles/MultiUsageStyles'
 
 const PokemonOnGrassTile = ({ name, num }) => {
   const [showFrontSide, setShowFrontSide] = useState(true);
@@ -28,14 +28,6 @@ const PokemonOnGrassTile = ({ name, num }) => {
     )
 }
 
-const GrassTileContainer = styled.div`
-  z-index: -1;
-  position: relative;
-  top: 130px;
-`
-const SpriteOnTile = styled.div`
-  position: relative;
-  bottom:120px;
-`
+
 
 export default PokemonOnGrassTile;

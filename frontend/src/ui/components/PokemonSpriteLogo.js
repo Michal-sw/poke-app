@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { PokemonLogoImg } from '../styles/MultiUsageStyles'
 
 const PokemonSpriteLogo = ({ name }) => {
   return (
@@ -8,13 +8,5 @@ const PokemonSpriteLogo = ({ name }) => {
       />
   )
 };
-
-const PokemonLogoImg = styled.img`
-  width: 80px;
-  height: 59px;
-  object-fit: cover;
-  object-position: 0 -16px;
-  border-radius: 20px;
-`;
 
 export default PokemonSpriteLogo;

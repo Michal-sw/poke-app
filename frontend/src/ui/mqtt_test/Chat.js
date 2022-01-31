@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
+import { selectClientPokemon, selectClientUsername, selectConnectionClient, selectMessages, selectRoomId } from '../../ducks/mqtt_handler/selectors';
 import { AsideSectionContainer, Message, MessageAuthor, MessageContent, MessageInput, MessageInputContainer, MessagesContainer } from '../styles/FightStyles'
 import { BigText, MyButton } from '../styles/MultiUsageStyles';
 
@@ -59,10 +60,10 @@ const Chat = ({ messages, mqttClient, roomId, clientUsername }) => {
 };
 
 const mapStateToProps = (state) => ({
-  messages: state.mqtt.messages,
-  mqttClient: state.mqtt.client,
-  roomId: state.mqtt.roomId,
-  clientUsername: state.fightClient.username
+  messages: selectMessages(state),
+  mqttClient: selectConnectionClient(state),
+  roomId: selectRoomId(state),
+  clientUsername: selectClientUsername(state)
 });
 
 const mapDispatchToProps = {
