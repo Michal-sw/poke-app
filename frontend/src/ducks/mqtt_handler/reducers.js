@@ -45,7 +45,7 @@ export const mqttReducer = (state = mqttInitState, action) => {
         return { ...state, winner: action.payload, isClientTurn: false }
 
       case types.DROP_CONNECTION:
-        return { ...state, client: null, messages: [], battleLog: [], roomId: 0, winner: '' }
+        return { ...mqttInitState }
 
       default:
         return state;
