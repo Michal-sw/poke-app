@@ -288,14 +288,14 @@ export const FightHpStatContainer = styled.div`
 `;
 
 export const WinnerContainer = styled.div`
-width: fit-content;
-align-self: center;
-position: relative;
-margin-top: -140px;
-background-color: gold;
-border-radius: 20px;
-padding: 20px;
-z-index: 3;
+  width: fit-content;
+  align-self: center;
+  position: relative;
+  margin-top: -140px;
+  background-color: gold;
+  border-radius: 20px;
+  padding: 20px;
+  z-index: 3;
 `;
 
 export const HoverHpBar = styled.div`
