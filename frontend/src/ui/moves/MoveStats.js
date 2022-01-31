@@ -11,7 +11,7 @@ const MoveStats = ({ power, accuracy }) => {
       </StatContainer>
       <StatContainer>
         <StatName>Accuracy</StatName>
-        <StatBar max='150' value={ accuracy } />
+        <StatBar max='100' value={ accuracy } />
         {accuracy}
       </StatContainer>
     </StatListContainer>

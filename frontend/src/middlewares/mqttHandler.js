@@ -90,7 +90,22 @@ const middleware = store => next => async action => {
           const move = store
             .getState().fightEnemy.pokemon.moves
             .find(move => messageJson.move === move.alias);
-          store.dispatch(actions.moveReceived({ move: move.name, damage: move.power }));
+          const effectiveness = messageJson.effectiveness;
+          store.dispatch(actions.moveReceived({
+            move: move.name,
+            author: messageJson.author,
+            damage: messageJson.damage,
+            willHit: messageJson.willHit,
+            message: !messageJson.willHit 
+              ? 'it missed!'
+              : effectiveness === 2
+                ? 'it was super effective!'
+                : effectiveness === 0.5
+                  ? "it's not very effective..."
+                  : effectiveness === 0
+                    ? "pokemon is immune!"
+                    : '' 
+          }));
         }
       }
     });

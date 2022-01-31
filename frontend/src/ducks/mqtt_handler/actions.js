@@ -55,6 +55,15 @@ const playerLeftRoom = (username) => ({
   payload: username
 });
 
+const endFight = (winnerUsername) => ({
+  type: types.END_FIGHT,
+  payload: winnerUsername
+});
+
+const dropConnection = () => ({
+  type: types.DROP_CONNECTION
+});
+
 const actions = {
   connectionInit,
   connectionSuccess,
@@ -67,6 +76,8 @@ const actions = {
   clientPokemonChosen,
   playerJoinedRoom,
   playerLeftRoom,
+  endFight,
+  dropConnection,
 };
 
 export default actions;

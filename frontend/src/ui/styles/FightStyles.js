@@ -54,7 +54,11 @@ export const MessageAuthor = styled.p`
   padding-right: 4px;
   height: fit-content;
 `;
-
+export const MessageBoldText = styled.p`
+  margin: 0px;
+  padding: 0px;
+  font-weight: 700;
+`
 export const MessageContent = styled.p`
   margin: 0px;
   max-width: 250px;
@@ -107,7 +111,8 @@ export const MessageInputContainer = styled.div`
 export const BattleContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
+
   width: 500px;
   height: 400px;
 
@@ -150,6 +155,9 @@ export const PokemonHoverDetailContainer = styled.div`
 export const PokemonAnimatedContainer = styled.div`
   margin-left: 40px;
   margin-right: 40px;
+  align-self: ${props => props.isEnemy ? 'flex-end' : 'flex-start'};
+  ${props => props.isEnemy ? 'margin-bottom: auto;' : null}
+  ${props => props.isEnemy ? 'margin-top: 40px;' : null}
   &:hover {
     >${PokemonHoverDetailContainer} {
       display: inline-block;
@@ -179,6 +187,7 @@ export const FightMovesContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  z-index: 1;
 `;
 
 export const FightMove = styled.span`
@@ -242,25 +251,30 @@ export const FightHpContainer = styled.div`
 `;
 
 export const FightHpStatBar = styled.progress`
-  width: 160px;
-  height: 8px;
+  width: 140px;
+  height: 6px;
 
   border-radius: 1px;
   &::-webkit-progress-bar {
     background-color: whitesmoke;
     border-radius: 10px;
     padding: 0.5px 0.5px 0.5px 0px;
-    box-shadow: 0.01em 0.03em 0.3em 0.04em grey; 
+    box-shadow: 0.01em 0.03em 0.2em 0.01em grey; 
 
   }
   &::-webkit-progress-value {
-    background-color: #ce0018;
+    background-color: ${props => {
+      const hpPercentage = ((props.value*100)/props.max);
+      if (hpPercentage <= 35) return '#ce0018'
+      else if (hpPercentage <= 65) return 'orange'
+      else return 'green'
+    }};
     border-radius: 10px;
     box-shadow: 0.01em 0.03em 0.2em 0.03em grey; 
   }
 `;
 export const FightHpStatName = styled.label`
-  font-size: 1.5em;
+  font-size: 1em;
   margin-right: 5px;
 `;
 export const FightHpStatContainer = styled.div`

@@ -1,30 +1,62 @@
 import { connect } from 'react-redux';
 import { TypeStamp, FightMove, FightMovesContainer, FightMoveDetail } from '../styles/FightStyles';
 import actions from '../../ducks/mqtt_handler/actions'
-import { BigText } from '../styles/MultiUsageStyles';
+import { selectTypesMap } from '../../ducks/types/selectors'
 
-const FightMoves = ({ pokemon, mqttClient, roomId, clientUsername, enemyUsername, isClientTurn, moveSent, typesSelectMap }) => {
+const FightMoves = ({ clientPokemon, enemyPokemon, mqttClient, roomId, clientUsername, enemyUsername, isClientTurn, moveSent, typesMap }) => {
+
+  const calculateDamage = (move) => {
+    const checkEffectiveness = (effectivenessType) => {
+      return typesMap[move.type][effectivenessType]
+        .some(type => enemyPokemon.types.includes(type))
+    }
+    const isSuperEffective = checkEffectiveness('strengths');
+    const isNotEffective = checkEffectiveness('weaknesses');
+    const isImmune = checkEffectiveness('immunes');
+    const effectivenessMultiplier = isSuperEffective ? 2 : isNotEffective ? 0.5 : isImmune ? 0 : 1;
+
+    const damage = Math.round((move.power * effectivenessMultiplier * (clientPokemon.stats.atk / enemyPokemon.stats.def) / 4));
+    const willHit = move.accuracy === 1 ? true : Math.floor(Math.random()*100) <= move.accuracy;
+
+    return {damage, effectiveness: effectivenessMultiplier, willHit }
+  }
 
   const handleMoveSelect = (move) => {
+    const moveDamageDetails = calculateDamage(move)
     if (isClientTurn) {
         mqttClient.publish(`fights/${roomId}`, JSON.stringify({
           author: clientUsername,
           target: enemyUsername,
-          move: move.alias
+          move: move.alias,
+          ...moveDamageDetails
       }));
-      moveSent({ move: move.name, damage: move.power });
+      moveSent({
+        move: move.name,
+        author: clientUsername,
+        damage: moveDamageDetails.damage,
+        willHit: moveDamageDetails.willHit,
+        message: !moveDamageDetails.willHit 
+          ? 'it missed!'
+          : moveDamageDetails.effectiveness === 2
+            ? 'it was super effective!'
+            : moveDamageDetails.effectiveness === 0.5
+              ? "it's not very effective..."
+              : moveDamageDetails.effectiveness === 0
+                ? "pokemon is immune!"
+                : '' 
+      });
     }
   }
 
 
   return (
     <FightMovesContainer>
-      {pokemon.moves.map(move => (
-        <FightMove isClientTurn={isClientTurn} onClick={() => handleMoveSelect(move)}>
+      {clientPokemon.moves.map(move => (
+        <FightMove key={move._id} isClientTurn={isClientTurn} onClick={() => handleMoveSelect(move)}>
           <p>{move.name}</p>
           <FightMoveDetail>
             <p>{`Power: ${move.power}`}</p>
-            <TypeStamp color={typesSelectMap[move.type].color}>{typesSelectMap[move.type].label}</TypeStamp>
+            <TypeStamp color={typesMap[move.type].color}>{typesMap[move.type].name}</TypeStamp>
           </FightMoveDetail>
         </FightMove>
       ))}
@@ -33,13 +65,15 @@ const FightMoves = ({ pokemon, mqttClient, roomId, clientUsername, enemyUsername
 }
 
 const mapStateToProps = (state, props) => ({
-  pokemon: props.isEnemy ? state.fightEnemy.pokemon : state.fightClient.pokemon,
+  clientPokemon: props.isEnemy ? state.fightEnemy.pokemon : state.fightClient.pokemon,
+  enemyPokemon: props.isEnemy ? state.fighClient.pokemon : state.fightEnemy.pokemon,
   mqttClient: state.mqtt.client,
   roomId: state.mqtt.roomId,
   clientUsername: state.fightClient.username,
   enemyUsername: state.fightEnemy.username,
   isClientTurn: state.mqtt.isClientTurn,
-  typesSelectMap: state.types.selectOptionsMap
+  typesMap: selectTypesMap(state)
+
 });
 
 const mapDispatchToProps = {

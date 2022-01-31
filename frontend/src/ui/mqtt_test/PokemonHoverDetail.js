@@ -8,7 +8,7 @@ const PokemonHoverDetail = ({ pokemon, typesSelectMap }) => {
     <PokemonHoverDetailContainer>
       <FightHoverTypeContainer>
         {pokemon.types.map(type => (
-          <TypeStamp color={typesSelectMap[type].color}>{typesSelectMap[type].label}</TypeStamp>
+          <TypeStamp key={type} color={typesSelectMap[type].color}>{typesSelectMap[type].label}</TypeStamp>
         ))}
       </FightHoverTypeContainer>
       <BigText>{pokemon.name}</BigText>

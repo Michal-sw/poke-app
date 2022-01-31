@@ -8,6 +8,7 @@ import { moveReducer } from './moves/reducers';
 import { typeReducer } from './types/reducers';
 import { mqttReducer, fightEnemyReducer, fightClientReducer } from './mqtt_handler/reducers';
 import apiErrorHandler from '../middlewares/apiErrorHandler';
+import fightEndHandler from '../middlewares/fightEndHandler';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -29,6 +30,7 @@ const store = createStore(combinedReducers,
       createMiddleware(),
       apiErrorHandler,
       mqttHandler,
+      fightEndHandler,
       logger
     )
   ));

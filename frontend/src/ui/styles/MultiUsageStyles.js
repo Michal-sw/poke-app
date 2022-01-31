@@ -208,3 +208,8 @@ export const DeleteButton = styled.div`
     color: red;
   }
 `;
+
+export const TextNoMargin = styled.p`
+  padding: 0px;
+  margin: 0px;
+`;
