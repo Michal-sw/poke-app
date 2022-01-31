@@ -2,26 +2,26 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectMovesQuery } from "../../ducks/moves/selectors";
 import { selectPokemonsQuery } from '../../ducks/pokemons/selectors';
-import { NavContainer, NavLink, NavName } from "../styles/MultiUsageStyles";
+import { NavContainer, NavLinkContainer, NavName } from "../styles/MultiUsageStyles";
 
 const Navbar = ({ pokemonQuery, moveQuery }) => {
   return (
     <NavContainer>
-      <NavLink>
+      <NavLinkContainer>
         <Link to={`/pokemons?${pokemonQuery.toString()}`}>
           <NavName>Pokemons</NavName>
         </Link>
-      </NavLink>
-      <NavLink>
+      </NavLinkContainer>
+      <NavLinkContainer>
         <Link to={'/types'}>
           <NavName>Types</NavName>
         </Link>
-      </NavLink>
-      <NavLink>
+      </NavLinkContainer>
+      <NavLinkContainer>
         <Link to={`/moves?${moveQuery.toString()}`}>
           <NavName>Moves</NavName>
         </Link>
-      </NavLink>
+      </NavLinkContainer>
     </NavContainer>
   )
 };
