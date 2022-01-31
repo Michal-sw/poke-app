@@ -61,24 +61,38 @@ router.get('/:name', async (req, res) => {
 
 router.get('/:name/moves', async (req, res) => {
   const name = req.params.name;
+  const isFight = req.query.isFight;
+
+  const match = { $match: { alias: name } };
+
+  const lookup = { 
+    $lookup: {
+      from: 'moves',
+      localField: 'moves',
+      foreignField: '_id',
+      as: 'moves'
+  }};
+
+  const project = { 
+    $project: isFight
+      ? {
+        _id: 1, num: 1, name: 1, alias: 1, types: 1, stats: 1, abilities: 1,
+        moves: { $slice: [ "$moves", 4 ] }
+      }
+      : { moves: 1, _id: false }
+  };
 
   Pokemon
     .aggregate([
-      { $match: { alias: name } },
-      { $lookup: {
-          from: 'moves',
-          localField: 'moves',
-          foreignField: '_id',
-          as: 'moves'
-      }},
-      { $project: {
-        moves: 1,
-        _id: false
-      }}
+      match,
+      lookup,
+      project
     ])
     .then(result => {
       if (result.length) {
-        res.json({ pokemon: name, moves: result[0].moves })
+        isFight
+          ? res.json(result[0])
+          : res.json({ pokemon: name, moves: result[0].moves })
       } else {
         res.sendStatus(404)
       }

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { FightHoverType, FightHoverTypeContainer, PokemonHoverDetailContainer } from '../styles/FightStyles'
+import { TypeStamp, FightHoverTypeContainer, PokemonHoverDetailContainer } from '../styles/FightStyles'
 import { BigText } from '../styles/MultiUsageStyles';
 
 
@@ -8,7 +8,7 @@ const PokemonHoverDetail = ({ pokemon, typesSelectMap }) => {
     <PokemonHoverDetailContainer>
       <FightHoverTypeContainer>
         {pokemon.types.map(type => (
-          <FightHoverType color={typesSelectMap[type].color}>{typesSelectMap[type].label}</FightHoverType>
+          <TypeStamp color={typesSelectMap[type].color}>{typesSelectMap[type].label}</TypeStamp>
         ))}
       </FightHoverTypeContainer>
       <BigText>{pokemon.name}</BigText>

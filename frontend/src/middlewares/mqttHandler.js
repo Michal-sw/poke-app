@@ -68,27 +68,32 @@ const middleware = store => next => async action => {
     client.on('message', (topic, mess) => {
       const messageJson = JSON.parse(mess.toString());
       if (messageJson.chat) store.dispatch(actions.chatMessageReceived({ author: messageJson.author, content: messageJson.chat }));
-      if (messageJson.pokemon) store.dispatch(getEnemyFightPokemon(messageJson.pokemon));
+
+      if (messageJson.pokemon) {
+        store.dispatch(getEnemyFightPokemon(messageJson.pokemon));
+      }
+
       if (messageJson.left) store.dispatch(actions.playerLeftRoom(messageJson.left));
+
       if (messageJson.roomMembers) {
-        const newUsername =
-          messageJson.roomMembers
+        const newUsername = messageJson.roomMembers
           .find(memberUsername => memberUsername !== store.getState().fightClient.username);
         client.publish(`fights/${roomId}/${newUsername}`, JSON.stringify({
           pokemon: store.getState().fightClient.pokemon.alias
         }));
         store.dispatch(actions.playerJoinedRoom(newUsername));
       };
+
       if (messageJson.move) {
-        // {"move":"${num}"} -> znajdz w store ->
-        const move = store
-          .getState().fightEnemy.pokemon.moves
-            .find(move => messageJson.move === move._id);
-        // sprawdz czy zadaje 2x, 0.5x lub 1x dmg ->
-        // dispatch({ move: ${move.name}, damage: ${move.power}}) ->
-        store.dispatch(actions.moveReceived({ move: move.name, damage: move.power }))
+        const fightClient = store.getState().fightClient;
+        if (messageJson.target === fightClient.username) {
+          const move = store
+            .getState().fightEnemy.pokemon.moves
+            .find(move => messageJson.move === move.alias);
+          store.dispatch(actions.moveReceived({ move: move.name, damage: move.power }));
+        }
       }
-    })
+    });
   }
 
   return next(action)

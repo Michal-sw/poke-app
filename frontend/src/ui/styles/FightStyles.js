@@ -165,9 +165,9 @@ export const FightHoverTypeContainer = styled.div`
   margin: 0;
 `;
 
-export const FightHoverType = styled.p`
+export const TypeStamp = styled.p`
   color: black;
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: 800;
   margin: 0;
   padding: 1px;
@@ -182,10 +182,35 @@ export const FightMovesContainer = styled.div`
 `;
 
 export const FightMove = styled.span`
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   background-color: whitesmoke;
   padding: 10px;
+  border-radius: 10px;
+  :hover {
+    background-color: ${props => props.isClientTurn ? 'white' : 'whitesmoke'};
+    cursor: pointer;
+    box-shadow: ${props => props.isClientTurn ? '0 0 1px 1px grey' : 'none' };
+  }
+  > p {
+    margin: 0px;
+    padding: 0px;
+  }
 `;
-
+export const FightMoveDetail = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  > ${TypeStamp} {
+    height: fit-content
+  }
+  > p {
+    margin: 0px;
+    padding: 0px;  
+  }
+`;
 
 export const RoomIdSelector = styled.div`
   display: flex;
@@ -206,4 +231,44 @@ export const RoomIdSelector = styled.div`
   > p {
     margin-top: 0px;
   }
+`;
+
+export const FightHpContainer = styled.div`
+  display: flex;
+  flex-display: row;
+  justify-content: flex-end;
+  align-items:center;
+  margin-bottom: 10px;
+`;
+
+export const FightHpStatBar = styled.progress`
+  width: 160px;
+  height: 8px;
+
+  border-radius: 1px;
+  &::-webkit-progress-bar {
+    background-color: whitesmoke;
+    border-radius: 10px;
+    padding: 0.5px 0.5px 0.5px 0px;
+    box-shadow: 0.01em 0.03em 0.3em 0.04em grey; 
+
+  }
+  &::-webkit-progress-value {
+    background-color: #ce0018;
+    border-radius: 10px;
+    box-shadow: 0.01em 0.03em 0.2em 0.03em grey; 
+  }
+`;
+export const FightHpStatName = styled.label`
+  font-size: 1.5em;
+  margin-right: 5px;
+`;
+export const FightHpStatContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(130, 255, 203, 0.26);
+  border-radius: 20px;
+  padding: 0px;
+  box-shadow: 0.01em 0.03em 0.2em 0.03em grey; 
+  justify-content: space-between;
 `;

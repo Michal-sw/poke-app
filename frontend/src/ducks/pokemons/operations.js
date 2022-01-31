@@ -35,7 +35,7 @@ export const getPokemon = (name) => {
 
 export const getEnemyFightPokemon = (name) => {
   return createAction({
-    endpoint: `${endpoint}pokemons/${name}`,
+    endpoint: `${endpoint}pokemons/${name}/moves?isFight=true`,
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'

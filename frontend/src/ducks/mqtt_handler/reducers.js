@@ -8,6 +8,7 @@ const mqttInitState = {
   battleLog: [],
   loading: false,
   err: '',
+  isClientTurn: true,
 }
 
 const fightParticipantInitState = {
@@ -30,15 +31,15 @@ export const mqttReducer = (state = mqttInitState, action) => {
         return { ...state, messages: [...state.messages, action.payload] }
 
       case types.MOVE_RECEIVED: 
-        return { ...state, battleLog: [...state.battleLog, action.payload] }
+        return { ...state, isClientTurn: true, battleLog: [...state.battleLog, action.payload] }
       case types.MOVE_SENT: 
-        return { ...state, battleLog: [...state.battleLog, action.payload] }
+        return { ...state, isClientTurn:false, battleLog: [...state.battleLog, action.payload] }
     
       case types.PLAYER_ROOM_JOIN:
         return { ...state, messages: [...state.messages, { author: 'system', content: `${action.payload} joined the room!` }], roomFill: state.roomFill + 1 }
       case types.PLAYER_ROOM_LEFT:
         return { ...state, messages: [...state.messages, { author: 'system', content: `${action.payload} left the room!` }], roomFill: state.roomFill - 1 }
-  
+
       default:
         return state;
     };
@@ -48,7 +49,7 @@ export const fightEnemyReducer = (state = fightParticipantInitState, action) => 
   switch(action.type) {
     case types.ENEMY_POKEMON_RECEIVED: 
       return { ...state, pokemon: { ...action.payload, fightHp: action.payload.stats.hp } }
-    
+
     case types.PLAYER_ROOM_JOIN:
       console.log(action.payload)
       return { ...state, username: action.payload }
@@ -59,7 +60,7 @@ export const fightEnemyReducer = (state = fightParticipantInitState, action) => 
     case types.CONNECTION_FAIL: 
     return { ...state, pokemon: fightParticipantInitState.pokemon, username: fightParticipantInitState.username }
 
-    case types.MOVE_RECEIVED: 
+    case types.MOVE_SENT: 
       return { ...state, pokemon: { ...state.pokemon, hp: state.hp - action.payload.damage } }
 
     default:
@@ -70,7 +71,7 @@ export const fightEnemyReducer = (state = fightParticipantInitState, action) => 
 export const fightClientReducer = (state = fightParticipantInitState, action) => {
   switch(action.type) {
     case types.CLIENT_POKEMON_CHOSEN: 
-      return { ...state, pokemon: { ...action.payload, fightHp: action.payload.stats.hp } }
+      return { ...state, pokemon: { ...action.payload.pokemon, fightHp: action.payload.pokemon.stats.hp, moves: action.payload.pokemonMoves } }
       
     case types.CONNECTION_SUCCESS:
       return { ...state, roomId: action.payload.roomId, username: action.payload.username };

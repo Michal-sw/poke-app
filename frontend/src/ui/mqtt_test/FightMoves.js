@@ -1,11 +1,32 @@
 import { connect } from 'react-redux';
-import { FightMove, FightMovesContainer } from '../styles/FightStyles';
+import { TypeStamp, FightMove, FightMovesContainer, FightMoveDetail } from '../styles/FightStyles';
+import actions from '../../ducks/mqtt_handler/actions'
+import { BigText } from '../styles/MultiUsageStyles';
 
-const FightMoves = ({ pokemon }) => {
+const FightMoves = ({ pokemon, mqttClient, roomId, clientUsername, enemyUsername, isClientTurn, moveSent, typesSelectMap }) => {
+
+  const handleMoveSelect = (move) => {
+    if (isClientTurn) {
+        mqttClient.publish(`fights/${roomId}`, JSON.stringify({
+          author: clientUsername,
+          target: enemyUsername,
+          move: move.alias
+      }));
+      moveSent({ move: move.name, damage: move.power });
+    }
+  }
+
+
   return (
     <FightMovesContainer>
-      {pokemon.moves.slice(0,3).map(move => (
-        <FightMove>{move}</FightMove>
+      {pokemon.moves.map(move => (
+        <FightMove isClientTurn={isClientTurn} onClick={() => handleMoveSelect(move)}>
+          <p>{move.name}</p>
+          <FightMoveDetail>
+            <p>{`Power: ${move.power}`}</p>
+            <TypeStamp color={typesSelectMap[move.type].color}>{typesSelectMap[move.type].label}</TypeStamp>
+          </FightMoveDetail>
+        </FightMove>
       ))}
     </FightMovesContainer>
   )
@@ -13,10 +34,16 @@ const FightMoves = ({ pokemon }) => {
 
 const mapStateToProps = (state, props) => ({
   pokemon: props.isEnemy ? state.fightEnemy.pokemon : state.fightClient.pokemon,
-  connectionClient: state.mqtt.client
+  mqttClient: state.mqtt.client,
+  roomId: state.mqtt.roomId,
+  clientUsername: state.fightClient.username,
+  enemyUsername: state.fightEnemy.username,
+  isClientTurn: state.mqtt.isClientTurn,
+  typesSelectMap: state.types.selectOptionsMap
 });
 
 const mapDispatchToProps = {
+  moveSent: actions.moveSent
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FightMoves);

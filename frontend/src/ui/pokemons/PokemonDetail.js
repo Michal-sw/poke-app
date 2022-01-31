@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { selectPokemon, selectPokemonsLoading } from '../../ducks/pokemons/selectors';
+import { selectPokemon, selectPokemonMoves, selectPokemonsLoading } from '../../ducks/pokemons/selectors';
 import { selectTypesLoading, selectTypesSelectOptionsMap } from '../../ducks/types/selectors'
 import { getPokemon } from '../../ducks/pokemons/operations';
 import { getTypes } from '../../ducks/types/operations'
@@ -17,7 +17,7 @@ import PokemonOnGrassTile from '../components/PokemonOnGrassTile';
 import { PokemonDetailViewContainer, PokemonDetailInfo } from '../styles/PokemonStyles';
 import { MyButton, MyLink, NameLabel } from '../styles/MultiUsageStyles';
 
-const PokemonDetail = ({ pokemon, getPokemon, name, typesMap, getTypes, typesLoading, loading, chooseFightPokemon }, props) => {
+const PokemonDetail = ({ pokemon, getPokemon, pokemonMoves, name, typesMap, getTypes, typesLoading, loading, chooseFightPokemon }, props) => {
 
   useEffect(() => {
     if (pokemon.alias !== name) getPokemon(name);
@@ -25,7 +25,7 @@ const PokemonDetail = ({ pokemon, getPokemon, name, typesMap, getTypes, typesLoa
   }, [pokemon.alias])
 
   const handleFightChoose = () => {
-    chooseFightPokemon(pokemon)
+    chooseFightPokemon({ pokemon, pokemonMoves: pokemonMoves.slice(0,4) })
   };
 
   return (
@@ -52,6 +52,7 @@ const PokemonDetail = ({ pokemon, getPokemon, name, typesMap, getTypes, typesLoa
 const mapStateToProps = (state, props) => ({
   name: props.match.params.name,
   pokemon: selectPokemon(state, props),
+  pokemonMoves: selectPokemonMoves(state),
   typesMap: selectTypesSelectOptionsMap(state),
   typesLoading: selectTypesLoading(state),
   loading: selectPokemonsLoading(state)

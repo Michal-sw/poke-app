@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import mqttActions from '../../ducks/mqtt_handler/actions'
 import PokemonAnimated from '../components/PokemonAnimated';
 import { BattleContainer } from '../styles/FightStyles'
 import FightMoves from './FightMoves';
