@@ -2,13 +2,12 @@ import { createAction } from "redux-api-middleware"
 import types from './types';
 const endpoint = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : 'https://localhost:3001/'
 
-
 export const getMoves = (query) => {
   return createAction({
     endpoint: `${endpoint}moves?${query}`,
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     types: [
       types.MOVE_LIST_REQUEST,
@@ -71,7 +70,8 @@ export const editMove = (move) => {
     body: JSON.stringify(move),
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `${document.cookie.split(';').find(row => row.startsWith('token=')).split('=')[1]}`
     },
     types: [
       types.MOVE_EDIT_REQUEST,
