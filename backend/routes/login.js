@@ -7,7 +7,6 @@ const { admins } = require('../adminsData')
 router.post('/', async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-
   if (admins[username] === password) {
     const token = jwt.sign({ username }, 'S3CR3T');
     return res.json({ username, token })

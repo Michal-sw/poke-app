@@ -87,7 +87,8 @@ export const editPokemon = (pokemon) => {
     body: JSON.stringify(pokemon),
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `${document.cookie.split(';').find(row => row.startsWith('token=')).split('=')[1]}`
     },
     types: [
       types.POKEMON_EDIT_REQUEST,
@@ -101,6 +102,10 @@ export const deletePokemon = (name) => {
   return createAction({
     endpoint: `${endpoint}pokemons/${name}`,
     method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${document.cookie.split(';').find(row => row.startsWith('token=')).split('=')[1]}`
+    },
     types: [
       types.POKEMON_DELETE_REQUEST,
       types.POKEMON_DELETE_SUCCESS,

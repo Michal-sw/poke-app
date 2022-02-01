@@ -86,7 +86,8 @@ export const deleteMove = (name) => {
     endpoint: `${endpoint}moves/${name}`,
     method: 'DELETE',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `${document.cookie.split(';').find(row => row.startsWith('token=')).split('=')[1]}`
     },
     types: [
       types.MOVE_DELETE_REQUEST,
