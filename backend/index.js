@@ -7,6 +7,7 @@ const pokemons = require('./routes/pokemons');
 const moves = require('./routes/moves');
 const types = require('./routes/types');
 const fights = require('./routes/fights');
+const login = require('./routes/login')
 
 const corsOptions = {
   origin: 'https://localhost:3000',
@@ -24,6 +25,7 @@ app.use('/pokemons', pokemons);
 app.use('/moves', moves);
 app.use('/types', types);
 app.use('/fights', fights);
+app.use('/login', login);
 
 require('dotenv').config();
 const dbConnData = {

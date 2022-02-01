@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router({mergeParams: true});
-const { Types } = require('mongoose')
+const { authorizeMiddleware } = require('../middleware/middlewares');
 
+const { Types } = require('mongoose')
 const Pokemon = require('../models/Pokemon');
 
 router.get('/', async (req, res) => {
@@ -101,7 +102,7 @@ router.get('/:name/moves', async (req, res) => {
 })
 
 
-router.put('/:name/edit', async (req, res) => {
+router.put('/:name/edit', authorizeMiddleware, async (req, res) => {
   try {
     const name = req.params.name;
     const pokemonObject = req.body;
