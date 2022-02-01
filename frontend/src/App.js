@@ -16,6 +16,7 @@ import MoveDetail from './ui/moves/MoveDetail';
 import MoveForm from './ui/moves/MoveForm';
 import PokemonForm from './ui/pokemons/PokemonForm';
 import FightMainView from './ui/mqtt_test/FightMainView';
+import Login from './ui/components/Login';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <BrowserRouter>
         <Navbar/>
         <Switch>
+          <Route path='/login' component={ Login } exact/>
           <Route path='/pokemons' component={ PokemonMasterView } exact/>
           <Route path='/pokemons/add' component={ PokemonForm } exact/>
 
