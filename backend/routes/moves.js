@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
-const { Types } = require('mongoose');
+const { authorizeMiddleware } = require('../middleware/middlewares');
 
+const { Types } = require('mongoose');
 const Move = require('../models/Move');
 const Pokemon = require('../models/Pokemon');
 
@@ -77,7 +78,7 @@ router.get('/:name/pokemons', async (req, res) => {
     .catch(err => res.status(500).json(err));
 })
 
-router.put('/:name/edit', async (req, res) => {
+router.put('/:name/edit', authorizeMiddleware, async (req, res) => {
   const name = req.params.name;
   const moveObject = req.body;
   try {
@@ -96,7 +97,7 @@ router.put('/:name/edit', async (req, res) => {
   }
 })
 
-router.delete('/:name', async (req, res) => {
+router.delete('/:name', authorizeMiddleware, async (req, res) => {
   const name = req.params.name;
 
     Move.findOneAndDelete({ alias: name })

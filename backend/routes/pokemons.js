@@ -121,7 +121,7 @@ router.put('/:name/edit', authorizeMiddleware, async (req, res) => {
     }
 });
 
-router.delete('/:name', async (req, res) => {
+router.delete('/:name', authorizeMiddleware, async (req, res) => {
   const name = req.params.name;
   
   Pokemon.findOneAndDelete({ alias: name })
