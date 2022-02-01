@@ -16,7 +16,7 @@ const options = {
 // Local host -
 // const host = 'ws://192.168.0.13:8000/mqtt'
 
-const host = 'ws://10.45.3.136:8000/mqtt'
+const host = 'wss://10.45.3.136:8000/mqtt'
 
 const mqttHandler = store => next => async action => {
   if (action.type === types.CONNECTION_INIT) {
@@ -43,7 +43,8 @@ const mqttHandler = store => next => async action => {
         topic: 'fights/connect',
         payload: JSON.stringify({ room: roomId, payload: -1, username }),
         qos: 2
-      }
+      },
+      wsOptions: { rejectUnauthorized: false }
     });
 
     client.on('connect', async (conn) => {
@@ -60,10 +61,12 @@ const mqttHandler = store => next => async action => {
       })
     });
 
+    client.on('error', (err) => console.log(err))
+
     client.on('offline',  () => {
       store.dispatch(actions.connectionFail('Websocket is offline!'))
     })
-
+  
 
     client.on('message', (topic, mess) => {
       const messageJson = JSON.parse(mess.toString());

@@ -4,7 +4,7 @@ import mqttActions from '../../ducks/mqtt_handler/actions'
 import { RoomIdSelector } from '../styles/FightStyles';
 import { BigText, MyButton, ItemListContainer } from '../styles/MultiUsageStyles';
 
-const ConnectionSetup = ({ connectionInit }) => {
+const ConnectionSetup = ({ connectionInit, loading }) => {
   const [roomId, setRoomId] = useState(0);
   const [username, setUsername] = useState('');
   const [errMessageRoom, setErrMessageRoom] = useState('');
@@ -38,12 +38,13 @@ const ConnectionSetup = ({ connectionInit }) => {
         <input style={{ fontSize: '1.3em', minWidth: '120px' }} onChange={handleUsernameChange}/>
       </RoomIdSelector>
       </ItemListContainer>
-      <MyButton onClick={handleConnect}>Connect</MyButton>
+      { loading ? <BigText>Loading...</BigText> : <MyButton onClick={handleConnect}>Connect</MyButton>}
     </div>
   )
 };
 
 const mapStateToProps = (state) => ({
+  loading: state.mqtt.loading
 });
 
 const mapDispatchToProps = {

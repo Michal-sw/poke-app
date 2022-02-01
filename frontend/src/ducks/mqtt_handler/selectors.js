@@ -6,7 +6,7 @@ export const selectEnemyPokemon = (state) => state.fightEnemy.pokemon;
 export const selectClientUsername = (state) => state.fightClient.username;
 export const selectEnemyUsername = (state) => state.fightEnemy.username;
 
-export const selectWinner = (state) => state.mqtt.winne;
+export const selectWinner = (state) => state.mqtt.winner;
 export const selectMessages = (state) => state.mqtt.messages;
 export const selectBattleLog = (state) => state.mqtt.battleLog;
 export const selectRoomId = (state) => state.mqtt.roomId;
