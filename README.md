@@ -3,7 +3,7 @@
 ```markdown
 Pokemon App that lets the user browse all existing pokemons, see their moves and play out fights with other users.
 Users are able to create a fighting room and fight (turn-based) with their respective pokemons using MQTT over WebSockets.
-Fighters will be able to chat during the fight.
+Fighters are able to chat during the fight.
 Admin access for editing and deleting data
 ```
 
