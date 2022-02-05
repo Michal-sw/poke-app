@@ -30,7 +30,7 @@ Admin access for editing and deleting data
 - [Node](/backend/)
 - [React](/frontend/src)
 - [Redux](/frontend/src/ducks)
-- [MQTT](/frontend/src/middlewares/mqtt_handler.js)
+- [MQTT](/frontend/src/middlewares/mqttHandler.js)
 - [Styles](/frontend/src/ui/styles)
 ## Principles ##
 ```markdown
