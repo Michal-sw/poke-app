@@ -1,37 +1,47 @@
-## Welcome to GitHub Pages
-
-You can use the [editor on GitHub](https://github.com/Michal-sw/poke-app/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
+# Poke-app
+## [LIVE DEMO](http://pokeapp.live/pokemons/)
 ```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+Pokemon App that lets the user browse all existing pokemons, see their moves and play out fights with other users.
+Users are able to create a fighting room and fight (turn-based) with their respective pokemons using MQTT over WebSockets.
+Fighters will be able to chat during the fight.
+Admin access for editing and deleting data
 ```
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+## Technologies ##
+```markdown
+  1. Frontend:
+    - React functional components
+    - Redux for state managment
+    - Redux-api-middleware for handling API calls
+    - styled-components to make it look good (and style easily)
 
-### Jekyll Themes
+  2. Rest API:
+    - Node.js
+    - Express
+    - MongoDB (mongoose for communication)
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Michal-sw/poke-app/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+  3. MQTT:
+    - mqtt.js
 
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+  4. Deployment: 
+    - RHEL 7 run on Microsoft Azure services
+    - NGINX
+```
+- [Node](/backend/)
+- [React](/frontend/src/ui)
+- [Redux](/frontend/src/ducks)
+- [MQTT](/frontend/src/middleware)
+- [Styles](/frontend/src/styles)
+## Principles ##
+```markdown
+  - Clean Code
+  - Ducks
+  - DRY / reusability approach
+```
+## Resources ##
+```markdown
+Pokemon data as well as a bunch of assets are aquired thanks to:
+  - https://itsjavi.com/pokemon-assets : All Backend data, modified and tailored to fit the page purposes by me + Pokemon logos and type logos
+  - PokeAPI - Pokemon sprites and animations
+  - https://github.com/msikma/pokesprite : Small Pokemon Logos
+```
