@@ -1,12 +1,11 @@
 # Poke-app
-## [LIVE DEMO](http://pokeapp.live/pokemons/)
 ```markdown
 Pokemon App that lets the user browse all existing pokemons, see their moves and play out fights with other users.
 Users are able to create a fighting room and fight (turn-based) with their respective pokemons using MQTT over WebSockets.
 Fighters are able to chat during the fight.
 Admin access for editing and deleting data
 ```
-
+## [LIVE DEMO](http://pokeapp.live/pokemons/)
 ## Technologies ##
 ```markdown
   1. Frontend:
