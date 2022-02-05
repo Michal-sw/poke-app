@@ -24,7 +24,7 @@ const TypeDetail = ({ type, getTypes }, props) => {
 
         <TypeAssociatedTypes />
         <MyLink to={`/pokemons?types=${type._id}`}>
-          <MyButton>Show associated pokemons</MyButton>
+          {type.num ? <MyButton>Show associated pokemons</MyButton> : null}
         </MyLink>
       </TypeDetailViewContainer>
   )

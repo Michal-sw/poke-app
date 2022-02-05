@@ -16,6 +16,7 @@ import PokemonOnGrassTile from '../components/PokemonOnGrassTile';
 
 import { PokemonDetailViewContainer, PokemonDetailInfo } from '../styles/PokemonStyles';
 import { MyButton, MyLink, NameLabel } from '../styles/MultiUsageStyles';
+import PageNotFound from '../components/PageNotFound';
 
 const PokemonDetail = ({ pokemon, getPokemon, pokemonMoves, name, typesMap, getTypes, typesLoading, loading, chooseFightPokemon }, props) => {
 
@@ -30,7 +31,8 @@ const PokemonDetail = ({ pokemon, getPokemon, pokemonMoves, name, typesMap, getT
 
   return (
       loading ? <Loading/>
-      : <PokemonDetailViewContainer>
+      : pokemon.alias ?
+        <PokemonDetailViewContainer>
           <PokemonTypeLogos />
           <NameLabel style={{marginBottom: '-30px'}}>{pokemon.name}</NameLabel>
           <PokemonOnGrassTile name={pokemon.alias} num={pokemon.num}></PokemonOnGrassTile>
@@ -38,13 +40,14 @@ const PokemonDetail = ({ pokemon, getPokemon, pokemonMoves, name, typesMap, getT
             <PokemonStats stats={pokemon.stats} />
             <PokemonMoves />
           </PokemonDetailInfo>
-          <MyLink to={`/pokemons/${pokemon.alias}/edit`}>
-            <MyButton>Edit Pokemon</MyButton>
-          </MyLink>
-          <MyLink to={`/pokemons/fight`}>
-            <MyButton onClick={handleFightChoose}>Select for fight!</MyButton>
-          </MyLink>
+            <MyLink to={`/pokemons/${pokemon.alias}/edit`}>
+              <MyButton>Edit Pokemon</MyButton>
+            </MyLink>
+            <MyLink to={`/pokemons/fight`}>
+              <MyButton onClick={handleFightChoose}>Select for fight!</MyButton>
+            </MyLink>
         </PokemonDetailViewContainer>
+        : <PageNotFound/>
   )
 };
 

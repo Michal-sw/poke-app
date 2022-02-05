@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-import { selectMove, selectMovePokemons, selectMovePokemonsName, selectMovesLoading } from "../../ducks/moves/selectors";
+import { selectMove, selectMovePokemons, selectMovePokemonsLoading, selectMovePokemonsName, selectMovesLoading } from "../../ducks/moves/selectors";
 import { selectTypesSelectOptionsMap } from "../../ducks/types/selectors";
 import { getMovePokemons } from '../../ducks/moves/operations';
 
@@ -41,7 +41,7 @@ const MovePokemons = ({ pokemons, name, getMovePokemons, pokemonsMoveName, types
     pokemons: selectMovePokemons(state),
     pokemonsMoveName: selectMovePokemonsName(state),
     typesMap: selectTypesSelectOptionsMap(state),
-    loading: selectMovesLoading(state)
+    loading: selectMovePokemonsLoading(state)
   });
   
   const mapDispatchToProps = {

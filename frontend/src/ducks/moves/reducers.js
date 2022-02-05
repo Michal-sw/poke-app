@@ -4,6 +4,7 @@ const moveInitState = {
   moves: [],
   move: { },
   movePokemons: { move: '', pokemons: [] },
+  movePokemonsLoading: false,
   loading: false,
   err: '',
   query: new URLSearchParams(),
@@ -48,11 +49,11 @@ export const moveReducer = (state = moveInitState, action) => {
         return { ...state, loading: false, err: action.payload };
 
       case types.MOVE_POKEMONS_REQUEST:
-        return { ...state, loading: true };
+        return { ...state, movePokemonsLoading: true };
       case types.MOVE_POKEMONS_SUCCESS:
-        return { ...state, loading: false, movePokemons: action.payload };
+        return { ...state, movePokemonsLoading: false, movePokemons: action.payload };
       case types.MOVE_POKEMONS_FAILURE:
-        return { ...state, loading: false, err: action.payload };
+        return { ...state, movePokemonsLoading: false, err: action.payload };
     
       case types.MOVE_CHANGE_QUERY:
         return { ...state, query: action.payload }

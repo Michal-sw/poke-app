@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { selectMove } from '../../ducks/moves/selectors';
+import { selectMove, selectMovesLoading } from '../../ducks/moves/selectors';
 import { selectTypesLoading, selectTypesSelectOptionsMap } from '../../ducks/types/selectors'
 import { getMove } from '../../ducks/moves/operations';
 import { getTypes } from '../../ducks/types/operations'
@@ -12,15 +12,20 @@ import MovePokemons from './MovePokemons';
 import MoveStats from './MoveStats';
 
 import { MainListFlexContainer, MyButton, MyLink, NameLabel } from '../styles/MultiUsageStyles';
+import Loading from '../components/Loading';
+import PageNotFound from '../components/PageNotFound';
 
-const MoveDetail = ({ move, getMove, name, typesMap, getTypes, typesLoading }, props) => {
+const MoveDetail = ({ move, getMove, name, typesMap, getTypes, typesLoading, loading }, props) => {
 
   useEffect(() => {
     if (move.alias !== name) getMove(name);
     if (!typesMap[move.type] && !typesLoading) getTypes();
+    console.log(move.alias)
   }, [move._id])
 
   return (
+    loading ? <Loading/>
+    : move.alias ?
       <MainListFlexContainer>
         <MyLink to={`/types/${typesMap[move.type]?.value}`}>
           <TypeLogo type={typesMap[move.type]?.label}/>
@@ -31,9 +36,10 @@ const MoveDetail = ({ move, getMove, name, typesMap, getTypes, typesLoading }, p
 
         <MovePokemons />
         <MyLink to={`/moves/${move.alias}/edit`}>
-          <MyButton>Edit</MyButton>
+          { move._id ? <MyButton>Edit</MyButton> : null}
         </MyLink>
       </MainListFlexContainer>
+      : <PageNotFound/>
   )
 };
 
@@ -42,6 +48,7 @@ const mapStateToProps = (state, props) => ({
   move: selectMove(state, props),
   typesMap: selectTypesSelectOptionsMap(state),
   typesLoading: selectTypesLoading(state),
+  loading: selectMovesLoading(state)
 });
 
 const mapDispatchToProps = {

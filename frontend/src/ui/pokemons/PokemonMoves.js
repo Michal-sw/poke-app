@@ -2,20 +2,23 @@ import { useEffect } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-import { selectPokemon, selectPokemonMoves, selectPokemonMovesName } from "../../ducks/pokemons/selectors";
+import { selectPokemon, selectPokemonMoves, selectPokemonMovesName, selectPokemonMovesLoading } from "../../ducks/pokemons/selectors";
 import { selectTypesSelectOptionsMap } from "../../ducks/types/selectors";
 import { getPokemonMoves } from '../../ducks/pokemons/operations';
 
 import { PokemonMoveCard } from '../styles/PokemonStyles'
 import { ItemListFlexColumnContainer, MyLink } from "../styles/MultiUsageStyles";
+import Loading from "../components/Loading";
 
-const PokemonMoves = ({ moves, pokemon, name, getPokemonMoves, movesPokemonName, typesMap }) => {
+const PokemonMoves = ({ moves, pokemon, name, getPokemonMoves, movesPokemonName, typesMap, loading }) => {
 
   useEffect(() => {
-    if (movesPokemonName !== name) getPokemonMoves(name);
+    if (pokemon.num && movesPokemonName !== name) getPokemonMoves(name);
   }, [pokemon.num]);
 
   return (
+    loading ? <Loading/>
+    :
     <ItemListFlexColumnContainer>
       {moves.map(move => (
         <MyLink to={`/moves/${move.alias}`} key={move.num}>
@@ -35,6 +38,7 @@ const PokemonMoves = ({ moves, pokemon, name, getPokemonMoves, movesPokemonName,
     movesPokemonName: selectPokemonMovesName(state),
     pokemon: selectPokemon(state, props),
     typesMap: selectTypesSelectOptionsMap(state),
+    loading: selectPokemonMovesLoading(state)
   });
   
   const mapDispatchToProps = {

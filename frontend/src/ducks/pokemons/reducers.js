@@ -4,6 +4,7 @@ const pokemonInitState = {
   pokemons: [],
   pokemon: { types: [], moves: [] },
   pokemonMoves: { pokemon: '', moves: [] },
+  pokemonMovesLoading: false,
   loading: false,
   err: '',
   query: new URLSearchParams(),
@@ -48,11 +49,11 @@ export const pokemonReducer = (state = pokemonInitState, action) => {
         return { ...state, loading: false, err: action.payload };
 
       case types.POKEMON_MOVES_REQUEST:
-        return { ...state, loading: true };
+        return { ...state, pokemonMovesLoading: true };
       case types.POKEMON_MOVES_SUCCESS:
-        return { ...state, loading: false, pokemonMoves: action.payload };
+        return { ...state, pokemonMovesLoading: false, pokemonMoves: action.payload };
       case types.POKEMON_MOVES_FAILURE:
-        return { ...state, loading: false, err: action.payload };
+        return { ...state, pokemonMovesLoading: false, err: action.payload };
         
       case types.POKEMON_CHANGE_QUERY:
         return { ...state, query: action.payload }

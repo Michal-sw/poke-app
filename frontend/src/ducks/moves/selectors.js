@@ -4,6 +4,7 @@ export const selectMovePokemons = (state) => state.moves.movePokemons.pokemons;
 export const selectMovePokemonsName = (state) => state.moves.movePokemons.move;
 
 export const selectMovesLoading = (state) => state.moves.loading;
+export const selectMovePokemonsLoading = (state) => state.moves.movePokemonsLoading;
 
 export const selectMovesQuery = (state) => state.moves.query;
 export const selectMovesQueryPage = (state) => state.moves.query.get('page') || 1;
