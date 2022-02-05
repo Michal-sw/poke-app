@@ -28,7 +28,7 @@ Admin access for editing and deleting data
     - NGINX
 ```
 - [Node](/backend/)
-- [React](/frontend/src/ui)
+- [React](/frontend/src)
 - [Redux](/frontend/src/ducks)
 - [MQTT](/frontend/src/middleware)
 - [Styles](/frontend/src/styles)
