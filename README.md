@@ -6,6 +6,10 @@ Fighters are able to chat during the fight.
 Admin access for editing and deleting data
 ```
 ## [LIVE DEMO](http://pokeapp.live/pokemons)
+```markdown
+to access fight screen go to pokemon detail page, scroll down and click 
+"Select for fight"
+```
 ## Technologies ##
 ```markdown
   1. Frontend:
