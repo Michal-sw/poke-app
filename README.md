@@ -5,7 +5,7 @@ Users are able to create a fighting room and fight (turn-based) with their respe
 Fighters are able to chat during the fight.
 Admin access for editing and deleting data
 ```
-## [LIVE DEMO](http://pokeapp.live/pokemons/)
+## [LIVE DEMO](http://pokeapp.live/pokemons)
 ## Technologies ##
 ```markdown
   1. Frontend:
