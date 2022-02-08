@@ -1,6 +1,6 @@
 const admins = {
-  majk: 'password',
-  admin: 'Som3@Str0ngP@ss1'
+  majk: 'Haslo123',
+  admin: 'Som3@St30NG'
 }
 
 module.exports = { admins };
