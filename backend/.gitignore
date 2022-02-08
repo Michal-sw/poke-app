@@ -1,4 +1,4 @@
 pokemon/**
 **/node_modules/**
-/.cert/*
+**/.cert/**
 adminsData.js
