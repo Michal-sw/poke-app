@@ -273,3 +273,11 @@ export const TextNoMargin = styled.p`
 export const LoadingText = styled.p`
 font-size: 3em;
 `;
+
+export const PageNotFoundContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(120, 40, 120, 0.20);
+  border-radius: 20px;
+`

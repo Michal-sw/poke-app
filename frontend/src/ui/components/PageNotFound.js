@@ -1,8 +1,15 @@
-import { BigText } from '../styles/MultiUsageStyles'
+import { BigText, NameLabel, PageNotFoundContainer } from '../styles/MultiUsageStyles'
 
 const PageNotFound = () => {
   return (
-    <BigText>OMG! Team Rocket must have stole this page!</BigText>
+    <PageNotFoundContainer>
+      <NameLabel>404</NameLabel>
+      <BigText>OMG! Team Rocket must have stolen this page!</BigText>
+      <img
+        src='https://www.pngkit.com/png/full/33-339338_rocket-a-team-rocket-pokemon.png'
+        height={'300px'}
+      />
+    </PageNotFoundContainer>
   )
 }
 

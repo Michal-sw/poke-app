@@ -17,6 +17,8 @@ import MoveForm from './ui/moves/MoveForm';
 import PokemonForm from './ui/pokemons/PokemonForm';
 import FightMainView from './ui/mqtt_test/FightMainView';
 import Login from './ui/components/Login';
+import PageNotFound from './ui/components/PageNotFound';
+import WelcomePage from './ui/components/WelcomePage';
 
 function App() {
   return (
@@ -40,6 +42,8 @@ function App() {
           <Route path='/moves/add' component={ MoveForm } exact/>
           <Route path='/moves/:name' component={ MoveDetail } exact/>
           <Route path='/moves/:name/edit' component={ MoveForm } exact/>
+          <Route path='/' component={ WelcomePage } exact/>
+          <Route path='*' component={ PageNotFound } exact/>
 
         </Switch>
       </BrowserRouter>

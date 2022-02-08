@@ -10,6 +10,7 @@ import TypeLogo from '../components/TypeLogo';
 
 import { TypeDetailViewContainer } from '../styles/TypeStyles';
 import { MyButton, MyLink, NameLabel } from '../styles/MultiUsageStyles';
+import PageNotFound from '../components/PageNotFound';
 
 const TypeDetail = ({ type, getTypes }, props) => {
 
@@ -18,6 +19,7 @@ const TypeDetail = ({ type, getTypes }, props) => {
   }, []);
 
   return (
+    type._id ?
       <TypeDetailViewContainer>
         <TypeLogo type={type.name}/>
         <NameLabel>{type.name}</NameLabel>
@@ -27,6 +29,7 @@ const TypeDetail = ({ type, getTypes }, props) => {
           {type.num ? <MyButton>Show associated pokemons</MyButton> : null}
         </MyLink>
       </TypeDetailViewContainer>
+    : <PageNotFound />
   )
 };
 
