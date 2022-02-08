@@ -1,3 +1,7 @@
 pokemon/**
 **/node_modules/**
+<<<<<<< HEAD
 adminsData.js
+=======
+.cert/*
+>>>>>>> 2a85af6ad46af302fe2dfd8ded33d71828fe78e5

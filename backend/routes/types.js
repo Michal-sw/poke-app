@@ -3,6 +3,22 @@ const router = express.Router({ mergeParams: true });
 
 const Type = require('../models/Type');
 
+// EKSPORT DANYCH 
+fs = require('fs');
+
+router.get('/all', async(req, res) => {
+  Type.find({})
+    .then(result => {
+      fs.writeFile('types.json', JSON.stringify(result), (err) => {
+        if (err) return console.log(err);
+        console.log('Eksported and saved');
+      })
+    })
+      
+  
+})
+//
+ 
 router.get('/', async (req, res) => {
   await Type.find()
     .then(result => res.json(result))
