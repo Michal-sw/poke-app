@@ -39,13 +39,14 @@ export const PokemonCardHead = styled.div`
   display: flex;
   box-shadow: 0px 3px 1px silver;
   background-color: whitesmoke;
+  height: 30%;
   width: 100%;
   justify-content: center;
 `;
 
 export const PokemonSprite = styled.img`
   width: 13em;
-  height: auto;
+  height: 70%;
   image-rendering: crisp-edges;
 `;
 
