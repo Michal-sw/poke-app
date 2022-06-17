@@ -1,8 +1,10 @@
+import svgPath from "../../assets/common_svg/poke_search.svg";
+
 const PokeSearch = ({onClick}) => {
   return (
     <img
       onClick={onClick}
-      src="https://raw.githubusercontent.com/itsjavi/pokemon-assets/master/assets/svg/search-button.svg"
+      src={svgPath}
       alt="pokeball"
       height="40"
       width="50"
