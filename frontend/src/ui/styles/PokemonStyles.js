@@ -46,8 +46,8 @@ export const PokemonCardHead = styled.div`
 
 export const PokemonSprite = styled.img`
   width: 13em;
-  height: 70%;
-  image-rendering: crisp-edges;
+  height: 66%;
+  image-rendering: pixelated;
 `;
 
 export const PokemonDetailViewContainer = styled.div`

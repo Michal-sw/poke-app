@@ -16,7 +16,8 @@ const options = {
 // Local host -
 // const host = 'ws://192.168.0.13:8000/mqtt'
 
-const host = 'wss://10.45.3.136:8000/mqtt'
+// Azure host - 
+const host = 'ws://20.123.199.56:8000/mqtt'
 
 const mqttHandler = store => next => async action => {
   if (action.type === types.CONNECTION_INIT) {
