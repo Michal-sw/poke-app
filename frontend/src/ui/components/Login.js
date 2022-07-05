@@ -6,6 +6,7 @@ import { useCookies } from 'react-cookie'
 
 import { BigText, FormContainer } from '../styles/MultiUsageStyles';
 import FormFieldContainer from './FormFieldContainer';
+import KeycloakLogin from './KeycloakLogin';
 
 const Login = () => {
   const [errMessage, setErrMessage] = useState('');
@@ -40,6 +41,7 @@ const Login = () => {
   const initialValues = { username: '', password: '' };
 
   return (
+    <>
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
@@ -59,6 +61,11 @@ const Login = () => {
           </FormContainer>
         </Form>
     </Formik>
+      <FormContainer>
+        <BigText>Login with keycloak</BigText>
+          <KeycloakLogin/>
+      </FormContainer>
+    </>
   )
 }
 

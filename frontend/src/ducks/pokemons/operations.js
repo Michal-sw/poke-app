@@ -2,13 +2,18 @@ import { createAction } from "redux-api-middleware"
 import types from './types';
 import mqttTypes from '../mqtt_handler/types';
 const endpoint = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : 'https://localhost:3001/'
+const protectedResourceEndpoint = 'http://localhost:4000/spa/pokemons';
 
-export const getPokemons = (query) => {
+export const getPokemons = (query, token) => {
+  const oldEndpoint = `${endpoint}pokemons?${query}`;
+  const protectedResourceEndpoint = `http://localhost:4000/spa/pokemons?${query}`;
+
   return createAction({
-    endpoint: `${endpoint}pokemons?${query}`,
+    endpoint: protectedResourceEndpoint,
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token || ""}`
     },
     types: [
       types.POKEMON_LIST_REQUEST,

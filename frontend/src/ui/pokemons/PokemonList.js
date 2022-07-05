@@ -10,18 +10,20 @@ import Loading from '../components/Loading';
 
 import { PokemonCard, PokemonCardHead, PokemonSprite} from '../styles/PokemonStyles';
 import { ItemListContainer, MyLink, NameLabel } from '../styles/MultiUsageStyles';
+import { useKeycloak } from '@react-keycloak/web';
 
 const PokemonList = ({ pokemons, loading, query, changeQueryAction, getPokemons }, props) => {
   const location = useLocation();
+  const { keycloak } = useKeycloak();
 
   useEffect(() => {
     const url = new URLSearchParams(location.search);
 
     if (query.toString() !== url.toString() || pokemons.length === 0) {
       changeQueryAction(url)
-      getPokemons(url.toString());
+      getPokemons(url.toString(), keycloak.token);
     }
-  }, [location.search]);
+  }, [location.search, keycloak.authenticated]);
 
   
   return (
