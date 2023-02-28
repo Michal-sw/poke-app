@@ -10,7 +10,7 @@ const fights = require('./routes/fights');
 const login = require('./routes/login')
 
 const corsOptions = {
-  origin: 'https://localhost:3000',
+  origin: true,
   optionsSuccessStatus: 200
 }
 const sslOptions = {

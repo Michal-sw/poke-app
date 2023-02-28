@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router({mergeParams: true});
 const mqtt = require('mqtt');
-const host = 'mqtt://10.45.3.136:1883/mqtt';
+// :1883 - tls connections
+const host = 'mqtt://40.68.186.182:1883/mqtt';
 
 const options = {
   clean: true,
