@@ -101,8 +101,8 @@ export const NavContainer = styled.nav`
 `;
 
 export const NavLinkContainer = styled.div`
-  background-image: url("https://raw.githubusercontent.com/itsjavi/pokemon-assets/master/assets/svg/pokeball-banner.svg");
-  width: 282px;
+  background-image: url(poke_banner.svg);
+  width: 268px;
   margin-right: 5px;
   transition: all 0.08s linear;
 
