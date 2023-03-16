@@ -68,7 +68,7 @@ router.get('/:name/moves', async (req, res) => {
 
   const lookup = { 
     $lookup: {
-      from: 'moves',
+      from: 'Move',
       localField: 'moves',
       foreignField: '_id',
       as: 'moves'

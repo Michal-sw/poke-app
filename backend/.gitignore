@@ -3,3 +3,4 @@ pokemon/**
 **/node_modules/**
 **/.cert/**
 adminsData.js
+.env

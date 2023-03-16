@@ -33,6 +33,6 @@ const moveSchema = new Schema({
       type: String,
       required: 'Target required'
     }
-});
+}, { collection: 'Move' });
 
 module.exports = model('Move', moveSchema);

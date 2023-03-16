@@ -27,6 +27,6 @@ const typeSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: "Type",
     }]
-});
+}, { collection: 'Type' });
 
 module.exports = model('Type', typeSchema);

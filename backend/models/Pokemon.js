@@ -32,6 +32,6 @@ const pokemonSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: "Move"
     }]
-});
+}, { collection: 'Pokemon' });
 
 module.exports = model('Pokemon', pokemonSchema);

@@ -11,6 +11,11 @@ const options = {
 
 const rooms = { };
 
+const roomActions = {
+  exit: -1,
+  enter: 1
+}
+
 const client = mqtt.connect(host, options)
 
 client.on('connect', async (conn) => {
@@ -28,7 +33,7 @@ client.on('message', (topic, mess) => {
   const username = messageJson.username;
   const roomMembers = rooms[roomId] || [];
 
-  if (payload === -1) {
+  if (payload === roomActions.exit) {
     const newMembers = roomMembers.filter(member => member !== username);
     rooms[roomId] = newMembers;
     client.publish(
@@ -36,7 +41,7 @@ client.on('message', (topic, mess) => {
       JSON.stringify({ left: username }),
       { qos: 2 }
     )
-  } else {
+  } else if (payload === roomActions.enter) {
     const newMembers = [...roomMembers, username];
     rooms[roomId] = newMembers;
     if (newMembers.length > 1) client.publish(
