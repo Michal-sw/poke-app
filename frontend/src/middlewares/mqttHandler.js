@@ -17,7 +17,9 @@ const options = {
 // const host = 'ws://192.168.0.13:8000/mqtt'
 
 // Azure host - 
-const host = 'ws://20.123.199.56:8000/mqtt'
+const host = process.env.REACT_APP_MQTT_ENDPOINT
+  ? process.env.REACT_APP_MQTT_ENDPOINT
+  : 'ws://localhost:8000/mqtt'
 
 const mqttHandler = store => next => async action => {
   if (action.type === types.CONNECTION_INIT) {
