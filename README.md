@@ -7,7 +7,7 @@ Admin access for editing and deleting data
 ```
 ## [LIVE DEMO](https://poke-app-michal-sw.vercel.app/pokemons)
 ```markdown
-to access fight screen go to pokemon detail page, scroll down and click 
+to access fight screen select a pokemon in /pokemons section, scroll down and click 
 "Select for fight"
 ```
 ## Technologies ##
