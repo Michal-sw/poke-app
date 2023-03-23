@@ -42,8 +42,11 @@ const mqttHandler = store => next => async action => {
         return next(action)
     }
 
+    const clientId = `${username}_${roomId}_${Math.floor(Math.random()*100)}`;
+
     const client = mqtt.connect(host, {
       ...options,
+      clientId,
       will: {
         topic: 'fights/connect',
         payload: JSON.stringify({ room: roomId, payload: -1, username }),
