@@ -1,12 +1,19 @@
 const express = require('express');
 const router = express.Router({mergeParams: true});
 const mqtt = require('mqtt');
-const host = 'mqtt://10.45.3.136:1883/mqtt';
+
+const host = process.env.MQTT_ENDPOINT 
+  ? process.env.MQTT_ENDPOINT
+  : 'mqtt://130.61.177.18:1883/mqtt';
 
 const options = {
   clean: true,
   reconnectPeriod: 5000,
   connectTimeout: 30 * 1000,
+  clientId: 'server',
+  username: process.env.MQTT_USERNAME,
+  password: process.env.MQTT_PASSWORD,
+  rejectUnauthorized: false,
 };
 
 const rooms = { };
