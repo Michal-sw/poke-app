@@ -5,7 +5,9 @@ Users are able to create a fighting room and fight (turn-based) with their respe
 Fighters are able to chat during the fight.
 Admin access for editing and deleting data
 ```
-## [LIVE DEMO](https://poke-app-michal-sw.vercel.app/pokemons)
+## *** IF YOU DO NOT SEE ANY DATA ON THE WEBSITE *** 
+Please go to [API ENDPOINT](https://130.61.177.18:3000/) and mark the certificate as trusted
+## [LIVE DEMO](https://poke-app-michal-sw.vercel.app/pokemons) (remember to mark API endpoint as trusted)
 ```markdown
 to access fight screen select a pokemon in /pokemons section, scroll down and click 
 "Select for fight"
