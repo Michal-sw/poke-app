@@ -8,6 +8,8 @@ const options = {
   clean: true,
   reconnectPeriod: 30000,
   connectTimeout: 30 * 1000,
+  username: process.env.REACT_APP_MQTT_USERNAME,
+  password: process.env.REACT_APP_MQTT_PASSWORD,
 };
 
 // sigma HOST -
