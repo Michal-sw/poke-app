@@ -9,7 +9,7 @@ import actions from '../../ducks/pokemons/actions';
 import Loading from '../components/Loading';
 
 import { PokemonCard, PokemonCardHead, PokemonSprite} from '../styles/PokemonStyles';
-import { ItemListContainer, MyLink, NameLabel } from '../styles/MultiUsageStyles';
+import { BigText, ItemListContainer, MyLink, NameLabel } from '../styles/MultiUsageStyles';
 
 const PokemonList = ({ pokemons, loading, query, changeQueryAction, getPokemons }, props) => {
   const location = useLocation();
@@ -27,18 +27,26 @@ const PokemonList = ({ pokemons, loading, query, changeQueryAction, getPokemons 
   return (
     <ItemListContainer >
     { loading ? <Loading/> :
-      pokemons.map(pokemon => {
-        return (
-          <MyLink to={`pokemons/${pokemon.alias}`} key={pokemon.num}>
-            <PokemonCard>
-              <PokemonCardHead>
-                <NameLabel>{pokemon.name}</NameLabel>
-              </PokemonCardHead>
-              <PokemonSprite alt={pokemon.name} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.num}.png`}/>
-            </PokemonCard>
-          </MyLink>
-        )
-      })
+        pokemons.length ? 
+          pokemons.map(pokemon => {
+            return (
+              <MyLink to={`pokemons/${pokemon.alias}`} key={pokemon.num}>
+                <PokemonCard>
+                  <PokemonCardHead>
+                    <NameLabel>{pokemon.name}</NameLabel>
+                  </PokemonCardHead>
+                  <PokemonSprite alt={pokemon.name} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.num}.png`}/>
+                </PokemonCard>
+              </MyLink>
+            )
+          })
+        : <>
+            <BigText>If you do not see any pokemons, please visit</BigText>
+            <BigText>
+              <a href="https://130.61.177.18:3000" target='_blank'>https://130.61.177.18:3000</a>
+              and mark the website certificate as trusted.
+            </BigText>
+          </>
     }
     </ItemListContainer>
   );
