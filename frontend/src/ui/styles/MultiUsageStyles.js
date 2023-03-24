@@ -174,6 +174,10 @@ export const MyButton = styled.button`
   }
 `;
 
+export const FightButton = styled(MyButton)`
+  border: 1px solid red;
+`
+
 export const StatContainer = styled.div`
   display: flex;
   flex-display: row;
