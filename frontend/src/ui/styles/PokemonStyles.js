@@ -48,6 +48,9 @@ export const PokemonSprite = styled.img`
   width: 13em;
   height: 66%;
   image-rendering: pixelated;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const PokemonDetailViewContainer = styled.div`

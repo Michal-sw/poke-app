@@ -49,6 +49,13 @@ export const SearchContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  margin-bottom: 16px;
+  @media (max-width: 700px) {
+    flex-direction: column;
+    &:last-child {
+      align-self: center;
+    }
+  }
 `;
 
 
