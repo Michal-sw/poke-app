@@ -41,7 +41,7 @@ const PokemonList = ({ pokemons, loading, query, changeQueryAction, getPokemons 
             )
           })
         : <>
-            <BigText>If you do not see any pokemons, please visit <a href="https://130.61.177.18:3000" target='_blank'>https://130.61.177.18:3000</a> and mark the website certificate as trusted, so the API data can be fetched.</BigText>
+            <BigText>If you do not see any pokemons, please visit <a href="https://michal-sw.com/pokeapp" target='_blank'>https://michal-sw.com/pokeapp</a> and mark the website certificate as trusted, so the API data can be fetched.</BigText>
           </>
     }
     </ItemListContainer>
